@@ -1,12 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
-const db = require('./config/database');
 
-app.get('/', (req, res) => {
-  res.send('Bienvenue sur mon application Express.js !');
-});
+const PORT = process.env.PORT;
+const movieRouter = require('./routes/movie.router');
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+app.use(express.json());
+
+app.use('/movies', movieRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
