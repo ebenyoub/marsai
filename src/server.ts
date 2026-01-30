@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import userRoutes from "./routes/user.routes.js";
 import dotenv from 'dotenv';
+import festivalRoutes from './routes/festival.route.js';
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/users', userRoutes);
+app.use("/festivals", festivalRoutes);
 
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+  console.log(`[server]: Server is running at http://localhost:${port} - Connexion à la base de donnée réalisé avec succés ✅ `);
 });

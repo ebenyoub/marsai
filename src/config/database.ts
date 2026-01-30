@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise'; // <-- IMPORTANT : ajoute /promise
+import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -11,6 +11,7 @@ const connection = await mysql.createConnection({
   port: Number(process.env.DB_PORT) || 3306,
 });
 
-console.log("✅ Connecté à MySQL via Promises");
+// Typage de l'argument 'error'
+console.log('Connexion à la base de donnée réussi ✅'); 
 
 export default connection;
