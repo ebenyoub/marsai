@@ -1,5 +1,5 @@
 import express from 'express';
-import festivalController from "../controllers/festival.controller.js";
+import festivalController from "../controllers/festival.controller";
 
 const router = express.Router();
 
