@@ -1,5 +1,3 @@
-import { RowDataPacket } from 'mysql2';
-
 export interface MovieType{
   id?: number;
   title: string;
