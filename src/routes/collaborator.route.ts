@@ -1,5 +1,5 @@
 import express from 'express';
-import collaboratorController from '../controllers/collaborator.controller.js';
+import collaboratorController from '../controllers/collaborator.controller';
 
 const router = express.Router();
 
