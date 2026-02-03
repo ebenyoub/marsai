@@ -4,21 +4,22 @@
     "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react-jsx",
-
-    // Allow JS files for gradual migration
     "allowJs": true,
     "checkJs": false,
     "noEmit": true,
-
-    // Strict type-checking
     "strict": true,
     "isolatedModules": true,
-
-    // Module resolution for Vite
     "moduleResolution": "bundler",
-
-    // Skip type checking of node_modules
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src"]
+  "include": [
+    "src", 
+    "vite.config.js", 
+    "eslint.config.js",
+    "**/*.d.ts"
+  ]
 }
