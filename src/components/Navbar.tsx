@@ -6,9 +6,12 @@ import { useLanguage } from '../contexts/LanguageContext.js';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MarsAILogo } from './MarsAILogo.js';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from './ui/LanguageSwitcher.js';
+import { MobileLanguageSwitcher } from './ui/MobileLanguageSwitcher.js';
 
 export function Navbar() {
-  const { t, language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   const location = useLocation();
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,75 +31,100 @@ export function Navbar() {
         {/* Desktop Navigation - Hidden on Mobile */}
         <div className="hidden md:flex items-center gap-3">
           <Link to="/">
-            <Button 
-              variant={isActive('/') ? 'default' : 'ghost'} 
+            <Button
+              variant={isActive('/') ? 'default' : 'ghost'}
               size="sm"
-              className={isActive('/') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}
+              className={
+                isActive('/')
+                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                  : ''
+              }
               aria-label={t('nav.gallery')}
             >
               {t('nav.gallery')}
             </Button>
           </Link>
           <Link to="/submit">
-            <Button 
-              variant={isActive('/submit') ? 'default' : 'ghost'} 
+            <Button
+              variant={isActive('/submit') ? 'default' : 'ghost'}
               size="sm"
-              className={isActive('/submit') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}
+              className={
+                isActive('/submit')
+                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                  : ''
+              }
               aria-label={t('nav.submit')}
             >
               {t('nav.submit')}
             </Button>
           </Link>
           <Link to="/jury">
-            <Button 
-              variant={isActive('/jury') ? 'default' : 'ghost'} 
+            <Button
+              variant={isActive('/jury') ? 'default' : 'ghost'}
               size="sm"
-              className={isActive('/jury') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}
+              className={
+                isActive('/jury')
+                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                  : ''
+              }
               aria-label={t('nav.jury')}
             >
               {t('nav.jury')}
             </Button>
           </Link>
           <Link to="/admin">
-            <Button 
-              variant={isActive('/admin') ? 'default' : 'ghost'} 
+            <Button
+              variant={isActive('/admin') ? 'default' : 'ghost'}
               size="sm"
-              className={isActive('/admin') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}
+              className={
+                isActive('/admin')
+                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                  : ''
+              }
               aria-label={t('nav.admin')}
             >
               {t('nav.admin')}
             </Button>
           </Link>
           <Link to="/super-admin">
-            <Button 
-              variant={isActive('/super-admin') ? 'default' : 'ghost'} 
+            <Button
+              variant={isActive('/super-admin') ? 'default' : 'ghost'}
               size="sm"
-              className={isActive('/super-admin') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}
+              className={
+                isActive('/super-admin')
+                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                  : ''
+              }
               aria-label="Super Admin"
             >
               Super Admin
             </Button>
           </Link>
-          
+
           {/* Separator */}
-          <div className="w-px h-6 bg-border/50" role="separator" aria-hidden="true" />
-          
+          <div
+            className="w-px h-6 bg-border/50"
+            role="separator"
+            aria-hidden="true"
+          />
+
           {/* Connexion Button - Highlighted */}
           <Link to="/login">
-            <Button 
+            <Button
               variant={isActive('/login') ? 'default' : 'outline'}
               size="sm"
               className={`
-                ${isActive('/login') 
-                  ? 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent' 
-                  : 'border-accent text-accent hover:bg-accent/10 hover:border-accent/80'
+                ${
+                  isActive('/login')
+                    ? 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent'
+                    : 'border-accent text-accent hover:bg-accent/10 hover:border-accent/80'
                 }
                 font-semibold shadow-sm hover:shadow-md transition-all
               `}
-              aria-label={language === 'fr' ? 'Se connecter' : 'Login'}
+              aria-label={t('button.connect')}
             >
               <LogIn className="w-4 h-4 mr-1.5" aria-hidden="true" />
-              {language === 'fr' ? 'Connexion' : 'Login'}
+              {t('button.connect')}
             </Button>
           </Link>
         </div>
@@ -104,81 +132,13 @@ export function Navbar() {
         {/* Desktop Right Section - Register + Language */}
         <div className="hidden md:flex items-center gap-3">
           {/* Desktop Language Selector */}
-          <div className="relative">
-            <button
-              onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-              onBlur={() => setTimeout(() => setLangDropdownOpen(false), 150)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-card rounded-lg border border-border hover:border-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-              aria-label={t('nav.language')}
-              aria-expanded={langDropdownOpen}
-              aria-haspopup="true"
-            >
-              <Globe className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
-              <span className="text-sm font-medium">{language.toUpperCase()}</span>
-            </button>
-
-            {langDropdownOpen && (
-              <div 
-                className="absolute right-0 mt-2 w-32 bg-card rounded-lg border border-border shadow-lg overflow-hidden z-50"
-                role="menu"
-                aria-orientation="vertical"
-              >
-                <button
-                  onClick={() => {
-                    setLanguage('fr');
-                    setLangDropdownOpen(false);
-                  }}
-                  className="w-full px-3 py-2 text-left text-sm hover:bg-primary/10 transition-colors flex items-center justify-between focus:outline-none focus:bg-primary/10"
-                  role="menuitem"
-                  aria-label="Français"
-                >
-                  <span>Français</span>
-                  {language === 'fr' && <Check className="w-4 h-4 text-primary" aria-hidden="true" />}
-                </button>
-                <button
-                  onClick={() => {
-                    setLanguage('en');
-                    setLangDropdownOpen(false);
-                  }}
-                  className="w-full px-3 py-2 text-left text-sm hover:bg-primary/10 transition-colors flex items-center justify-between focus:outline-none focus:bg-primary/10"
-                  role="menuitem"
-                  aria-label="English"
-                >
-                  <span>English</span>
-                  {language === 'en' && <Check className="w-4 h-4 text-primary" aria-hidden="true" />}
-                </button>
-              </div>
-            )}
-          </div>
+          <LanguageSwitcher />
         </div>
 
         {/* Mobile Right Section - Language + Burger */}
         <div className="flex md:hidden items-center gap-3">
           {/* Mobile Language Switcher */}
-          <div className="flex items-center gap-1 px-2 py-1 bg-card rounded border border-border">
-            <button
-              onClick={() => setLanguage('fr')}
-              className={`px-1.5 py-0.5 text-xs rounded transition-colors ${
-                language === 'fr'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-              aria-label="FR"
-            >
-              FR
-            </button>
-            <button
-              onClick={() => setLanguage('en')}
-              className={`px-1.5 py-0.5 text-xs rounded transition-colors ${
-                language === 'en'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-              aria-label="EN"
-            >
-              EN
-            </button>
-          </div>
+          <MobileLanguageSwitcher />
 
           {/* Burger Menu Button */}
           <button
@@ -210,8 +170,8 @@ export function Navbar() {
           >
             <div className="container mx-auto px-4 py-4 space-y-2">
               <Link to="/" onClick={closeMobileMenu}>
-                <Button 
-                  variant={isActive('/') ? 'default' : 'ghost'} 
+                <Button
+                  variant={isActive('/') ? 'default' : 'ghost'}
                   size="lg"
                   className={`w-full justify-start ${isActive('/') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
                   aria-label={t('nav.gallery')}
@@ -220,8 +180,8 @@ export function Navbar() {
                 </Button>
               </Link>
               <Link to="/submit" onClick={closeMobileMenu}>
-                <Button 
-                  variant={isActive('/submit') ? 'default' : 'ghost'} 
+                <Button
+                  variant={isActive('/submit') ? 'default' : 'ghost'}
                   size="lg"
                   className={`w-full justify-start ${isActive('/submit') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
                   aria-label={t('nav.submit')}
@@ -230,8 +190,8 @@ export function Navbar() {
                 </Button>
               </Link>
               <Link to="/jury" onClick={closeMobileMenu}>
-                <Button 
-                  variant={isActive('/jury') ? 'default' : 'ghost'} 
+                <Button
+                  variant={isActive('/jury') ? 'default' : 'ghost'}
                   size="lg"
                   className={`w-full justify-start ${isActive('/jury') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
                   aria-label={t('nav.jury')}
@@ -240,8 +200,8 @@ export function Navbar() {
                 </Button>
               </Link>
               <Link to="/admin" onClick={closeMobileMenu}>
-                <Button 
-                  variant={isActive('/admin') ? 'default' : 'ghost'} 
+                <Button
+                  variant={isActive('/admin') ? 'default' : 'ghost'}
                   size="lg"
                   className={`w-full justify-start ${isActive('/admin') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
                   aria-label={t('nav.admin')}
@@ -250,8 +210,8 @@ export function Navbar() {
                 </Button>
               </Link>
               <Link to="/super-admin" onClick={closeMobileMenu}>
-                <Button 
-                  variant={isActive('/super-admin') ? 'default' : 'ghost'} 
+                <Button
+                  variant={isActive('/super-admin') ? 'default' : 'ghost'}
                   size="lg"
                   className={`w-full justify-start ${isActive('/super-admin') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
                   aria-label="Super Admin"
@@ -259,27 +219,32 @@ export function Navbar() {
                   Super Admin
                 </Button>
               </Link>
-              
+
               {/* Separator */}
-              <div className="h-px bg-border/50 my-2" role="separator" aria-hidden="true" />
-              
+              <div
+                className="h-px bg-border/50 my-2"
+                role="separator"
+                aria-hidden="true"
+              />
+
               {/* Connexion Button - Highlighted in Mobile */}
               <Link to="/login" onClick={closeMobileMenu}>
-                <Button 
+                <Button
                   variant={isActive('/login') ? 'default' : 'outline'}
                   size="lg"
                   className={`
                     w-full justify-start
-                    ${isActive('/login') 
-                      ? 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent' 
-                      : 'border-accent text-accent hover:bg-accent/10 hover:border-accent/80'
+                    ${
+                      isActive('/login')
+                        ? 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent'
+                        : 'border-accent text-accent hover:bg-accent/10 hover:border-accent/80'
                     }
                     font-semibold
                   `}
-                  aria-label={language === 'fr' ? 'Se connecter' : 'Login'}
+                  aria-label={t('button.connect')}
                 >
                   <LogIn className="w-5 h-5 mr-2" aria-hidden="true" />
-                  {language === 'fr' ? 'Se connecter' : 'Login'}
+                  {t('button.connect')}
                 </Button>
               </Link>
             </div>
