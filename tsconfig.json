@@ -4,11 +4,18 @@
     "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react-jsx",
-    "moduleResolution": "bundler", // Add this if you are using Vite
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": true,
     "isolatedModules": true,
-    "noEmit": true
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src"] // This tells TS to look for your .d.ts files in src
+  "include": ["src", "vite.config.js", "eslint.config.js", "**/*.d.ts"]
 }
