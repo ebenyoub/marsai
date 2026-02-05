@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react';
 
 type Language = 'fr' | 'en';
 
@@ -18,7 +24,7 @@ const translations = {
     'nav.gallery': 'Galerie',
     'nav.back': 'Retour',
     'nav.language': 'Sélectionner la langue',
-    
+
     // Common
     'common.save': 'Enregistrer',
     'common.cancel': 'Annuler',
@@ -37,16 +43,19 @@ const translations = {
     'common.validated': 'Validé',
     'common.pending': 'En attente',
     'common.rejected': 'Rejeté',
-    
+
     // Landing Page
     'landing.title': 'marsAI',
     'landing.subtitle': 'Festival de Courts-Métrages IA',
     'landing.edition': 'Marseille 2026',
     'landing.theme': 'Thème : \"Imaginer des Futurs Désirables\"',
-    'landing.theme.description': 'Explorez l\'avenir à travers le prisme de l\'intelligence artificielle. Découvrez comment les créateurs du monde entier imaginent des mondes meilleurs grâce à l\'IA.',
-    'landing.hero.title': 'L\'imaginaire n\'a plus de limites. L\'IA a trouvé sa scène.',
-    'landing.hero.subtitle': 'Découvrez les futurs souhaitables à travers l\'œil des créateurs et la puissance de l\'intelligence artificielle.',
-    'landing.submit.cta': 'Soumettre un Chef-d\'œuvre',
+    'landing.theme.description':
+      "Explorez l'avenir à travers le prisme de l'intelligence artificielle. Découvrez comment les créateurs du monde entier imaginent des mondes meilleurs grâce à l'IA.",
+    'landing.hero.title':
+      "L'imaginaire n'a plus de limites. L'IA a trouvé sa scène.",
+    'landing.hero.subtitle':
+      "Découvrez les futurs souhaitables à travers l'œil des créateurs et la puissance de l'intelligence artificielle.",
+    'landing.submit.cta': "Soumettre un Chef-d'œuvre",
     'landing.explore.cta': 'Explorer la Galerie 2026',
     'landing.program': 'Programme du Festival',
     'landing.search.placeholder': 'Rechercher un film...',
@@ -60,30 +69,30 @@ const translations = {
     'landing.results.showing': 'Affichage de',
     'landing.results.of': 'sur',
     'landing.results.none': 'Aucun film ne correspond à vos filtres.',
-    
+
     // AI Tools
     'ai.script': 'Scénario',
     'ai.image': 'Image',
     'ai.video': 'Vidéo',
     'ai.sound': 'Son',
-    
+
     // Admin Dashboard
     'admin.title': 'Tableau de Bord Super Admin',
     'admin.festival.instance': 'Instance du Festival',
-    'admin.festival.switch': 'Changer d\'édition du festival',
+    'admin.festival.switch': "Changer d'édition du festival",
     'admin.stats.films': 'Films au Total',
     'admin.stats.countries': 'Pays Représentés',
     'admin.stats.rating': 'Note Moyenne',
     'admin.stats.selection': 'Sélection Officielle',
-    'admin.branding.title': 'Configuration de l\'Identité',
-    'admin.branding.description': 'Personnalisez l\'identité visuelle',
+    'admin.branding.title': "Configuration de l'Identité",
+    'admin.branding.description': "Personnalisez l'identité visuelle",
     'admin.branding.logo': 'Logo du Festival',
     'admin.branding.logo.hint': 'PNG ou SVG recommandé, max 2MB',
     'admin.branding.color': 'Couleur Principale',
     'admin.branding.youtube': 'Clé API YouTube',
-    'admin.branding.youtube.hint': 'Requis pour l\'intégration vidéo',
+    'admin.branding.youtube.hint': "Requis pour l'intégration vidéo",
     'admin.settings.title': 'Paramètres du Festival',
-    'admin.settings.start': 'Date d\'Ouverture des Soumissions',
+    'admin.settings.start': "Date d'Ouverture des Soumissions",
     'admin.settings.end': 'Date de Clôture',
     'admin.settings.duration': 'Durée Max du Film (secondes)',
     'admin.users.title': 'Gestion des Utilisateurs',
@@ -92,10 +101,10 @@ const translations = {
     'admin.tabs.branding': 'Identité',
     'admin.tabs.settings': 'Paramètres',
     'admin.tabs.users': 'Utilisateurs',
-    
+
     // Submission Form
     'submit.title': 'Soumission de Film',
-    'submit.hero.title': 'Devenez l\'architecte du monde de demain.',
+    'submit.hero.title': "Devenez l'architecte du monde de demain.",
     'submit.step': 'Étape',
     'submit.progress': 'Progression',
     'submit.step1.title': 'Identité',
@@ -119,25 +128,29 @@ const translations = {
     'submit.step2.synopsis.placeholder': 'Décrivez votre film...',
     'submit.step2.chars': 'caractères',
     'submit.step3.title': 'Déclaration IA',
-    'submit.step3.description': 'Racontez-nous votre collaboration avec la machine.',
-    'submit.step3.type': 'Type d\'Utilisation',
+    'submit.step3.description':
+      'Racontez-nous votre collaboration avec la machine.',
+    'submit.step3.type': "Type d'Utilisation",
     'submit.step3.type.100': '100% Généré par IA',
     'submit.step3.type.hybrid': 'Hybride (IA + Humain)',
     'submit.step3.techstack': 'Stack Technique IA',
-    'submit.step3.techstack.placeholder': 'Listez les outils utilisés (ex: Midjourney, Runway, GPT-4...)',
+    'submit.step3.techstack.placeholder':
+      'Listez les outils utilisés (ex: Midjourney, Runway, GPT-4...)',
     'submit.step3.methodology': 'Méthodologie Créative',
-    'submit.step3.methodology.placeholder': 'Décrivez votre processus créatif...',
+    'submit.step3.methodology.placeholder':
+      'Décrivez votre processus créatif...',
     'submit.step4.title': 'Médias',
     'submit.step4.description': 'Fichiers et contenus multimédias',
     'submit.step4.youtube': 'URL YouTube',
-    'submit.step4.youtube.hint': 'Téléversez votre film sur YouTube (non listé ou public)',
+    'submit.step4.youtube.hint':
+      'Téléversez votre film sur YouTube (non listé ou public)',
     'submit.step4.poster': 'Affiche du Film',
     'submit.step4.poster.hint': 'Format JPG, max 2MB',
     'submit.step4.subtitles': 'Fichier de Sous-titres',
     'submit.step4.subtitles.hint': 'Format SRT',
     'submit.step5.title': 'Équipe',
     'submit.step5.description': 'Collaborateurs et équipe',
-    'submit.step5.collaborators': 'Membres de l\'Équipe',
+    'submit.step5.collaborators': "Membres de l'Équipe",
     'submit.step5.add': 'Ajouter un Collaborateur',
     'submit.step5.collaborator': 'Collaborateur',
     'submit.step5.name': 'Nom',
@@ -146,15 +159,16 @@ const translations = {
     'submit.step5.email': 'Email',
     'submit.success': 'Votre film a été soumis avec succès !',
     'submit.final': 'Soumettre le Film',
-    'submit.final.ready': 'Prêt à marquer l\'histoire du cinéma génératif ?',
+    'submit.final.ready': "Prêt à marquer l'histoire du cinéma génératif ?",
     'submit.previous': 'Précédent',
     'submit.next': 'Suivant',
     'submit.submit': 'Soumettre le Film',
-    'submit.validation.error': 'Veuillez remplir tous les champs obligatoires avant de continuer.',
-    
+    'submit.validation.error':
+      'Veuillez remplir tous les champs obligatoires avant de continuer.',
+
     // Jury Interface
     'jury.title': 'Interface Jury marsAI',
-    'jury.subtitle': 'Espace d\'Évaluation Professionnel',
+    'jury.subtitle': "Espace d'Évaluation Professionnel",
     'jury.progress': 'Progression',
     'jury.progress.films': 'films évalués',
     'jury.nav.previous': 'Film Précédent',
@@ -166,10 +180,10 @@ const translations = {
     'jury.video.director': 'Réalisateur',
     'jury.video.replay': 'Rejouer',
     'jury.video.fullscreen': 'Plein Écran',
-    'jury.ai.title': 'Carte d\'Identité IA',
+    'jury.ai.title': "Carte d'Identité IA",
     'jury.ai.description': 'Outils et méthodologie utilisés',
     'jury.ai.script': 'Génération de Scénario',
-    'jury.ai.image': 'Génération d\'Images',
+    'jury.ai.image': "Génération d'Images",
     'jury.ai.video': 'Génération Vidéo',
     'jury.ai.sound': 'Son & Musique',
     'jury.ai.notused': 'Non utilisé',
@@ -182,16 +196,17 @@ const translations = {
     'jury.rating.average': 'Moyen',
     'jury.rating.excellent': 'Excellent',
     'jury.rating.comments': 'Commentaires Internes Privés',
-    'jury.rating.comments.placeholder': 'Partagez vos réflexions pour la délibération...',
+    'jury.rating.comments.placeholder':
+      'Partagez vos réflexions pour la délibération...',
     'jury.rating.comments.hint': 'Ces commentaires sont confidentiels',
-    'jury.rating.submit': 'Soumettre l\'Évaluation',
+    'jury.rating.submit': "Soumettre l'Évaluation",
     'jury.rating.submitted': 'Évaluation Soumise',
-    
+
     // Badges
     'badge.official': 'Sélection Officielle',
-    
+
     // Footer
-    'footer.tagline': 'Propulser le cinéma de demain, aujourd\'hui.',
+    'footer.tagline': "Propulser le cinéma de demain, aujourd'hui.",
     'footer.navigation': 'Navigation',
     'footer.gallery': 'Galerie',
     'footer.submit': 'Soumettre',
@@ -213,7 +228,7 @@ const translations = {
     'nav.gallery': 'Gallery',
     'nav.back': 'Back',
     'nav.language': 'Select Language',
-    
+
     // Common
     'common.save': 'Save',
     'common.cancel': 'Cancel',
@@ -232,15 +247,18 @@ const translations = {
     'common.validated': 'Validated',
     'common.pending': 'Pending',
     'common.rejected': 'Rejected',
-    
+
     // Landing Page
     'landing.title': 'marsAI',
     'landing.subtitle': 'AI Short Film Festival',
     'landing.edition': 'Marseille 2026',
     'landing.theme': 'Theme: "Imagining Desirable Futures"',
-    'landing.theme.description': 'Explore the future through the lens of artificial intelligence. Discover how creators worldwide imagine better worlds with AI.',
-    'landing.hero.title': 'Imagination knows no bounds. AI has found its stage.',
-    'landing.hero.subtitle': 'Discover desirable futures through the eyes of creators and the power of artificial intelligence.',
+    'landing.theme.description':
+      'Explore the future through the lens of artificial intelligence. Discover how creators worldwide imagine better worlds with AI.',
+    'landing.hero.title':
+      'Imagination knows no bounds. AI has found its stage.',
+    'landing.hero.subtitle':
+      'Discover desirable futures through the eyes of creators and the power of artificial intelligence.',
     'landing.submit.cta': 'Submit a Masterpiece',
     'landing.explore.cta': 'Explore the 2026 Gallery',
     'landing.program': 'Festival Program',
@@ -255,13 +273,13 @@ const translations = {
     'landing.results.showing': 'Showing',
     'landing.results.of': 'of',
     'landing.results.none': 'No films match your filters.',
-    
+
     // AI Tools
     'ai.script': 'Script',
     'ai.image': 'Image',
     'ai.video': 'Video',
     'ai.sound': 'Sound',
-    
+
     // Admin Dashboard
     'admin.title': 'Super Admin Dashboard',
     'admin.festival.instance': 'Festival Instance',
@@ -287,10 +305,10 @@ const translations = {
     'admin.tabs.branding': 'Branding',
     'admin.tabs.settings': 'Settings',
     'admin.tabs.users': 'Users',
-    
+
     // Submission Form
     'submit.title': 'Film Submission',
-    'submit.hero.title': 'Be the architect of tomorrow\'s world.',
+    'submit.hero.title': "Be the architect of tomorrow's world.",
     'submit.step': 'Step',
     'submit.progress': 'Progress',
     'submit.step1.title': 'Identity',
@@ -314,18 +332,21 @@ const translations = {
     'submit.step2.synopsis.placeholder': 'Describe your film...',
     'submit.step2.chars': 'characters',
     'submit.step3.title': 'AI Declaration',
-    'submit.step3.description': 'Tell us about your collaboration with the machine.',
+    'submit.step3.description':
+      'Tell us about your collaboration with the machine.',
     'submit.step3.type': 'Usage Type',
     'submit.step3.type.100': '100% AI Generated',
     'submit.step3.type.hybrid': 'Hybrid (AI + Human)',
     'submit.step3.techstack': 'AI Tech Stack',
-    'submit.step3.techstack.placeholder': 'List tools used (e.g., Midjourney, Runway, GPT-4...)',
+    'submit.step3.techstack.placeholder':
+      'List tools used (e.g., Midjourney, Runway, GPT-4...)',
     'submit.step3.methodology': 'Creative Methodology',
     'submit.step3.methodology.placeholder': 'Describe your creative process...',
     'submit.step4.title': 'Media',
     'submit.step4.description': 'Files and multimedia content',
     'submit.step4.youtube': 'YouTube URL',
-    'submit.step4.youtube.hint': 'Upload your film to YouTube (unlisted or public)',
+    'submit.step4.youtube.hint':
+      'Upload your film to YouTube (unlisted or public)',
     'submit.step4.poster': 'Film Poster',
     'submit.step4.poster.hint': 'JPG format, max 2MB',
     'submit.step4.subtitles': 'Subtitles File',
@@ -345,8 +366,9 @@ const translations = {
     'submit.previous': 'Previous',
     'submit.next': 'Next',
     'submit.submit': 'Submit Film',
-    'submit.validation.error': 'Please fill in all required fields before continuing.',
-    
+    'submit.validation.error':
+      'Please fill in all required fields before continuing.',
+
     // Jury Interface
     'jury.title': 'marsAI Jury Interface',
     'jury.subtitle': 'Professional Evaluation Workspace',
@@ -377,16 +399,17 @@ const translations = {
     'jury.rating.average': 'Average',
     'jury.rating.excellent': 'Excellent',
     'jury.rating.comments': 'Private Internal Comments',
-    'jury.rating.comments.placeholder': 'Share your thoughts for deliberation...',
+    'jury.rating.comments.placeholder':
+      'Share your thoughts for deliberation...',
     'jury.rating.comments.hint': 'These comments are confidential',
     'jury.rating.submit': 'Submit Rating',
     'jury.rating.submitted': 'Rating Submitted',
-    
+
     // Badges
     'badge.official': 'Official Selection',
-    
+
     // Footer
-    'footer.tagline': 'Propelling tomorrow\'s cinema, today.',
+    'footer.tagline': "Propelling tomorrow's cinema, today.",
     'footer.navigation': 'Navigation',
     'footer.gallery': 'Gallery',
     'footer.submit': 'Submit',
@@ -401,13 +424,17 @@ const translations = {
   },
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined
+);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   // Initialiser avec la langue sauvegardée dans localStorage ou 'fr' par défaut
   const [language, setLanguage] = useState<Language>(() => {
     const savedLanguage = localStorage.getItem('marsai-language');
-    return (savedLanguage === 'en' || savedLanguage === 'fr') ? savedLanguage : 'fr';
+    return savedLanguage === 'en' || savedLanguage === 'fr'
+      ? savedLanguage
+      : 'fr';
   });
 
   // Sauvegarder la langue dans localStorage à chaque changement
@@ -418,7 +445,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [language]);
 
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations['fr']] || key;
+    return (
+      translations[language][key as keyof (typeof translations)['fr']] || key
+    );
   };
 
   return (

@@ -1,13 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { LanguageSwitcher } from './components/ui/LanguageSwitcher';
 import HeroSection from './components/sections/HeroSection';
+import StatsSection from './components/sections/StatsSection';
 
 export default function App() {
   const { t } = useTranslation();
 
-  return (
-    <div>
-      <HeroSection />
-    </div>
-  );
+  return <div></div>;
 }
