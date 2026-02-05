@@ -1,5 +1,11 @@
-function App() {
-  return <div>App</div>;
-}
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from './components/ui/LanguageSwitcher';
 
-export default App;
+export default function App() {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+    </div>
+  );
+}
