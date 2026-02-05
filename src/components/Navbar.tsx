@@ -21,7 +21,7 @@ export function Navbar() {
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <nav className=" bg-card/95 backdrop-blur-md border-b border-border/50">
+    <nav className="sticky z-50 bg-card/95 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4 md:px-6 h-full flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="shrink-0">
