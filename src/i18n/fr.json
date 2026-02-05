@@ -8,9 +8,6 @@
   "nav.language": "Sélectionner la langue",
   "button.connect": "Se connecter",
 
-  "hero.title": "Marseille 2026: le futur s'écrit en 60 secondes",
-  "hero.subtitle": "Date limite : 15 Avril 2026",
-
   "common.save": "Enregistrer",
   "common.cancel": "Annuler",
   "common.next": "Suivant",
@@ -28,6 +25,13 @@
   "common.validated": "Validé",
   "common.pending": "En attente",
   "common.rejected": "Rejeté",
+
+  "hero.title": "Marseille 2026: le futur s'écrit en 60 secondes",
+  "hero.subtitle": "Date limite : 15 Avril 2026",
+
+  "landing.stats.countries": "Pays Représentés",
+  "landing.stats.films": "Films Soumis",
+  "landing.stats.prize": "Prix du Lauréat",
 
   "landing.title": "marsAI",
   "landing.subtitle": "Festival de Courts-Métrages IA",
