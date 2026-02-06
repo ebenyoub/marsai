@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Globe, Check, Menu, X, LogIn } from 'lucide-react';
-import { Button } from '../components/ui/button.js';
 import { useLanguage } from '../contexts/LanguageContext.js';
 // import { MarsAILogo } from '../components/MarsAILogo.js';
 import { useState } from 'react';
@@ -9,6 +8,7 @@ import { MarsAILogo } from './MarsAILogo.js';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from './ui/LanguageSwitcher.js';
 import { MobileLanguageSwitcher } from './ui/MobileLanguageSwitcher.js';
+import { Button } from './ui/button_test.js';
 
 export function Navbar() {
   const { t } = useTranslation();
