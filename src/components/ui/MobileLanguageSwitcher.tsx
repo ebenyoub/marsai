@@ -15,7 +15,6 @@ export function MobileLanguageSwitcher() {
 
   return (
     <div className="flex items-center gap-1 px-2 py-1 bg-card rounded border border-border">
-      
       {/* French Button */}
       <button
         onClick={() => i18n.changeLanguage('fr')}
@@ -33,7 +32,6 @@ export function MobileLanguageSwitcher() {
       >
         EN
       </button>
-
     </div>
   );
 }

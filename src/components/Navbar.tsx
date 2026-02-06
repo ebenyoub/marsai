@@ -1,7 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Globe, Check, Menu, X, LogIn } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext.js';
-// import { MarsAILogo } from '../components/MarsAILogo.js';
+import { Menu, X, LogIn } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MarsAILogo } from './MarsAILogo.js';
@@ -13,7 +11,6 @@ import { Button } from './ui/button_test.js';
 export function Navbar() {
   const { t } = useTranslation();
   const location = useLocation();
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
@@ -21,7 +18,7 @@ export function Navbar() {
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <nav className="sticky z-50 bg-card/95 backdrop-blur-md border-b border-border/50">
+    <nav className="sticky z-50 bg-card/95 backdrop-blur-md border-b border-border/50 py-3">
       <div className="container mx-auto px-4 md:px-6 h-full flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="shrink-0">

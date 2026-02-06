@@ -2,13 +2,10 @@
 @import './styles/tailwind.css';
 @import './styles/theme.css';
 
-
 #root {
   margin: 0 auto;
   text-align: center;
 }
-
-
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -30,7 +27,6 @@
     animation: logo-spin infinite 20s linear;
   }
 }
-
 
 .read-the-docs {
   color: #888;

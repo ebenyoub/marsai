@@ -1,7 +1,11 @@
-import HeroSection from "@/components/sections/HeroSection";
+import HeroSection from '@/components/sections/HeroSection';
+import StatsSection from '@/components/sections/StatsSection';
 
 export function Home() {
-    return (
-        <HeroSection />
-    )
+  return (
+    <div>
+      <HeroSection />
+      <StatsSection />
+    </div>
+  );
 }
