@@ -106,7 +106,7 @@ export function SEOHead({
     }
 
     // Set robots meta tag
-    let robotsMeta = document.querySelector('meta[name="robots"]');
+    const robotsMeta= document.querySelector('meta[name="robots"]');
     if (noindex) {
       if (robotsMeta) {
         robotsMeta.setAttribute('content', 'noindex, nofollow');
@@ -130,7 +130,7 @@ export function SEOHead({
     }
 
     // Set theme color
-    let themeColor = document.querySelector('meta[name="theme-color"]');
+    const themeColor = document.querySelector('meta[name="theme-color"]');
     if (themeColor) {
       themeColor.setAttribute('content', '#0A0E1A');
     } else {
