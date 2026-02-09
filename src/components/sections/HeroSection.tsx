@@ -19,17 +19,21 @@ export default function HeroSection() {
           {t('hero.subtitle')}
         </p>
       </div>
-      <Button className="text-white mt-3" icon={<Upload size={15}/>} variant='purple' >
+      <Button
+        className="text-white mt-3"
+        icon={<Upload size={15} />}
+        variant="purple"
+      >
         Soumettre mon Film
       </Button>
 
-      <Button className="mt-3" icon={<LogIn size={15}/>} variant='connexion' >
+      <Button className="mt-3" icon={<LogIn size={15} />} variant="connexion">
         Se connecter
       </Button>
-      <Button className="mt-3" icon={<LogIn size={15}/>} variant='ghost' >
+      <Button className="mt-3" icon={<LogIn size={15} />} variant="ghost">
         Ghost
       </Button>
-      <Button className="mt-3" icon={<LogIn size={15}/>} variant='active' >
+      <Button className="mt-3" icon={<LogIn size={15} />} variant="active">
         active
       </Button>
     </section>

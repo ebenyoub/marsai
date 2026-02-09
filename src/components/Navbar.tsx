@@ -40,7 +40,7 @@ export function Navbar() {
               variant={isActive('/submit') ? 'active' : 'ghost'}
               aria-label={t('nav.submit')}
             >
-               {t('nav.submit')}
+              {t('nav.submit')}
             </Button>
           </NavLink>
 
@@ -65,7 +65,7 @@ export function Navbar() {
           <NavLink to="/super-admin">
             <Button
               variant={isActive('/super-admin') ? 'active' : 'ghost'}
-               aria-label="Super Admin"
+              aria-label="Super Admin"
             >
               {t('super-admin')}
             </Button>

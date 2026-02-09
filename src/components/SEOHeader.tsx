@@ -106,7 +106,7 @@ export function SEOHead({
     }
 
     // Set robots meta tag
-    const robotsMeta= document.querySelector('meta[name="robots"]');
+    const robotsMeta = document.querySelector('meta[name="robots"]');
     if (noindex) {
       if (robotsMeta) {
         robotsMeta.setAttribute('content', 'noindex, nofollow');
