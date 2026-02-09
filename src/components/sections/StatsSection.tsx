@@ -1,8 +1,6 @@
 import { Trophy, Users, Video } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import StatCard from '../ui/StatCard';
-import Card from '../ui/Card';
-import ProgramCard from '../ui/ProgramCard';
 
 export default function StatsSection() {
   const { t } = useTranslation();

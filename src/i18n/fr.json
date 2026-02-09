@@ -64,11 +64,11 @@
         }
       }
     },
-         "cta": {
-        "title": "3000 Visiteurs Attendus",
-        "description": "Rejoignez-nous pour 2 jours d'événements exceptionnels dédiés à l'IA générative et au cinéma du futur",
-        "button": "S'inscrire aux Événements"
-      }
+    "cta": {
+      "title": "3000 Visiteurs Attendus",
+      "description": "Rejoignez-nous pour 2 jours d'événements exceptionnels dédiés à l'IA générative et au cinéma du futur",
+      "button": "S'inscrire aux Événements"
+    }
   },
 
   "ai.script": "Scénario",

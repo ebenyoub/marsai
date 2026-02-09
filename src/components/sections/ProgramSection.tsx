@@ -57,18 +57,22 @@ export default function ProgramSection() {
       </div>
       <div className="flex justify-center mt-16 w-full">
         <Card className="text-center p-4">
-          <div className='flex items-center justify-center gap-3 mb-4'>
+          <div className="flex items-center justify-center gap-3 mb-4">
             <Users className="w-6 h-6 text-accent" />
-            <h2 className='text-2xl md:text-3xl font-semibold text-white'>{t('landing.cta.title')}</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold text-white">
+              {t('landing.cta.title')}
+            </h2>
           </div>
           <p className="text-muted-foreground mb-8 text-lg max-w-xl ">
             {t('landing.cta.description')}
           </p>
           <Button
-          size='lg'
-          className='bg-accent hover:bg-accent/90 shadow-[0_0_20px_rgba(16,185,129,0.4)]'>
+            size="lg"
+            className="bg-accent hover:bg-accent/90 shadow-[0_0_20px_rgba(16,185,129,0.4)]"
+          >
             <Users />
-            {t('landing.cta.button')}</Button>
+            {t('landing.cta.button')}
+          </Button>
         </Card>
       </div>
     </section>

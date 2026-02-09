@@ -7,7 +7,7 @@ export function Home() {
     <div>
       <HeroSection />
       <StatsSection />
-      <ProgramSection/>
+      <ProgramSection />
     </div>
   );
 }
