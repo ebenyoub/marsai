@@ -1,7 +1,7 @@
 import heroImage from '@/assets/hero.jpg';
 import { useTranslation } from 'react-i18next';
 import { LogIn, Upload } from 'lucide-react';
-import Button from '../ui/button';
+import Button from '@/components/ui/button';
 
 export default function HeroSection() {
   const { t } = useTranslation();
