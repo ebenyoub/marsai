@@ -1,12 +1,12 @@
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn } from 'lucide-react';
-import { Button } from '../components/ui/button.js';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MarsAILogo } from './MarsAILogo.js';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from './ui/LanguageSwitcher.js';
 import { MobileLanguageSwitcher } from './ui/MobileLanguageSwitcher.js';
+import Button from './ui/button.js';
 
 export function Navbar() {
   const { t } = useTranslation();
@@ -27,76 +27,49 @@ export function Navbar() {
 
         {/* Desktop Navigation - Hidden on Mobile */}
         <div className="hidden md:flex items-center gap-3">
-          <Link to="/">
+          <NavLink to="/">
             <Button
-              variant={isActive('/') ? 'default' : 'ghost'}
-              size="sm"
-              className={
-                isActive('/')
-                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                  : ''
-              }
+              variant={isActive('/gallery') ? 'active' : 'ghost'}
               aria-label={t('nav.gallery')}
             >
               {t('nav.gallery')}
             </Button>
-          </Link>
-          <Link to="/submit">
+          </NavLink>
+          <NavLink to="/submit">
             <Button
-              variant={isActive('/submit') ? 'default' : 'ghost'}
-              size="sm"
-              className={
-                isActive('/submit')
-                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                  : ''
-              }
+              variant={isActive('/submit') ? 'active' : 'ghost'}
               aria-label={t('nav.submit')}
             >
               {t('nav.submit')}
             </Button>
-          </Link>
-          <Link to="/jury">
+          </NavLink>
+
+          <NavLink to="/jury">
             <Button
-              variant={isActive('/jury') ? 'default' : 'ghost'}
-              size="sm"
-              className={
-                isActive('/jury')
-                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                  : ''
-              }
+              variant={isActive('/jury') ? 'active' : 'ghost'}
               aria-label={t('nav.jury')}
             >
               {t('nav.jury')}
             </Button>
-          </Link>
-          <Link to="/admin">
+          </NavLink>
+
+          <NavLink to="/admin">
             <Button
-              variant={isActive('/admin') ? 'default' : 'ghost'}
-              size="sm"
-              className={
-                isActive('/admin')
-                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                  : ''
-              }
+              variant={isActive('/admin') ? 'active' : 'ghost'}
               aria-label={t('nav.admin')}
             >
               {t('nav.admin')}
             </Button>
-          </Link>
-          <Link to="/super-admin">
+          </NavLink>
+
+          <NavLink to="/super-admin">
             <Button
-              variant={isActive('/super-admin') ? 'default' : 'ghost'}
-              size="sm"
-              className={
-                isActive('/super-admin')
-                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                  : ''
-              }
+              variant={isActive('/super-admin') ? 'active' : 'ghost'}
               aria-label="Super Admin"
             >
-              Super Admin
+              {t('super-admin')}
             </Button>
-          </Link>
+          </NavLink>
 
           {/* Separator */}
           <div
@@ -106,24 +79,15 @@ export function Navbar() {
           />
 
           {/* Connexion Button - Highlighted */}
-          <Link to="/login">
+          <NavLink to="/login">
             <Button
-              variant={isActive('/login') ? 'default' : 'outline'}
-              size="sm"
-              className={`
-                ${
-                  isActive('/login')
-                    ? 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent'
-                    : 'border-accent text-accent hover:bg-accent/10 hover:border-accent/80'
-                }
-                font-semibold shadow-sm hover:shadow-md transition-all
-              `}
+              variant={isActive('/login') ? 'green' : 'connexion'}
               aria-label={t('button.connect')}
             >
               <LogIn className="w-4 h-4 mr-1.5" aria-hidden="true" />
               {t('button.connect')}
             </Button>
-          </Link>
+          </NavLink>
         </div>
 
         {/* Desktop Right Section - Register + Language */}
@@ -166,56 +130,46 @@ export function Navbar() {
             aria-label="Menu mobile"
           >
             <div className="container mx-auto px-4 py-4 space-y-2">
-              <Link to="/" onClick={closeMobileMenu}>
+              <NavLink to="/" onClick={closeMobileMenu}>
                 <Button
-                  variant={isActive('/') ? 'default' : 'ghost'}
-                  size="lg"
-                  className={`w-full justify-start ${isActive('/') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
+                  variant={isActive('/') ? 'active' : 'ghost'}
                   aria-label={t('nav.gallery')}
                 >
                   {t('nav.gallery')}
                 </Button>
-              </Link>
-              <Link to="/submit" onClick={closeMobileMenu}>
+              </NavLink>
+              <NavLink to="/submit" onClick={closeMobileMenu}>
                 <Button
-                  variant={isActive('/submit') ? 'default' : 'ghost'}
-                  size="lg"
-                  className={`w-full justify-start ${isActive('/submit') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
+                  variant={isActive('/submit') ? 'active' : 'ghost'}
                   aria-label={t('nav.submit')}
                 >
                   {t('nav.submit')}
                 </Button>
-              </Link>
-              <Link to="/jury" onClick={closeMobileMenu}>
+              </NavLink>
+              <NavLink to="/jury" onClick={closeMobileMenu}>
                 <Button
-                  variant={isActive('/jury') ? 'default' : 'ghost'}
-                  size="lg"
-                  className={`w-full justify-start ${isActive('/jury') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
+                  variant={isActive('/jury') ? 'active' : 'ghost'}
                   aria-label={t('nav.jury')}
                 >
                   {t('nav.jury')}
                 </Button>
-              </Link>
-              <Link to="/admin" onClick={closeMobileMenu}>
+              </NavLink>
+              <NavLink to="/admin" onClick={closeMobileMenu}>
                 <Button
-                  variant={isActive('/admin') ? 'default' : 'ghost'}
-                  size="lg"
-                  className={`w-full justify-start ${isActive('/admin') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
+                  variant={isActive('/admin') ? 'active' : 'ghost'}
                   aria-label={t('nav.admin')}
                 >
                   {t('nav.admin')}
                 </Button>
-              </Link>
-              <Link to="/super-admin" onClick={closeMobileMenu}>
+              </NavLink>
+              <NavLink to="/super-admin" onClick={closeMobileMenu}>
                 <Button
-                  variant={isActive('/super-admin') ? 'default' : 'ghost'}
-                  size="lg"
-                  className={`w-full justify-start ${isActive('/super-admin') ? 'bg-primary/10 text-primary hover:bg-primary/20' : ''}`}
+                  variant={isActive('/super-admin') ? 'active' : 'ghost'}
                   aria-label="Super Admin"
                 >
                   Super Admin
                 </Button>
-              </Link>
+              </NavLink>
 
               {/* Separator */}
               <div
@@ -225,25 +179,15 @@ export function Navbar() {
               />
 
               {/* Connexion Button - Highlighted in Mobile */}
-              <Link to="/login" onClick={closeMobileMenu}>
+              <NavLink to="/login" onClick={closeMobileMenu}>
                 <Button
-                  variant={isActive('/login') ? 'default' : 'outline'}
-                  size="lg"
-                  className={`
-                    w-full justify-start
-                    ${
-                      isActive('/login')
-                        ? 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent'
-                        : 'border-accent text-accent hover:bg-accent/10 hover:border-accent/80'
-                    }
-                    font-semibold
-                  `}
+                  variant={isActive('/login') ? 'green' : 'connexion'}
                   aria-label={t('button.connect')}
                 >
                   <LogIn className="w-5 h-5 mr-2" aria-hidden="true" />
                   {t('button.connect')}
                 </Button>
-              </Link>
+              </NavLink>
             </div>
           </motion.div>
         )}
