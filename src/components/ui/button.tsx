@@ -14,9 +14,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const buttonVariant = {
     default: "border border-white hover:bg-white/30",
     purple: "bg-primary shadow-md shadow-primary",
-    connexion: "bg-background border-accent text-accent hover:text-foreground hover:bg-background/60 ",
-    green: "bg-background border-accent text-accent hover:text-foreground",
-    
+    connexion: "bg-background border border-accent text-accent hover:text-foreground hover:bg-background/60 ",
+    green: "bg-accent border-accent hover:bg-accent/80",
+    ghost:"hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+    link: "text-primary underline-offset-4 hover:underline",
+    active: "bg-secondary text-secondary-foreground hover:bg-secondary/80"
 }
 
 const Button = ({
@@ -33,7 +35,7 @@ const Button = ({
         <button 
             className={cn(
                 buttonVariant[variant],
-                'flex items-center gap-3 border rounded p-3 z-10 transition',
+                'w-full md:w-fit flex items-center gap-3 rounded-md px-2 py-1 z-10 transition',
                 className
                 )}
             {...props}
