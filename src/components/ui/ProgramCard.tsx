@@ -18,16 +18,16 @@ export default function ProgramCard({
   return (
     <Card
       className={cn(
-        'flex flex-col items-center text-center space-y-4',
+        'flex flex-col items-center text-center p-4 h-full ',
         className
       )}
       variant={variant}
     >
       <IconBadge icon={Icon} variant={activeIconVariant} />
-      <h3 className="text-xl font-bold mt-2">{title}</h3>
-      <p className="text-muted-foreground text-sm mb-6 grow">{description}</p>
+      <h3 className="font-bold mt-2">{title}</h3>
+      <p className="text-muted-foreground text-sm mb-6">{description}</p>
 
-      <div className="w-full flex items-center justify-center gap-4 text-xs text-muted-foreground pt-4 border-t border-border/50">
+      <div className="w-full flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground ">
         <div className="flex items-center gap-1.5">
           <Calendar className="w-3 h-3" />
           <span>{date}</span>

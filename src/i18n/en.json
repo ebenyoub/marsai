@@ -63,6 +63,11 @@
           "capacity": "1000 seats"
         }
       }
+    },
+    "cta": {
+      "title": "3000 Expected Visitors",
+      "description": "Join us for 2 days of exceptional events dedicated to generative AI and the cinema of the future",
+      "button": "Register for Events"
     }
   },
 
