@@ -17,7 +17,7 @@ export default function Card({
 }: CardProps) {
   return (
     <div
-      className={cn('border rounded-2xl ', className, cartVariants[variant])}
+      className={cn('border rounded-2xl transition', className, cartVariants[variant])}
       {...props}
     >
       {children}
