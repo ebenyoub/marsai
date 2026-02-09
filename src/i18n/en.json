@@ -33,27 +33,43 @@
   "landing.stats.films": "Films Submitted",
   "landing.stats.prize": "Grand Prize",
 
-  "landing.title": "marsAI",
-  "landing.subtitle": "AI Short Film Festival",
-  "landing.edition": "Marseille 2026",
-  "landing.theme": "Theme: \"Imagining Desirable Futures\"",
-  "landing.theme.description": "Explore the future through the lens of artificial intelligence. Discover how creators worldwide imagine better worlds with AI.",
-  "landing.hero.title": "Imagination knows no bounds. AI has found its stage.",
-  "landing.hero.subtitle": "Discover desirable futures through the eyes of creators and the power of artificial intelligence.",
-  "landing.submit.cta": "Submit a Masterpiece",
-  "landing.explore.cta": "Explore the 2026 Gallery",
-  "landing.program": "Festival Program",
-  "landing.search.placeholder": "Search films...",
-  "landing.filters.title": "Filters",
-  "landing.filters.selection": "Selection",
-  "landing.filters.official": "Official Selection Only",
-  "landing.filters.aitools": "AI Tools Used",
-  "landing.filters.country": "Country",
-  "landing.filters.countries": "Countries",
-  "landing.results": "films",
-  "landing.results.showing": "Showing",
-  "landing.results.of": "of",
-  "landing.results.none": "No films match your filters.",
+  "landing": {
+    "program": {
+      "title": "The marsAI Festival 2026",
+      "subtitle": "International Festival on Generative AI - June 12-13, 2026 in Marseille",
+      "cards": {
+        "competition": {
+          "title": "Film Competition",
+          "description": "Screening of finalist films in competition",
+          "date": "June 12 - 2:00 PM",
+          "capacity": "500 seats"
+        },
+        "masterclass": {
+          "title": "Masterclass",
+          "description": "Practical workshops with AI experts",
+          "date": "June 12 - 10:00 AM",
+          "capacity": "200 seats"
+        },
+        "conference": {
+          "title": "Conferences",
+          "description": "Panels on the future of AI cinema",
+          "date": "June 12-13",
+          "capacity": "800 seats"
+        },
+        "night": {
+          "title": "marsAI Night",
+          "description": "Closing party + Awards ceremony",
+          "date": "June 13 - 7:00 PM",
+          "capacity": "1000 seats"
+        }
+      }
+    },
+    "cta": {
+      "title": "3000 Expected Visitors",
+      "description": "Join us for 2 days of exceptional events dedicated to generative AI and the cinema of the future",
+      "button": "Register for Events"
+    }
+  },
 
   "ai.script": "Script",
   "ai.image": "Image",

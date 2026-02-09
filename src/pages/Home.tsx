@@ -1,4 +1,5 @@
 import HeroSection from '@/components/sections/HeroSection';
+import ProgramSection from '@/components/sections/ProgramSection';
 import StatsSection from '@/components/sections/StatsSection';
 
 export function Home() {
@@ -6,6 +7,7 @@ export function Home() {
     <div>
       <HeroSection />
       <StatsSection />
+      <ProgramSection />
     </div>
   );
 }

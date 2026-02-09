@@ -33,27 +33,43 @@
   "landing.stats.films": "Films Soumis",
   "landing.stats.prize": "Prix du Lauréat",
 
-  "landing.title": "marsAI",
-  "landing.subtitle": "Festival de Courts-Métrages IA",
-  "landing.edition": "Marseille 2026",
-  "landing.theme": "Thème : \"Imaginer des Futurs Désirables\"",
-  "landing.theme.description": "Explorez l'avenir à travers le prisme de l'intelligence artificielle. Découvrez comment les créateurs du monde entier imaginent des mondes meilleurs grâce à l'IA.",
-  "landing.hero.title": "L'imaginaire n'a plus de limites. L'IA a trouvé sa scène.",
-  "landing.hero.subtitle": "Découvrez les futurs souhaitables à travers l'œil des créateurs et la puissance de l'intelligence artificielle.",
-  "landing.submit.cta": "Soumettre un Chef-d'œuvre",
-  "landing.explore.cta": "Explorer la Galerie 2026",
-  "landing.program": "Programme du Festival",
-  "landing.search.placeholder": "Rechercher un film...",
-  "landing.filters.title": "Filtres",
-  "landing.filters.selection": "Sélection",
-  "landing.filters.official": "Sélection Officielle Uniquement",
-  "landing.filters.aitools": "Outils IA Utilisés",
-  "landing.filters.country": "Pays",
-  "landing.filters.countries": "Pays",
-  "landing.results": "films",
-  "landing.results.showing": "Affichage de",
-  "landing.results.of": "sur",
-  "landing.results.none": "Aucun film ne correspond à vos filtres.",
+  "landing": {
+    "program": {
+      "title": "Le Festival marsAI 2026",
+      "subtitle": "Festival international sur l'IA générative - 12-13 Juin 2026 à Marseille",
+      "cards": {
+        "competition": {
+          "title": "Concours de Films",
+          "description": "Projection des films finalistes en compétition",
+          "date": "12 Juin - 14h00",
+          "capacity": "500 places"
+        },
+        "masterclass": {
+          "title": "Masterclass",
+          "description": "Ateliers pratiques avec experts IA",
+          "date": "12 Juin - 10h00",
+          "capacity": "200 places"
+        },
+        "conference": {
+          "title": "Conférences",
+          "description": "Panels sur le futur du cinéma IA",
+          "date": "12-13 Juin",
+          "capacity": "800 places"
+        },
+        "night": {
+          "title": "marsAI Night",
+          "description": "Soirée de clôture + Remise des prix",
+          "date": "13 Juin - 19h00",
+          "capacity": "1000 places"
+        }
+      }
+    },
+    "cta": {
+      "title": "3000 Visiteurs Attendus",
+      "description": "Rejoignez-nous pour 2 jours d'événements exceptionnels dédiés à l'IA générative et au cinéma du futur",
+      "button": "S'inscrire aux Événements"
+    }
+  },
 
   "ai.script": "Scénario",
   "ai.image": "Image",
