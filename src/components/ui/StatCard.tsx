@@ -1,12 +1,13 @@
 import { StatCardProps } from '@/types/home';
 import { cn } from './utils';
+import IconBadge from './IconBadge';
 
 export default function StatCard({
   icon: Icon,
   value,
   label,
   color,
-  bgColor,
+  variant = 'default',
   className,
 }: StatCardProps) {
   return (
@@ -16,9 +17,7 @@ export default function StatCard({
         className
       )}
     >
-      <div className={cn('p-4 rounded-full mb-2 ', bgColor)}>
-        <Icon className={cn('w-8 h-8', color)} />
-      </div>
+      <IconBadge icon={Icon} variant={variant} />
       <span className={cn('text-4xl md:text-3xl font-bold', color)}>
         {value}
       </span>
