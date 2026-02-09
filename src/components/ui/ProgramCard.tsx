@@ -2,17 +2,19 @@ import { ProgramCardProps } from '@/types/home';
 import { cn } from './utils';
 import Card from './Card';
 import IconBadge from './IconBadge';
+import { Calendar, Users } from 'lucide-react';
 
 export default function ProgramCard({
   title,
   description,
   date,
-  capasity,
-  variant = "default",
+  capacity,
+  variant = 'default',
+  iconVariant,
   icon: Icon,
-  iconVariant = "default",
   className,
 }: ProgramCardProps) {
+  const activeIconVariant = iconVariant || variant;
   return (
     <Card
       className={cn(
@@ -21,11 +23,20 @@ export default function ProgramCard({
       )}
       variant={variant}
     >
-      <IconBadge icon={Icon} variant={variant} />
-      <span className={cn('text-m md:text-l font-semibold')}>{title}</span>
-      <span className="text-muted-foreground font-medium text-lg">
-        {description}
-      </span>
+      <IconBadge icon={Icon} variant={activeIconVariant} />
+      <h3 className="text-xl font-bold mt-2">{title}</h3>
+      <p className="text-muted-foreground text-sm mb-6 grow">{description}</p>
+
+      <div className="w-full flex items-center justify-center gap-4 text-xs text-muted-foreground pt-4 border-t border-border/50">
+        <div className="flex items-center gap-1.5">
+          <Calendar className="w-3 h-3" />
+          <span>{date}</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <Users className="w-3 h-3" />
+          <span>{capacity}</span>
+        </div>
+      </div>
     </Card>
   );
 }

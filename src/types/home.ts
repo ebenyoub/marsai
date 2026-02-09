@@ -16,7 +16,7 @@ export interface ProgramCardProps {
   title: string;
   description: string;
   date: string;
-  capasity: string;
+  capacity: string;
   className?: string;
   icon:LucideIcon;
   variant?: keyof typeof cartVariants;
