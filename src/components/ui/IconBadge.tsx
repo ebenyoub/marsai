@@ -1,16 +1,11 @@
-import { IconBadgeProps, iconVariants } from '@/types/home';
+import { IconBadgeProps } from '@/types/home';
+import { iconVariants } from '../utils/viariants';
 import { cn } from './utils';
 
-export default function IconBadge({
-  icon: Icon,
-  variant = 'default',
-  className,
-}: IconBadgeProps) {
+export default function IconBadge({ icon: Icon, variant = 'default', className }: IconBadgeProps) {
   return (
-    <div
-      className={cn('p-4 rounded-full mb-2 ', className, iconVariants[variant])}
-    >
-      <Icon className={cn('w-8 h-8')} />
+    <div className={cn('mb-2 rounded-full p-4', className, iconVariants[variant])}>
+      <Icon className={cn('h-8 w-8')} />
     </div>
   );
 }

@@ -1,17 +1,10 @@
-import { CardProps, cartVariants } from '@/types/home';
+import { CardProps } from '@/types/home';
+import { cartVariants } from '../utils/viariants';
 import { cn } from './utils';
 
-export default function Card({
-  children,
-  className,
-  variant = 'default',
-  ...props
-}: CardProps) {
+export default function Card({ children, className, variant = 'default', ...props }: CardProps) {
   return (
-    <div
-      className={cn('border rounded-2xl ', className, cartVariants[variant])}
-      {...props}
-    >
+    <div className={cn('rounded-2xl border', className, cartVariants[variant])} {...props}>
       {children}
     </div>
   );

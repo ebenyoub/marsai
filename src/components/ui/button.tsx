@@ -1,20 +1,13 @@
-import { cn } from './utils';
-import { buttonVariant } from '../utils/viariants';
 import { ButtonProps } from '@/types/home';
+import { buttonVariant } from '../utils/viariants';
+import { cn } from './utils';
 
-const Button = ({
-  children,
-  className,
-  variant = 'default',
-  icon,
-  position = 'left',
-  ...props
-}: ButtonProps) => {
+const Button = ({ children, className, variant = 'default', icon, position = 'left', ...props }: ButtonProps) => {
   return (
     <button
       className={cn(
         buttonVariant[variant],
-        'w-full md:w-fit flex items-center gap-3 rounded-md px-2 py-1 z-10 transition',
+        'z-10 flex w-full items-center gap-3 rounded-md px-2 py-1 transition md:w-fit',
         className
       )}
       {...props}
