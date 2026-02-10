@@ -1,27 +1,13 @@
 import { StatCardProps } from '@/types/home';
-import { cn } from './utils';
 import IconBadge from './IconBadge';
+import { cn } from './utils';
 
-export default function StatCard({
-  icon: Icon,
-  value,
-  label,
-  color,
-  variant = 'default',
-  className,
-}: StatCardProps) {
+export default function StatCard({ icon: Icon, value, label, color, variant = 'default', className }: StatCardProps) {
   return (
-    <div
-      className={cn(
-        'flex flex-col items-center text-center space-y-4',
-        className
-      )}
-    >
+    <div className={cn('flex flex-col items-center space-y-4 text-center', className)}>
       <IconBadge icon={Icon} variant={variant} />
-      <span className={cn('text-4xl md:text-3xl font-bold', color)}>
-        {value}
-      </span>
-      <span className="text-muted-foreground font-medium text-lg">{label}</span>
+      <span className={cn('text-4xl font-bold md:text-3xl', color)}>{value}</span>
+      <span className="text-muted-foreground text-lg font-medium">{label}</span>
     </div>
   );
 }
