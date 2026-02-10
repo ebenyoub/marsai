@@ -4,6 +4,7 @@ import heroImage from '@/assets/hero.jpg';
 
 import CountDown from '@/components/ui/CountDown'; // On importe le décompte
 import Card from '@/components/ui/Card'; // On importe ta Card
+import Button from '@/components/ui/button';
 
 export default function HeroSection() {
   const { t } = useTranslation();

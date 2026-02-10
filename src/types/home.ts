@@ -24,6 +24,7 @@ export interface ProgramCardProps {
   iconVariant?: keyof typeof iconVariants;
 }
 
+
 export interface CardProps {
   children: ReactNode;
   className?: string;
