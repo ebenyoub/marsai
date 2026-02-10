@@ -1,9 +1,32 @@
-import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
-import { type VariantProps, cva } from 'class-variance-authority';
-import { cn } from './utils.js';
+import { cva } from 'class-variance-authority';
 
-const buttonVariants = cva(
+export const buttonVariant = {
+  default: 'border border-white hover:bg-white/30',
+  purple: 'bg-primary shadow-md shadow-primary',
+  connexion: 'bg-background border border-accent text-accent hover:text-foreground hover:bg-background/60',
+  green: 'bg-accent border-accent hover:bg-accent/80',
+  ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
+  link: 'text-primary underline-offset-4 hover:underline',
+  active: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+};
+
+export const iconVariants = {
+  default: 'bg-muted ring-border text-muted-foreground',
+  purple: 'bg-primary/10 ring-primary/30 text-primary hover:bg-primary/20',
+  green: 'bg-emerald-500/10 ring-emerald-500/30 text-emerald-500 hover:bg-accent/20',
+  blue: 'bg-blue-500/10 ring-blue-500/30 text-blue-500',
+  gold: 'bg-amber-400/10 ring-amber-400/30 text-amber-400 hover:bg-amber-500/20',
+};
+
+export const cartVariants = {
+  default: 'bg-card/20 border-primary/20',
+  purple: 'border-primary/50 bg-primary/5 hover:border-primary',
+  green: 'border-emerald-500/50 bg-emerald-500/5 hover:border-emerald-500',
+  blue: 'border-blue-500/50 bg-blue-500/5 hover:border-blue-500',
+  gold: 'border-amber-400/50 bg-amber-400/5 hover:border-amber-400',
+};
+
+export const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
@@ -30,20 +53,3 @@ const buttonVariants = cva(
     },
   }
 );
-
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  }) {
-  const Comp = asChild ? Slot : 'button';
-
-  return <Comp data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
-}
-
-export default Button;

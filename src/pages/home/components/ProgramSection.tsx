@@ -1,8 +1,8 @@
-import { Award, Presentation, Users, Video } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import ProgramCard from '../ui/ProgramCard';
-import Card from '../ui/Card';
-import { Button } from '../ui/button_test';
+import { Award, Presentation, Users, Video } from 'lucide-react';
+import Card from '@/components/ui/Card';
+import ProgramCard from '@/components/ui/ProgramCard';
+import Button from '@/components/ui/button_test';
 
 export default function ProgramSection() {
   const { t } = useTranslation();
@@ -43,33 +43,24 @@ export default function ProgramSection() {
   ];
 
   return (
-    <section className="py-20 container mx-auto px-4">
-      <article className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          {t('landing.program.title')}
-        </h2>
+    <section className="container mx-auto px-4 py-20">
+      <article className="mb-12 text-center">
+        <h2 className="mb-4 text-3xl font-bold md:text-4xl">{t('landing.program.title')}</h2>
         <p className="text-muted-foreground">{t('landing.program.subtitle')}</p>
       </article>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {programs.map((program, index) => (
           <ProgramCard key={index} {...program} />
         ))}
       </div>
-      <div className="flex justify-center mt-16 w-full">
-        <Card className="text-center p-4">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Users className="w-6 h-6 text-accent" />
-            <h2 className="text-2xl md:text-3xl font-semibold text-white">
-              {t('landing.cta.title')}
-            </h2>
+      <div className="mt-16 flex w-full justify-center">
+        <Card className="p-4 text-center">
+          <div className="mb-4 flex items-center justify-center gap-3">
+            <Users className="text-accent h-6 w-6" />
+            <h2 className="text-2xl font-semibold text-white md:text-3xl">{t('landing.cta.title')}</h2>
           </div>
-          <p className="text-muted-foreground mb-8 text-lg max-w-xl ">
-            {t('landing.cta.description')}
-          </p>
-          <Button
-            size="lg"
-            className="bg-accent hover:bg-accent/90 shadow-[0_0_20px_rgba(16,185,129,0.4)]"
-          >
+          <p className="text-muted-foreground mb-8 max-w-xl text-lg">{t('landing.cta.description')}</p>
+          <Button size="lg" className="bg-accent hover:bg-accent/90 shadow-[0_0_20px_rgba(16,185,129,0.4)]">
             <Users />
             {t('landing.cta.button')}
           </Button>
