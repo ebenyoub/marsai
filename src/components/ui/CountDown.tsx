@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Card from './Card';
+import { motion } from 'framer-motion';
 import { cartVariants } from '../utils/viariants';
+import Card from './Card';
 
 export default function CountDown() {
-  const { i18n } = useTranslation();
-  const deadline = new Date("2026-07-01T00:00:00").getTime();
+  const { t } = useTranslation();
+  const deadline = new Date('2026-07-01T00:00:00').getTime();
 
   // 1. STABILITÉ : Calcul immédiat pour éviter le 00:00:00 au rafraîchissement
   const calculateTimeLeft = useCallback(() => {
@@ -34,10 +34,10 @@ export default function CountDown() {
   }, [calculateTimeLeft]);
 
   const units = [
-    { label: i18n.language === 'fr' ? 'Jours' : 'Days', value: timeLeft.days, variant: 'time_purple', delay: 0.1 },
-    { label: i18n.language === 'fr' ? 'Heures' : 'Hours', value: timeLeft.hours, variant: 'time_purple', delay: 0.2 },
-    { label: i18n.language === 'fr' ? 'Min' : 'Min', value: timeLeft.minutes, variant: 'time_green', delay: 0.3 },
-    { label: i18n.language === 'fr' ? 'Sec' : 'Sec', value: timeLeft.seconds, variant: 'time_green', delay: 0.4 },
+    { label: t('countdown.day'), value: timeLeft.days, variant: 'time_purple', delay: 0.1 },
+    { label: t('countdown.hour'), value: timeLeft.hours, variant: 'time_purple', delay: 0.2 },
+    { label: t('countdown.min'), value: timeLeft.minutes, variant: 'time_green', delay: 0.3 },
+    { label: t('countdown.sec'), value: timeLeft.seconds, variant: 'time_green', delay: 0.4 },
   ];
 
   return (
@@ -54,15 +54,17 @@ export default function CountDown() {
           {/* BOÎTE INDIVIDUELLE : Fond sombre 50%, bordure subtile */}
           <Card
             variant={unit.variant as keyof typeof cartVariants}
-            className="bg-background/50 backdrop-blur-sm rounded-md p-1.5 md:p-2 border border-primary/20 flex flex-col items-center justify-center min-w-30 md:min-w-40"
+            className="bg-background/50 border-primary/20 flex min-w-30 flex-col items-center justify-center rounded-md border p-1.5 backdrop-blur-sm md:min-w-40 md:p-2"
           >
             {/* CHIFFRE : Tabular-nums pour éviter que ça bouge + couleurs primaires/accent */}
-            <span className={`text-lg sm:text-xl md:text-2xl font-bold tabular-nums leading-none ${unit.variant === 'time_purple' ? 'text-primary' : 'text-accent'}`}>
+            <span
+              className={`text-lg leading-none font-bold tabular-nums sm:text-xl md:text-2xl ${unit.variant === 'time_purple' ? 'text-primary' : 'text-accent'}`}
+            >
               {String(unit.value).padStart(2, '0')}
             </span>
 
             {/* LABEL : Petit, gris, majuscules, espacé */}
-            <span className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground uppercase tracking-wide mt-1">
+            <span className="text-muted-foreground mt-1 text-[9px] tracking-wide uppercase sm:text-[10px] md:text-xs">
               {unit.label}
             </span>
           </Card>
@@ -70,4 +72,4 @@ export default function CountDown() {
       ))}
     </div>
   );
-} 
+}

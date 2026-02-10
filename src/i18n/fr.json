@@ -29,6 +29,11 @@
   "hero.title": "Marseille 2026: le futur s'écrit en 60 secondes",
   "hero.subtitle": "Date limite : 15 Avril 2026",
 
+  "countdown.day": "Jours",
+  "countdown.hour": "Heures",
+  "countdown.min": "Min",
+  "countdown.sec": "Sec",
+
   "landing.stats.countries": "Pays Représentés",
   "landing.stats.films": "Films Soumis",
   "landing.stats.prize": "Prix du Lauréat",
