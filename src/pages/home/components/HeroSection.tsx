@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { LogIn, Upload } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import heroImage from '@/assets/hero.jpg';
 import Button from '@/components/ui/button';
 
@@ -17,16 +17,6 @@ export default function HeroSection() {
       </div>
       <Button className="mt-3 text-white" icon={<Upload size={15} />} variant="purple">
         Soumettre mon Film
-      </Button>
-
-      <Button className="mt-3" icon={<LogIn size={15} />} variant="connexion">
-        Se connecter
-      </Button>
-      <Button className="mt-3" icon={<LogIn size={15} />} variant="ghost">
-        Ghost
-      </Button>
-      <Button className="mt-3" icon={<LogIn size={15} />} variant="active">
-        active
       </Button>
     </section>
   );

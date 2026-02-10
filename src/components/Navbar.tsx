@@ -96,7 +96,11 @@ export function Navbar() {
             aria-label="Menu"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="text-foreground h-5 w-5" /> : <Menu className="text-foreground h-5 w-5" />}
+            {
+              mobileMenuOpen 
+                ? <X className="text-foreground h-5 w-5" />
+                : <Menu className="text-foreground h-5 w-5" />
+            }
           </button>
         </div>
       </div>
