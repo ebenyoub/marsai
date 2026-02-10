@@ -1,7 +1,6 @@
-import { Trophy, Users, Video } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import StatCard from '../ui/StatCard';
-import { stat } from 'node:fs';
+import { Trophy, Users, Video } from 'lucide-react';
+import StatCard from '@/components/ui/StatCard';
 
 export default function StatsSection() {
   const { t } = useTranslation();
@@ -12,28 +11,28 @@ export default function StatsSection() {
       value: '120+',
       label: t('landing.stats.countries'),
       color: 'text-primary',
-      bgColor: 'bg-primary/10',
+      variant: 'purple' as const,
     },
     {
       icon: Video,
       value: '600+',
       label: t('landing.stats.films'),
       color: 'text-accent',
-      bgColor: 'bg-accent/10',
+      variant: 'green' as const,
     },
     {
       icon: Trophy,
       value: '50 000$',
       label: t('landing.stats.prize'),
       color: 'text-amber-400',
-      bgColor: 'bg-amber-400/10',
+      variant: 'gold' as const,
     },
   ];
 
   return (
-    <section className="flex py-7 bg-[#171b29] border border-[#2a3242] md:px-80">
+    <section className="flex border border-[#2a3242] bg-[#171b29] py-7 md:px-80">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
           {stats.map((stat, index) => (
             <StatCard key={index} {...stat} />
           ))}
