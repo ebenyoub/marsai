@@ -1,7 +1,8 @@
-import { cartVariants } from '@/components/ui/Card';
-import { iconVariants } from '@/components/ui/IconBadge';
-import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
+import { LucideIcon } from 'lucide-react';
+import { buttonVariant, cartVariants, iconVariants } from '@/components/utils/viariants';
+
+// *** CARD ***
 
 export interface StatCardProps {
   icon: LucideIcon;
@@ -34,4 +35,14 @@ export interface IconBadgeProps {
   icon: LucideIcon;
   variant?: keyof typeof iconVariants;
   className?: string;
+}
+
+// *** BUTTON ***
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  className?: string;
+  variant?: keyof typeof buttonVariant;
+  icon?: React.ReactNode;
+  position?: 'left' | 'right';
 }

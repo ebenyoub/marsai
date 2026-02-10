@@ -1,8 +1,8 @@
+import { Calendar, Users } from 'lucide-react';
 import { ProgramCardProps } from '@/types/home';
-import { cn } from './utils';
 import Card from './Card';
 import IconBadge from './IconBadge';
-import { Calendar, Users } from 'lucide-react';
+import { cn } from './utils';
 
 export default function ProgramCard({
   title,
@@ -16,24 +16,18 @@ export default function ProgramCard({
 }: ProgramCardProps) {
   const activeIconVariant = iconVariant || variant;
   return (
-    <Card
-      className={cn(
-        'flex flex-col items-center text-center p-4 h-full ',
-        className
-      )}
-      variant={variant}
-    >
+    <Card className={cn('flex h-full flex-col items-center p-4 text-center', className)} variant={variant}>
       <IconBadge icon={Icon} variant={activeIconVariant} />
-      <h3 className="font-bold mt-2">{title}</h3>
-      <p className="text-muted-foreground text-sm mb-6">{description}</p>
+      <h3 className="mt-2 font-bold">{title}</h3>
+      <p className="text-muted-foreground mb-6 text-sm">{description}</p>
 
-      <div className="w-full flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground ">
+      <div className="text-muted-foreground flex w-full flex-col items-center justify-center gap-2 text-xs">
         <div className="flex items-center gap-1.5">
-          <Calendar className="w-3 h-3" />
+          <Calendar className="h-3 w-3" />
           <span>{date}</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <Users className="w-3 h-3" />
+          <Users className="h-3 w-3" />
           <span>{capacity}</span>
         </div>
       </div>
