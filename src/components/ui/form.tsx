@@ -29,7 +29,7 @@ interface FormProps extends React.FormHTMLAttributes<HTMLFormElement>{
 
 export default function Form({ children, className, ...props }: FormProps) {
   return (
-    <form className={cn('flex flex-col gap-4 bg-primary/10 ring-primary/30 rounded-2xl border max-w-1/2 m-auto mt-6 p-4', className)} {...props}>
+    <form className={cn('flex flex-col  bg-primary/5 ring-primary/30 rounded-2xl border m-auto mt-6 p-4', className)} {...props}>
       {children}
     </form>
   );
