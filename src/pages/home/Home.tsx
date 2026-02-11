@@ -1,3 +1,4 @@
+import Badge from '@/components/ui/Badge';
 import HeroSection from './components/HeroSection';
 import ProgramSection from './components/ProgramSection';
 import StatsSection from './components/StatsSection';
@@ -8,6 +9,7 @@ export function Home() {
       <HeroSection />
       <StatsSection />
       <ProgramSection />
+      <Badge>Elyas</Badge>
     </div>
   );
 }
