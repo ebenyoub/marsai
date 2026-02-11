@@ -86,8 +86,8 @@
   "form.password_standart": "Minimum 6 caracters",
   "form.pass": "Password",
   "form.forgot_pass": "Forgot password?",
-  "form.footer":"Don't have an account?",
-  "form.event":"Register for Events",
+  "form.footer": "Don't have an account?",
+  "form.event": "Register for Events",
 
   "admin.title": "Super Admin Dashboard",
   "admin.festival.instance": "Festival Instance",

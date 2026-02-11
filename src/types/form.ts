@@ -6,6 +6,6 @@ export interface FormInputProps extends React.InputHTMLAttributes<HTMLInputEleme
 export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   className?: string;
   required?: boolean;
-  children: React.ReactNode
+  children: React.ReactNode;
   //extends lets us to inharite EVERYTHING that a normal HTML input has, such as onChange, required, aria- and className..
 }

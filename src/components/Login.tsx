@@ -1,17 +1,14 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Card from './ui/Card';
-import Form, { FormGroup, Input, Label } from './ui/Form';
-import Button from './ui/button';
-import { Checkbox } from './ui/CheckBox';
 import { Link } from 'react-router';
+import Form, { FormGroup, Input, Label } from './ui/form';
+import Button from './ui/button';
 
 const Login = () => {
   const { t } = useTranslation();
   return (
     <Form className="mx-auto w-full max-w-md space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold pb-3">Se Connecter</h2>
+        <h2 className="pb-3 text-2xl font-semibold">Se Connecter</h2>
         <p className="text-muted-foreground">Connectez-vous a votre compte</p>
       </div>
 
@@ -21,14 +18,14 @@ const Login = () => {
           <Input id="email" type="email" placeholder="contact@example.com" />
         </FormGroup>
         <FormGroup>
-          <Label required>{t("form.pass")}</Label>
+          <Label required>{t('form.pass')}</Label>
           <Input id="password" type="password" placeholder="••••••••" />
-         </FormGroup>
+        </FormGroup>
       </div>
-      <Link to="/" className='border-none text-primary text-sm'>
+      <Link to="/" className="text-primary border-none text-sm">
         {t('form.forgot_pass')}
       </Link>
-        <Button variant='purple'>{t("button.signin")}</Button>
+      <Button variant="purple">{t('button.signin')}</Button>
     </Form>
   );
 };

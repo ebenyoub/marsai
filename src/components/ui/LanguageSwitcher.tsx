@@ -37,7 +37,7 @@ export function LanguageSwitcher() {
             role="menuitem"
           >
             <span>Français</span>
-            {i18n.language === 'fr' &&  <Check className="text-primary h-4 w-4" />}
+            {i18n.language === 'fr' && <Check className="text-primary h-4 w-4" />}
           </button>
 
           {/* English Option */}
