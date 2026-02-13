@@ -1,3 +1,5 @@
+import FilmsPageTest from '@/components/FilmPageTest';
+import Popup from '@/components/FilmPopup';
 import HeroSection from './components/HeroSection';
 import ProgramSection from './components/ProgramSection';
 import StatsSection from './components/StatsSection';
@@ -8,6 +10,7 @@ export function Home() {
       <HeroSection />
       <StatsSection />
       <ProgramSection />
+      <FilmsPageTest />
     </div>
   );
 }

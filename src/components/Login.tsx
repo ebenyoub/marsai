@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import Form, { FormGroup, Input, Label } from './ui/form';
 import Button from './ui/button';
+import Form, { FormGroup, Input, Label } from './ui/form';
 
 const Login = () => {
   const { t } = useTranslation();
