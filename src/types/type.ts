@@ -8,6 +8,7 @@ export interface MovieType {
   ia_type: '100% IA' | 'Hybride';
   status: 'pending' | 'approved' | 'rejected';
   director_id: number;
+  created_at: Date;
 }
 export interface FestivalType {
   id: number;

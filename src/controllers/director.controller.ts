@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import DirectorModel from '../models/director.model.js';
+import directorModel from '../models/director.model.js';
 import { DirectorType, Params } from '../types/type.js';
 
 const getAllDirectors = async (req: Request, res: Response) => {
   try {
-    const result = await DirectorModel.findAll();
+    const result = await directorModel.findAll();
     if (result.length === 0) {
       return res
         .status(404)
@@ -28,7 +28,7 @@ const getDirectorById = async (req: Request<Params>, res: Response) => {
         success: false,
       });
     }
-    const result = await DirectorModel.findById(id);
+    const result = await directorModel.findById(id);
     if (result.length === 0) {
       return res
         .status(404)
@@ -48,7 +48,7 @@ const getDirectorById = async (req: Request<Params>, res: Response) => {
 const createDirector = async (req: Request, res: Response) => {
   try {
     const director: DirectorType = req.body;
-    const results = await DirectorModel.create(director);
+    const results = await directorModel.create(director);
     if (!results) {
       return res.status(404).json({
         success: false,

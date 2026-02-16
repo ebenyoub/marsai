@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
-import UserModel from '../models/user.model.js';
+import userModel from '../models/user.model.js';
 import { Params, UserType } from '../types/type.js';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const results = await UserModel.findAll();
+    const results = await userModel.findAll();
     if (results.length > 0) {
       return res.status(404).json({
         success: true,
@@ -32,7 +31,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 const getOneUser = async (req: Request<Params>, res: Response) => {
   try {
     const id = req.params.id;
-    const results = await UserModel.findOne(id);
+    const results = await userModel.findOne(id);
 
     if (results.length === 0) {
       return res
@@ -56,7 +55,7 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const user: UserType = req.body;
     user.hashedPassword = bcrypt.hashSync(user.password, 10);
-    const results = await UserModel.create(user);
+    const results = await userModel.create(user);
 
     if (!results) {
       return res
@@ -79,7 +78,7 @@ const createUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request<Params>, res: Response) => {
   const id = req.params.id;
   const user: UserType = req.body;
-  const results = await UserModel.update(id, user);
+  const results = await userModel.update(id, user);
   try {
     if (!id || !user) {
       return res.status(400).json({
@@ -111,7 +110,7 @@ const updateUser = async (req: Request<Params>, res: Response) => {
 const deleteUser = async (req: Request<Params>, res: Response) => {
   try {
     const id = req.params.id;
-    const results = await UserModel.deleted(id);
+    const results = await userModel.deleted(id);
     return res.status(200).json({
       success: true,
       data: results,
@@ -126,46 +125,11 @@ const deleteUser = async (req: Request<Params>, res: Response) => {
   }
 };
 //--------------------------------------------------------------------------------
-const connectionUser = async (req: Request<Params>, res: Response) => {
-  try {
-    const { email, password } = req.body;
-    const users = await UserModel.findByEmail(email);
 
-    if (users.length === 0) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'Cet utilisateur est introuvable' });
-    }
-    const user = users[0];
-    const isPasswordValid = bcrypt.compareSync(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).send('Identifiants invalides');
-    }
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: '1h',
-      }
-    );
-    return res.status(200).json({
-      success: true,
-      data: users,
-      message: 'Connexion effectué avec succés !',
-    });
-  } catch (error) {
-    console.error('Erreur lors de la récupération des utilisateurs : ', error);
-    return res.status(500).json({
-      success: false,
-      message: 'Une erreur interne est survenue sur le serveur.',
-    });
-  }
-};
 export default {
   getAllUsers,
   getOneUser,
   createUser,
   updateUser,
   deleteUser,
-  connectionUser,
 };

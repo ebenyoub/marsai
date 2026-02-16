@@ -1,16 +1,16 @@
 import db from '../config/database.js';
-import { CollaboratorType, Params } from '../types/type.js';
+import { CollaboratorType } from '../types/type.js';
 
 const findAll = async () => {
-  const [result] = await db.execute('SELECT * FROM collaborator');
+  const query = 'SELECT * FROM collaborator';
+  const [result] = await db.execute(query);
   return result as CollaboratorType[];
 };
 //--------------------------------------------------------------------------------
 
 const findOne = async (id: number) => {
-  const [result] = await db.execute('SELECT * FROM collaborator WHERE id = ?', [
-    id,
-  ]);
+  const query = 'SELECT * FROM collaborator WHERE id = ?';
+  const [result] = await db.execute(query, [id]);
   return result as CollaboratorType[];
 };
 //--------------------------------------------------------------------------------

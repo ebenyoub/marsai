@@ -1,5 +1,5 @@
 import db from '../config/database.js';
-import { LoginType, UserType } from '../types/type.js';
+import { UserType } from '../types/type.js';
 
 const findAll = async () => {
   const query = 'SELECT * FROM user';
@@ -29,16 +29,7 @@ const create = async (user: UserType) => {
 };
 //--------------------------------------------------------------------------------
 
-const update = async (
-  id: number,
-  data: {
-    firstname: string;
-    lastname: string;
-    email: string;
-    password: string;
-    festival_id: number;
-  }
-) => {
+const update = async (id: number, data: UserType) => {
   const query =
     'UPDATE user SET firstname = ?, lastname = ?, email = ?, password = ?, updated_at = NOW(), festival_id = ? WHERE id = ?';
   const [result] = await db.execute(query, [
@@ -59,16 +50,11 @@ const deleted = async (id: number) => {
   return result as UserType[];
 };
 //--------------------------------------------------------------------------------
-const findByEmail = async (email: string) => {
-  const query = 'SELECT * FROM user WHERE email = ?';
-  const [result] = await db.execute(query, [email]);
-  return result as LoginType[];
-};
+
 export default {
   findAll,
   findOne,
   create,
   update,
   deleted,
-  findByEmail,
 };

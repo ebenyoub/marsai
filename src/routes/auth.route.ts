@@ -1,13 +1,13 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import userController from '../controllers/user.controller.js';
+import authController from '../controllers/auth.controller.js';
 
 dotenv.config();
 const router = express.Router();
-const login = userController;
-const register = userController;
+const login = authController;
+const register = authController;
 
-router.post('/login', login.connectionUser);
-router.post('/register', register.createUser);
+router.post('/login', login.login);
+router.post('/register', register.register);
 
 export default router;

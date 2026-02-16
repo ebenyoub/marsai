@@ -12,23 +12,17 @@ const findById = async (id: number) => {
   return result as MovieType[];
 };
 //--------------------------------------------------------------------------------
-const create = async (
-  title: string,
-  description: string,
-  release_date: string,
-  duration: number,
-  rating: number,
-  festival_id: number
-) => {
+const create = async (movie: MovieType) => {
   const query =
-    'INSERT INTO movie (title, description, release_date, duration, rating, festival_id) VALUES (?, ?, ?, ?, ?, ?)';
+    'INSERT INTO movie (title, yt_url, thumbnail, subtitles, stack, created_at, director_id,) VALUES (?, ?, ?, ?, ?, ?, ?)';
   const [result] = await db.execute(query, [
-    title,
-    description,
-    release_date,
-    duration,
-    rating,
-    festival_id,
+    movie.title,
+    movie.yt_url,
+    movie.thumbnail,
+    movie.subtitles,
+    movie.stack,
+    movie.created_at,
+    movie.director_id,
   ]);
   return result as MovieType[];
 };
