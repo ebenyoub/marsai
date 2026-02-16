@@ -341,7 +341,7 @@ const mockFilms = [
     id: 27,
     title: 'Flux Futuristes',
     titleEn: 'Futuristic Flux',
-    director: 'Thomas O\'Brien',
+    director: "Thomas O'Brien",
     country: 'IE',
     countryName: 'Irlande',
     thumbnail: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800',

@@ -28,13 +28,13 @@ export default function HeroSection() {
         </div>
 
         {/* 3. L'INSERTION DU DÉCOMPTE (DANS UNE CARD) */}
-        <Card variant="default" className="max-w-fit border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-md md:p-6">
+        <Card variant="purple" className="border-primary/20 max-w-fit bg-white/5 p-4 shadow-md backdrop-blur-xs md:p-6">
           <CountDown />
         </Card>
 
         {/* 4. LE BLOC BOUTONS (Regroupés ensemble) */}
         <div className="flex flex-wrap justify-center gap-4">
-          <Button icon={<Upload size={15} />} variant="purple">
+          <Button icon={<Upload size={15} />} variant="purple" className="">
             Soumettre mon Film
           </Button>
         </div>
