@@ -36,8 +36,16 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Serveur MarsAI en mode ESM (EcmaScript Modules) !');
 });
 
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
+
 app.use('/users', UserRoutes);
 app.use('/movies', MovieRouter);
 app.use("/festivals", FestivalRoutes);
 app.use("/collaborators", CollaboratorRoutes);
 app.use("/directors", DirectorRoutes)
+function cors(arg0: { origin: string; }): any {
+  throw new Error('Function not implemented.');
+}
+
