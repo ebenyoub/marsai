@@ -77,13 +77,13 @@
       "button": "S'inscrire aux Événements"
     }
   },
-  
-"errors": {
-      "required": "Ce champ est obligatoire",
-      "invalid_email": "Veuillez entrer une adresse email valide",
-      "password_too_short": "Le mot de passe doit contenir au moins 6 caractères",
-      "password_complexity": "Le mot de passe doit contenir au moins une lettre majuscule et un chiffre"
-    },
+
+  "errors": {
+    "required": "Ce champ est obligatoire",
+    "invalid_email": "Veuillez entrer une adresse email valide",
+    "password_too_short": "Le mot de passe doit contenir au moins 6 caractères",
+    "password_complexity": "Le mot de passe doit contenir au moins une lettre majuscule et un chiffre"
+  },
 
   "form.subtitle": "Connectez-vous à votre compte",
   "form.title": "Se Connecter",
@@ -92,7 +92,6 @@
   "form.footer": "Pas encore de compte?",
   "form.event": "S'inscrire aux Événements",
   "form.connection.error": "Erreur de connexion",
-
 
   "admin.title": "Tableau de Bord Super Admin",
   "admin.festival.instance": "Instance du Festival",

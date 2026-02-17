@@ -60,7 +60,7 @@ const Login = () => {
   };
 
   return (
-    <Form noValidate={true} className="mx-auto w-full max-w-md space-y-6" onSubmit={handleSubmit(onSubmit)} >
+    <Form noValidate={true} className="mx-auto w-full max-w-md space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <h2 className="pb-3 text-2xl font-semibold">{t('form.title')}</h2>
         <p className="text-muted-foreground">{t('form.subtitle')}</p>
