@@ -8,6 +8,7 @@ export const buttonVariant = {
   ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
   link: 'text-primary underline-offset-4 hover:underline',
   active: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+  destructive: 'bg-destructive text-secondary-foreground hover:bg-secondary/80',
 };
 
 export const iconVariants = {
