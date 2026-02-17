@@ -60,7 +60,7 @@ export default function ProgramSection() {
             <h2 className="text-2xl font-semibold text-white md:text-3xl">{t('landing.cta.title')}</h2>
           </div>
           <p className="text-muted-foreground mb-8 max-w-xl text-lg">{t('landing.cta.description')}</p>
-          <Button size="lg" className="bg-accent hover:bg-accent/90 shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+          <Button size="lg" className="bg-accent hover:bg-accent/90">
             <Users />
             {t('landing.cta.button')}
           </Button>
