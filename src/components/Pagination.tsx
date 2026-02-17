@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from './ui/button';
 
+
 interface PaginationProps {
   totalPosts: number;
   postsPerPage: number;
@@ -11,46 +12,40 @@ interface PaginationProps {
 export default function Pagination({ totalPosts, postsPerPage, currentPage, setCurrentPage }: PaginationProps) {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
-  if (totalPages <= 1) return null;
-
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
   return (
-    <div className="mt-8 mb-6 flex items-center justify-center gap-2">
-      <Button
-        variant="default"
-        onClick={() => setCurrentPage(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-4 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        <ChevronLeft className="mr-1 h-4 w-4" />
-        Précédent
-      </Button>
+    <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4 mb-8">
 
-      <div className="mx-2 flex gap-2">
-        {pages.map(page => (
-          <Button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            variant={page === currentPage ? 'purple' : 'default'}
-            className={`flex h-10! w-10! shrink-0 items-center justify-center rounded-lg p-0 ${
-              page === currentPage ? 'hover:bg-primary/90' : ''
-            }`}
-          >
-            {page}
-          </Button>
-        ))}
+      {/* TEXTE À GAUCHE */}
+      <p className="text-sm font-medium text-muted-foreground">
+        Affichage de <span className="text-primary font-bold">{totalPosts}</span> sur {totalPosts} films
+        (Page <span className="text-primary font-bold">{currentPage}</span> sur {totalPages})
+      </p>
+
+      {/* BOUTONS À DROITE */}
+      <div className="flex items-center gap-3">
+        <Button
+          variant="outline" // Utilisation de ta variante outline
+          icon={<ChevronLeft className="h-4 w-4" />}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Précédent
+        </Button>
+
+        <span className="text-sm font-semibold min-w-[30px] text-center">
+          {currentPage}/{totalPages}
+        </span>
+
+        <Button
+          variant="outline"
+          icon={<ChevronRight className="h-4 w-4" />}
+          position="right"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Suivant
+        </Button>
       </div>
-
-      <Button
-        variant="default"
-        onClick={() => setCurrentPage(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="px-4 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        Suivant
-        <ChevronRight className="ml-1 h-4 w-4" />
-      </Button>
     </div>
   );
 }
