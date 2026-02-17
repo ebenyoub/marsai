@@ -8,6 +8,7 @@
   "nav.language": "Select Language",
   "button.connect": "Login",
   "button.signin": "Sign in",
+  "super-admin": "Super-Admin",
 
   "common.save": "Save",
   "common.cancel": "Cancel",
@@ -219,5 +220,22 @@
   "footer.gdpr": "GDPR",
   "footer.status": "Status",
   "footer.status.operational": "Systems Operational",
-  "footer.copyright": "All rights reserved."
+  "footer.copyright": "All rights reserved.",
+
+"placeholder.submitform.firstname": "John",
+"placeholder.submitform.lastname": "Doe",
+"placeholder.submitform.email": "john.doe@example.com",
+"placeholder.submitform.mobile": "+1 555 123 4567",
+"placeholder.submitform.address": "123 Main Street",
+"placeholder.submitform.zip": "62704",
+"placeholder.submitform.city": "Springfield",
+"placeholder.submitform.country": "United States",
+"placeholder.submitform.job": "Software Engineer",
+"placeholder.submitform.youtubelink": "https://www.youtube.com/@username",
+"placeholder.submitform.instagramlink": "https://www.instagram.com/username",
+"placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
+"placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/username",
+"placeholder.submitform.twitterlink": "https://twitter.com/username",
+"placeholder.submitform.select": "Select an option"
+
 }

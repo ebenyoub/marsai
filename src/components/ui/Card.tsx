@@ -1,5 +1,5 @@
 import { CardProps } from '@/types/home';
-import { cartVariants } from '../utils/viariants';
+import { cartVariants } from '../utils/variants';
 import { cn } from './utils';
 
 
