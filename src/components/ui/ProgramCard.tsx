@@ -14,7 +14,13 @@ export default function ProgramCard({
   icon: Icon,
   className,
 }: ProgramCardProps) {
-  const activeIconVariant = iconVariant || variant;
+  const validIconVariants = ['default', 'purple', 'green', 'blue', 'gold'];
+
+  let activeIconVariant = iconVariant || variant;
+
+  if (!validIconVariants.includes(activeIconVariant)) {
+    activeIconVariant = 'default';
+  }
   return (
     <Card className={cn('flex h-full flex-col items-center p-4 text-center', className)} variant={variant}>
       <IconBadge icon={Icon} variant={activeIconVariant as any} />
