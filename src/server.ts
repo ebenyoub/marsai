@@ -7,6 +7,7 @@ import FestivalRoutes from './routes/festival.route.js';
 import CollaboratorRoutes from './routes/collaborator.route.js';
 import DirectorRoutes from './routes/director.route.js';
 import authRoute from './routes/auth.route.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -41,8 +42,16 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Serveur MarsAI en mode ESM (EcmaScript Modules) !');
 });
 
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
+
 app.use('/users', UserRoutes);
 app.use('/movies', MovieRouter);
+app.use("/festivals", FestivalRoutes);
+app.use("/collaborators", CollaboratorRoutes);
+app.use("/directors", DirectorRoutes)
+
 app.use('/festivals', FestivalRoutes);
 app.use('/collaborators', CollaboratorRoutes);
 app.use('/directors', DirectorRoutes);
