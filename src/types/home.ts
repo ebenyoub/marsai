@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { LucideIcon } from 'lucide-react';
-import { buttonVariant, cartVariants, iconVariants } from '@/components/utils/viariants';
+import { buttonVariant, cartVariants, iconVariants } from '@/components/utils/variants';
 
 // *** CARD ***
 
@@ -32,7 +32,7 @@ export interface CardProps {
 }
 
 export interface IconBadgeProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
   variant?: keyof typeof iconVariants;
   className?: string;
 }

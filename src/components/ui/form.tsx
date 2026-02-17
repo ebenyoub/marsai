@@ -18,9 +18,11 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input({ className, ...props }: InputProps) {
-  return <input className={cn('border-primary/50 bg-muted rounded-md border px-3 py-1.5', className)} {...props} />;
+  return <input className={cn('border-primary/30 bg-muted rounded-md border px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:opacity-50 transition-all duration-200', className)} {...props} />;
 }
-
+// export function Select ({ className, ...props }: SelectProps) {
+//  return <select className={cn('border-primary/30 bg-muted rounded-md border px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:opacity-50 transition-all duration-200', className)} {...props} />;
+// }
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;
   className?: string;
@@ -29,7 +31,7 @@ interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
 export default function Form({ children, className, ...props }: FormProps) {
   return (
     <form
-      className={cn('bg-primary/5 ring-primary/30 m-auto mt-6 flex flex-col rounded-2xl border p-4', className)}
+      className={cn('bg-muted/20 ring-primary/30 m-auto mt-6 flex flex-col rounded-2xl border p-4', className)}
       {...props}
     >
       {children}

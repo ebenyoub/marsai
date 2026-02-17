@@ -1,5 +1,5 @@
 import { ButtonProps } from '@/types/home';
-import { buttonVariant } from '../utils/viariants';
+import { buttonVariant } from '../utils/variants';
 import { cn } from './utils';
 
 const Button = ({ children, className, variant = 'default', icon, position = 'left', ...props }: ButtonProps) => {
@@ -7,7 +7,7 @@ const Button = ({ children, className, variant = 'default', icon, position = 'le
     <button
       className={cn(
         buttonVariant[variant],
-        'z-10 flex w-full items-center gap-3 rounded-md px-2 py-1 transition md:w-fit',
+        'z-10 flex w-full items-center gap-3 rounded-md px-2 py-1 transition md:w-fit cursor-pointer',
         className
       )}
       {...props}
