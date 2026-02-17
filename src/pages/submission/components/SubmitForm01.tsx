@@ -10,67 +10,67 @@ function SubmitForm() {
    
   return (
     <>
-    <Form className='m-auto w-4xl space-y-6 p-10'>
+<Form className='m-auto w-4xl space-y-6 p-10'>
         <div>
-            <h2 className="pb-3 text-2xl font-semibold"><span className='text-primary'>Étape 1: </span>
-Identité</h2>
-        <p className="text-muted-foreground">Vos informations personnelles</p>
+            <h2 className="pb-3 text-2xl font-semibold"><span className='text-primary'>{t('submit.step')} 1: </span>
+{t('submit.step1.title')}</h2>
+<p className="text-muted-foreground">{t('submit.step1.description')}</p>
         </div>
 
         <FormGroup>
-            <Label required>Civilité</Label>
+            <Label required>{t('submit.step1.civility')}</Label>
             <div className='flex gap-4'>
-            <Label>M.</Label>
+            <Label>{t('submit.step1.civility1')}</Label>
             <Input type="radio" className='border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50'/>
-            <Label>Mme</Label>
+            <Label>{t('submit.step1.civility2')}</Label>
             <Input type="radio" className='border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50'/>
             </div>  
         </FormGroup>
         <div className='grid grid-cols-2 gap-4'>
         <FormGroup>
-        <Label required>Prénom</Label>
+        <Label required>{t('submit.step1.firstname')}</Label>
         <Input placeholder={t('placeholder.submitform.firstname')}/>    
         </FormGroup>   
         <FormGroup>
-        <Label required>Nom</Label>
+        <Label required>{t('submit.step1.lastname')}</Label>
         <Input placeholder={t('placeholder.submitform.lastname')} />    
         </FormGroup> 
         </div>   
         <FormGroup>
-            <Label required>Date de naissance</Label>
+            <Label required>{t('submit.step1.age')}</Label>
             <Input type='date'/>
         </FormGroup>
         <FormGroup>
-            <Label required>Email</Label>
+            <Label required>{t('submit.step1.email')}</Label>
             <Input type='email' placeholder={t('placeholder.submitform.email')}/>
         </FormGroup>
         <FormGroup>
-            <Label required>Mobile</Label>
+            <Label required>{t('submit.step1.mobile')}</Label>
             <Input type='tel' placeholder={t('placeholder.submitform.mobile')}/>
         </FormGroup>
         <FormGroup>
-            <Label required>Adresse</Label>
+            <Label required>{t('submit.step1.address')}</Label>
             <Input placeholder={t('placeholder.submitform.address')}/>
         </FormGroup>
         <div className='grid grid-cols-3 gap-4'>
         <FormGroup>
-            <Label required>Code Postal</Label>
+            <Label required>{t('submit.step1.zip')}</Label>
             <Input placeholder={t('placeholder.submitform.zip')}/>
         </FormGroup>
         <FormGroup>
-            <Label required>Ville</Label>
+            <Label required>{t('submit.step1.city')}</Label>
             <Input placeholder={t('placeholder.submitform.city')}/>
         </FormGroup>
         <FormGroup>
-            <Label required>Pays</Label>
+            <Label required>{t('submit.step1.country')}</Label>
             <Input placeholder={t('placeholder.submitform.country')}/>
         </FormGroup>
         </div>
          <FormGroup>
-            <Label required>Métier actuel</Label>
+            <Label required>{t('submit.step1.role')}</Label>
             <Input placeholder={t('placeholder.submitform.job')}/>
         </FormGroup>
-        <div className='space-y-4 pt-4 border-t border-b pb-4 border-border'>
+        <div className='space-y-4 pt-4 bossssrder-t border-b pb-4 border-border'>
             <Label>E-réputation & Réseaux (Optionnel)</Label>
          <div className='grid grid-cols-2  gap-4'> 
         <FormGroup>
