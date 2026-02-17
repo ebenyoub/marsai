@@ -35,7 +35,7 @@ export default function CountDown() {
 
   const units = [
     { label: t('countdown.day'), value: timeLeft.days, variant: 'time_purple', delay: 0.1 },
-    { label: t('countdown.hour'), value: timeLeft.hours, variant: 'time_purple', delay: 0.2 },
+    { label: t('countdown.hour'), value: timeLeft.hours, variant: 'time_green', delay: 0.2 },
     { label: t('countdown.min'), value: timeLeft.minutes, variant: 'time_green', delay: 0.3 },
     { label: t('countdown.sec'), value: timeLeft.seconds, variant: 'time_green', delay: 0.4 },
   ];
@@ -54,17 +54,17 @@ export default function CountDown() {
           {/* BOÎTE INDIVIDUELLE : Fond sombre 50%, bordure subtile */}
           <Card
             variant={unit.variant as keyof typeof cartVariants}
-            className="bg-background/50 border-primary/20 flex min-w-30 flex-col items-center justify-center rounded-md border p-1.5 backdrop-blur-sm md:min-w-40 md:p-2"
+            className="bg-background/50 border-primary/20 flex flex-col rounded-md border p-2 backdrop-blur-sm sm:min-w-30"
           >
             {/* CHIFFRE : Tabular-nums pour éviter que ça bouge + couleurs primaires/accent */}
             <span
-              className={`text-lg leading-none font-bold tabular-nums sm:text-xl md:text-2xl ${unit.variant === 'time_purple' ? 'text-primary' : 'text-accent'}`}
+              className={`mb-0.5 text-lg leading-none font-bold sm:text-xl md:text-2xl ${unit.variant === 'time_purple' ? 'text-primary' : 'text-accent'}`}
             >
               {String(unit.value).padStart(2, '0')}
             </span>
 
             {/* LABEL : Petit, gris, majuscules, espacé */}
-            <span className="text-muted-foreground mt-1 text-[9px] tracking-wide uppercase sm:text-[10px] md:text-xs">
+            <span className="text-muted-foreground text-[9px] leading-none tracking-wide uppercase sm:text-[10px] md:text-xs">
               {unit.label}
             </span>
           </Card>
