@@ -9,6 +9,7 @@
   "button.connect": "Se connecter",
   "button.signin": "Se connecter",
   "button.logout": "Deconnexion",
+  "super-admin": "Super-Admin",
 
   "common.save": "Enregistrer",
   "common.cancel": "Annuler",
@@ -223,5 +224,23 @@
   "footer.gdpr": "RGPD",
   "footer.status": "Statut",
   "footer.status.operational": "Systèmes Opérationnels",
-  "footer.copyright": "Tous droits réservés."
+  "footer.copyright": "Tous droits réservés.",
+
+
+"placeholder.submitform.firstname": "Jean",
+"placeholder.submitform.lastname": "Dupont",
+"placeholder.submitform.email": "jean.dupont@example.com",
+"placeholder.submitform.mobile": "+33 6 12 34 56 78",
+"placeholder.submitform.address": "123 Rue de la République",
+"placeholder.submitform.zip": "75001",
+"placeholder.submitform.city": "Paris",
+"placeholder.submitform.country": "France",
+"placeholder.submitform.job": "Réalisateur, Designer, Développeur...",
+"placeholder.submitform.youtubelink": "https://www.youtube.com/@nomutilisateur",
+"placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
+"placeholder.submitform.instagramlink": "https://www.instagram.com/nomutilisateur",
+"placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/nomutilisateur",
+"placeholder.submitform.twitterlink": "https://x.com/nomutilisateur",
+"placeholder.submitform.select": "Sélectionnez une option"
+
 }
