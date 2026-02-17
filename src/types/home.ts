@@ -29,6 +29,7 @@ export interface CardProps {
   className?: string;
   variant?: keyof typeof cartVariants;
   icon?: LucideIcon;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 export interface IconBadgeProps {

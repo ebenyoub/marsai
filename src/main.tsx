@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Navbar />
-      <main className="min-h-screen">
+      <main className="min-h-screen min-w-80">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/submit" element={<SubmissionForm/>} />
