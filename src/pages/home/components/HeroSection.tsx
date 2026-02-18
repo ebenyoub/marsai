@@ -3,7 +3,7 @@ import { Upload } from 'lucide-react';
 import heroImage from '@/assets/hero.jpg';
 import { Card } from '@/components/ui/Card';
 import CountDown from '@/components/ui/CountDown';
-import Button from '@/components/ui/button';
+import Button from '@/components/ui/Button';
 
 export default function HeroSection() {
   const { t } = useTranslation();
