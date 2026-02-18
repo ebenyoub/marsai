@@ -6,10 +6,13 @@ import SearchBar from '@/components/ui/SearchBar';
 import Button from '@/components/ui/Button';
 import mockFilms from '@/mock/films';
 import CardVideo from './CardVideo';
+import { FilmType } from '@/types/home';
+import FilmPopup from '@/components/FilmPopup';
 
 function VideoSection() {
   const [currentPage, setCurrentPage] = useState(1);
   const [query, setQuery] = useState('');
+  const [selectedFilm, setSelectedFilm] = useState<FilmType | null>(null);
   const postsPerPage = 50;
 
   const filteredFilms = useMemo(() => {
@@ -50,9 +53,11 @@ function VideoSection() {
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredFilms.map(film => (
-          <CardVideo key={film.id} film={film} />
+          <CardVideo key={film.id} film={film} onClick={() => setSelectedFilm(film)} />
         ))}
       </div>
+
+      <FilmPopup film={selectedFilm} open={!!selectedFilm} onClose={() => setSelectedFilm(null)} />
     </section>
   );
 }
