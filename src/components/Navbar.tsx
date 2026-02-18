@@ -4,9 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { LogIn, LogOut, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { MarsAILogo } from './MarsAILogo.js';
-import { LanguageSwitcher } from './ui/LanguageSwitcher.js';
-import { MobileLanguageSwitcher } from './ui/MobileLanguageSwitcher.js';
 import Button from './ui/button.js';
+import { LanguageSwitcher, MobileLanguageSwitcher } from './ui/LanguageSwitcher.js';
 
 export function Navbar() {
   const { t } = useTranslation();

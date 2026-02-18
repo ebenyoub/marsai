@@ -80,7 +80,7 @@ function SubmitForm() {
         </div>
 
         <FormGroup>
-          <Label required>Civilité</Label>
+          <Label>Civilité</Label>
           <div className="flex gap-4">
             <Label>M.</Label>
             <Input
