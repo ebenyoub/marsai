@@ -14,9 +14,7 @@ export default function ProgramCard({
   icon: Icon,
   className,
 }: ProgramCardProps) {
-
   const activeIconVariant = iconVariant;
-  
 
   return (
     <Card className={cn('flex h-full flex-col items-center p-4 text-center', className)} variant={variant}>

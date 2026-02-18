@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { ZodType } from 'zod';
 
 type Errors<T> = Partial<Record<keyof T, string>>;
+type FormValue = string | number | boolean | null;
 
-const useForm = <T extends Record<string, any>>(initialValues: T, schema?: ZodType<T>) => {
+const useForm = <T extends Record<string, FormValue>>(initialValues: T, schema?: ZodType<T>) => {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Errors<T>>({});
 

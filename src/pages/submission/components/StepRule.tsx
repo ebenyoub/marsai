@@ -1,13 +1,12 @@
-import { CollaboratorType, Step } from "@/types/form";
-import { User, FileText, Sparkles, Upload, Users } from "lucide-react";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FileText, Sparkles, Upload, User, Users } from 'lucide-react';
+import { CollaboratorType, Step } from '@/types/form';
 
 export function useStepper() {
-
-    const [currentStep, setCurrentStep] = useState<Step>(1);
-    const { t } = useTranslation();
-    const [formData, setFormData] = useState({
+  const [currentStep, setCurrentStep] = useState<Step>(1);
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState({
     // Step 1 - Informations sur le Réalisateur
     civility: 'Mr',
     firstName: '',
@@ -27,7 +26,7 @@ export function useStepper() {
     xUrl: '',
     discoverySource: '',
     newsletter: false,
-    
+
     // Step 2 - Métadonnées du Film
     titleOriginal: '',
     titleEnglish: '',
@@ -36,32 +35,32 @@ export function useStepper() {
     tags: '',
     synopsisOriginal: '',
     synopsisEnglish: '',
-    
+
     // Step 3 - Déclaration d'Usage de l'IA
     aiClassification: 'full',
     techStack: '',
     methodology: '',
-    
+
     // Step 4 - Livrables Multimédias
     youtubeVideoUrl: '',
     hasSubtitles: false,
     subtitlesFile: null as File | null,
     posterFile: null as File | null | undefined,
     stillsFiles: [] as File[],
-    
+
     // Step 5 - Équipe
     collaborators: [] as CollaboratorType[],
   });
-    
-const steps = [
-      { number: 1, title: t('submit.step1.title'), icon: User },
-      { number: 2, title: t('submit.step2.title'), icon: FileText },
-      { number: 3, title: t('submit.step3.title'), icon: Sparkles },
-      { number: 4, title: t('submit.step4.title'), icon: Upload },
-      { number: 5, title: t('submit.step5.title'), icon: Users },
-    ];
 
-     const calculateAge = (birthDate: string): number => {
+  const steps = [
+    { number: 1, title: t('submit.step1.title'), icon: User },
+    { number: 2, title: t('submit.step2.title'), icon: FileText },
+    { number: 3, title: t('submit.step3.title'), icon: Sparkles },
+    { number: 4, title: t('submit.step4.title'), icon: Upload },
+    { number: 5, title: t('submit.step5.title'), icon: Users },
+  ];
+
+  const calculateAge = (birthDate: string): number => {
     if (!birthDate) return 0;
     const today = new Date();
     const birth = new Date(birthDate);
@@ -77,7 +76,7 @@ const steps = [
     const age = calculateAge(formData.birthDate);
     return age >= 18;
   };
-const validateStep = (step: Step): boolean => {
+  const validateStep = (step: Step): boolean => {
     switch (step) {
       case 1:
         return !!(
@@ -126,22 +125,21 @@ const validateStep = (step: Step): boolean => {
         return true; // L'équipe est optionnelle
       default:
         return false;
-    }}
+    }
+  };
 
+  const progress = (currentStep / steps.length) * 100;
 
-const progress = (currentStep / steps.length) * 100;
-
-
-const nextStep = () => {
-  if (currentStep < 5 && validateStep(currentStep)) {
-    setCurrentStep((currentStep + 1) as Step);
-  }
-};
-const prevStep = () => {
-  if (currentStep > 1) {
-    setCurrentStep((currentStep - 1) as Step);
-  }
-};
+  const nextStep = () => {
+    if (currentStep < 5 && validateStep(currentStep)) {
+      setCurrentStep((currentStep + 1) as Step);
+    }
+  };
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep((currentStep - 1) as Step);
+    }
+  };
 
   return {
     currentStep,
@@ -153,5 +151,4 @@ const prevStep = () => {
     prevStep,
     validateStep,
   };
-
 }

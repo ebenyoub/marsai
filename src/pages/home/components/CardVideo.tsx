@@ -19,14 +19,15 @@ interface FilmType {
 
 interface CardVideoProps {
   film: FilmType;
+  onClick: () => void;
 }
 
-function CardVideo({ film }: CardVideoProps) {
+function CardVideo({ film, onClick }: CardVideoProps) {
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
 
   return (
-    <Card className="group hover:shadow-primary/20 w-full overflow-hidden hover:shadow-lg">
+    <Card className="group hover:shadow-primary/20 w-full overflow-hidden hover:shadow-lg" onClick={onClick}>
       <figure>
         <div className="relative">
           <img

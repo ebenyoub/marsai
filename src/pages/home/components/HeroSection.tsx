@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Upload } from 'lucide-react';
 import heroImage from '@/assets/hero.jpg';
+import Button from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import CountDown from '@/components/ui/CountDown';
-import Button from '@/components/ui/button';
 
 export default function HeroSection() {
   const { t } = useTranslation();

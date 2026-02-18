@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-import Form, { Input } from './form';
+import Form, { Input } from './Form';
 
 export default function SearchBar({ setQuery }: { setQuery: (query: string) => void }) {
   return (

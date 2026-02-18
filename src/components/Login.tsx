@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
-// Make sure path is correct
+import { Form, Link, useNavigate } from 'react-router-dom';
 import useForm from '../hooks/useForm';
 import { loginSchema } from '../schemas/login.schema';
-import Button from './ui/button';
-import Form, { FormGroup, Input, Label } from './ui/form';
+import Button from './ui/Button';
+import { FormGroup, Input, Label } from './ui/Form';
 
 const Login = () => {
   const { t } = useTranslation();
