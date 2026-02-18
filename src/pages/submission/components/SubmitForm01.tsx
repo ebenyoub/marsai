@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import Button from '@/components/ui/Button';
-import Form, { FormGroup, Input, Label } from '@/components/ui/Form';
+import Button from '@/components/ui/button';
+import Form, { FormGroup, Input, Label } from '@/components/ui/form';
 
 function SubmitForm() {
   const { t } = useTranslation();
