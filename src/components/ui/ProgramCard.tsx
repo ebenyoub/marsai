@@ -1,6 +1,6 @@
 import { Calendar, Users } from 'lucide-react';
 import { ProgramCardProps } from '@/types/home';
-import Card from './Card';
+import { Card } from './Card';
 import IconBadge from './IconBadge';
 import { cn } from './utils';
 

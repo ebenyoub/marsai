@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { cartVariants } from '../utils/viariants';
-import Card from './Card';
+import { cartVariants } from '../utils/variants';
+import { Card } from './Card';
 
 export default function CountDown() {
   const { t } = useTranslation();

@@ -2,13 +2,14 @@ import { cva } from 'class-variance-authority';
 
 export const buttonVariant = {
   default: 'border border-white hover:bg-white/30',
-  purple: 'bg-primary shadow-md shadow-primary',
+  purple: 'bg-primary shadow-sm shadow-primary/60',
   connexion: 'bg-background border border-accent text-accent hover:text-foreground hover:bg-background/60',
   green: 'bg-accent border-accent hover:bg-accent/80',
   ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
   link: 'text-primary underline-offset-4 hover:underline',
   active: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-  outline:'border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+  outline:
+    'border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
 };
 
 export const iconVariants = {
@@ -27,6 +28,16 @@ export const cartVariants = {
   gold: 'border-amber-400/50 bg-amber-400/5 hover:border-amber-400',
   time_green: 'bg-black/30 border-accent/20 hover:bg-accent/20',
   time_purple: 'ring-primary/30 text-primary hover:bg-primary/20 bg-black/30 border-primary/20',
+};
+
+export const CardTitleVariants = {
+  default: 'text-3xl md:text-4xl text-foreground mb-2',
+  videoSection: 'text-2xl md:text-10 text-foreground mb-[7px]',
+};
+
+export const CardSubTitleVariant = {
+  default: 'text-base text-muted-foreground',
+  videoSection: 'text-[14px] text-[#9CA3AF]',
 };
 
 export const buttonVariants = cva(
