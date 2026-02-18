@@ -9,7 +9,8 @@ export const buttonVariant = {
   link: 'text-primary underline-offset-4 hover:underline',
   active: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
   destructive: 'bg-destructive text-secondary-foreground hover:bg-secondary/80',
-  outline:'border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+  outline:
+    'border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
 };
 
 export const iconVariants = {

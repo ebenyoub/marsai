@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from './ui/button';
 
-
 interface PaginationProps {
   totalPosts: number;
   postsPerPage: number;
@@ -13,12 +12,11 @@ export default function Pagination({ totalPosts, postsPerPage, currentPage, setC
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4 mb-8">
-
+    <div className="mb-8 flex w-full flex-col items-center justify-between gap-4 md:flex-row">
       {/* TEXTE À GAUCHE */}
-      <p className="text-sm font-medium text-muted-foreground">
-        Affichage de <span className="text-primary font-bold">{totalPosts}</span> sur {totalPosts} films
-        (Page <span className="text-primary font-bold">{currentPage}</span> sur {totalPages})
+      <p className="text-muted-foreground text-sm font-medium">
+        Affichage de <span className="text-primary font-bold">{totalPosts}</span> sur {totalPosts} films (Page{' '}
+        <span className="text-primary font-bold">{currentPage}</span> sur {totalPages})
       </p>
 
       {/* BOUTONS À DROITE */}
@@ -32,7 +30,7 @@ export default function Pagination({ totalPosts, postsPerPage, currentPage, setC
           Précédent
         </Button>
 
-        <span className="text-sm font-semibold min-w-[30px] text-center">
+        <span className="min-w-[30px] text-center text-sm font-semibold">
           {currentPage}/{totalPages}
         </span>
 

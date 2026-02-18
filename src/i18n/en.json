@@ -90,8 +90,11 @@
   "errors": {
     "required": "This field is required",
     "invalid_email": "Please enter a valid email address",
+    "invalid_url": "Invalid URL (must start with https://)",
+    "invalid_date": "Please enter a valid date",
+    "select_option": "Please select an option",
     "password_too_short": "Password must be at least 6 characters",
-    "password_complexity": "Password must contain at least one uppercase letter and one number"
+    "password_complexity": "Password must contain uppercase and numbers"
   },
 
   "admin.title": "Super Admin Dashboard",
@@ -226,20 +229,19 @@
   "footer.status.operational": "Systems Operational",
   "footer.copyright": "All rights reserved.",
 
-"placeholder.submitform.firstname": "John",
-"placeholder.submitform.lastname": "Doe",
-"placeholder.submitform.email": "john.doe@example.com",
-"placeholder.submitform.mobile": "+1 555 123 4567",
-"placeholder.submitform.address": "123 Main Street",
-"placeholder.submitform.zip": "62704",
-"placeholder.submitform.city": "Springfield",
-"placeholder.submitform.country": "United States",
-"placeholder.submitform.job": "Software Engineer",
-"placeholder.submitform.youtubelink": "https://www.youtube.com/@username",
-"placeholder.submitform.instagramlink": "https://www.instagram.com/username",
-"placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
-"placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/username",
-"placeholder.submitform.twitterlink": "https://twitter.com/username",
-"placeholder.submitform.select": "Select an option"
-
+  "placeholder.submitform.firstname": "John",
+  "placeholder.submitform.lastname": "Doe",
+  "placeholder.submitform.email": "john.doe@example.com",
+  "placeholder.submitform.mobile": "+1 555 123 4567",
+  "placeholder.submitform.address": "123 Main Street",
+  "placeholder.submitform.zip": "62704",
+  "placeholder.submitform.city": "Springfield",
+  "placeholder.submitform.country": "United States",
+  "placeholder.submitform.job": "Software Engineer",
+  "placeholder.submitform.youtubelink": "https://www.youtube.com/@username",
+  "placeholder.submitform.instagramlink": "https://www.instagram.com/username",
+  "placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
+  "placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/username",
+  "placeholder.submitform.twitterlink": "https://twitter.com/username",
+  "placeholder.submitform.select": "Select an option"
 }

@@ -80,10 +80,15 @@
   },
 
   "errors": {
-    "required": "Ce champ est obligatoire",
+    "required": "Ce champ est requis",
     "invalid_email": "Veuillez entrer une adresse email valide",
+    "invalid_phone": "Format invalide (ex: 06 12 34 56 78)",
+    "invalid_zip": "Code postal invalide (5 chiffres requis)",
+    "invalid_url": "URL invalide (doit commencer par https://)",
+    "invalid_date": "Veuillez entrer une date valide",
+    "select_option": "Veuillez sélectionner une option",
     "password_too_short": "Le mot de passe doit contenir au moins 6 caractères",
-    "password_complexity": "Le mot de passe doit contenir au moins une lettre majuscule et un chiffre"
+    "password_complexity": "Le mot de passe doit contenir des majuscules et des chiffres"
   },
 
   "form.subtitle": "Connectez-vous à votre compte",
@@ -226,21 +231,19 @@
   "footer.status.operational": "Systèmes Opérationnels",
   "footer.copyright": "Tous droits réservés.",
 
-
-"placeholder.submitform.firstname": "Jean",
-"placeholder.submitform.lastname": "Dupont",
-"placeholder.submitform.email": "jean.dupont@example.com",
-"placeholder.submitform.mobile": "+33 6 12 34 56 78",
-"placeholder.submitform.address": "123 Rue de la République",
-"placeholder.submitform.zip": "75001",
-"placeholder.submitform.city": "Paris",
-"placeholder.submitform.country": "France",
-"placeholder.submitform.job": "Réalisateur, Designer, Développeur...",
-"placeholder.submitform.youtubelink": "https://www.youtube.com/@nomutilisateur",
-"placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
-"placeholder.submitform.instagramlink": "https://www.instagram.com/nomutilisateur",
-"placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/nomutilisateur",
-"placeholder.submitform.twitterlink": "https://x.com/nomutilisateur",
-"placeholder.submitform.select": "Sélectionnez une option"
-
+  "placeholder.submitform.firstname": "Jean",
+  "placeholder.submitform.lastname": "Dupont",
+  "placeholder.submitform.email": "jean.dupont@example.com",
+  "placeholder.submitform.mobile": "+33 6 12 34 56 78",
+  "placeholder.submitform.address": "123 Rue de la République",
+  "placeholder.submitform.zip": "75001",
+  "placeholder.submitform.city": "Paris",
+  "placeholder.submitform.country": "France",
+  "placeholder.submitform.job": "Réalisateur, Designer, Développeur...",
+  "placeholder.submitform.youtubelink": "https://www.youtube.com/@nomutilisateur",
+  "placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
+  "placeholder.submitform.instagramlink": "https://www.instagram.com/nomutilisateur",
+  "placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/nomutilisateur",
+  "placeholder.submitform.twitterlink": "https://x.com/nomutilisateur",
+  "placeholder.submitform.select": "Sélectionnez une option"
 }

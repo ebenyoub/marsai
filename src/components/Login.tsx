@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-// Make sure path is correct
 import useForm from '../hooks/useForm';
 import { loginSchema } from '../schemas/login.schema';
 import Button from './ui/button';
@@ -21,7 +20,6 @@ const Login = () => {
     schema
   );
 
-  const [apiError, setApiError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (formValues: typeof values) => {
@@ -29,7 +27,6 @@ const Login = () => {
 
     try {
       setLoading(true);
-      setApiError(null);
 
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
@@ -38,22 +35,18 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        try {
-          const errorJson = JSON.parse(errorText);
-          setApiError(errorJson.message || t('form.connection.error'));
-        } catch {
-          setApiError(errorText || t('form.connection.error'));
-        }
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Login failed:', response.status, errorData);
         return;
       }
 
       const data = await response.json();
+      console.log('Login success:', data);
+
       localStorage.setItem('token', data.token);
       navigate('/');
-    } catch (err: unknown) {
-      if (err instanceof Error) setApiError(err.message);
-      else setApiError('Erreur réseau, réessayez.');
+    } catch (err) {
+      console.error('Network error:', err);
     } finally {
       setLoading(false);
     }
@@ -67,8 +60,6 @@ const Login = () => {
       </div>
 
       <div className="flex flex-col gap-5">
-        {apiError && <div className="rounded-md bg-red-100 p-3 text-sm text-red-500">{apiError}</div>}
-
         <FormGroup>
           <Label required>Email</Label>
           <Input
