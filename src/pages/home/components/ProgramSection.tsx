@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Award, Presentation, Users, Video } from 'lucide-react';
-import Card from '@/components/ui/Card';
+import { Card } from '@/components/ui/Card';
 import ProgramCard from '@/components/ui/ProgramCard';
 import Button from '@/components/ui/button_test';
 

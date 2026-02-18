@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 import { LucideIcon } from 'lucide-react';
-import { buttonVariant, cartVariants, iconVariants } from '@/components/utils/variants';
-
-// *** CARD ***
+import { CardTitleVariants, buttonVariant, cartVariants, iconVariants } from '@/components/utils/variants';
 
 export interface StatCardProps {
   icon: LucideIcon;
@@ -32,13 +30,23 @@ export interface CardProps {
   onClick?: (event: React.MouseEvent) => void;
 }
 
+export interface DescribeProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export interface TitleProps {
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  className?: string;
+  variant?: keyof typeof CardTitleVariants;
+}
+
 export interface IconBadgeProps {
   icon?: LucideIcon;
   variant?: keyof typeof iconVariants;
   className?: string;
 }
-
-// *** BUTTON ***
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -46,4 +54,20 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: keyof typeof buttonVariant;
   icon?: React.ReactNode;
   position?: 'left' | 'right';
+}
+
+export type AITool = 'Image' | 'Sound' | 'Video' | 'Voice' | 'Script';
+
+export interface FilmType {
+  id: number;
+  title: string;
+  titleEn: string;
+  director: string;
+  country: string;
+  countryName: string;
+  thumbnail: string;
+  aiTools: string[];
+  category: string;
+  officialSelection: boolean;
+  youtubeUrl: string;
 }
