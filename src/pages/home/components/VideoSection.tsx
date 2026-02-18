@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react';
 import { Film } from 'lucide-react';
+import FilmPopup from '@/components/FilmPopup';
 import Pagination from '@/components/Pagination';
+import Button from '@/components/ui/Button';
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import SearchBar from '@/components/ui/SearchBar';
-import Button from '@/components/ui/Button';
 import mockFilms from '@/mock/films';
-import CardVideo from './CardVideo';
 import { FilmType } from '@/types/home';
-import FilmPopup from '@/components/FilmPopup';
+import CardVideo from './CardVideo';
 
 function VideoSection() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,10 +19,11 @@ function VideoSection() {
     const searchTerm = query.toLowerCase().trim();
 
     if (searchTerm.length >= 3) {
-      return mockFilms.filter(movie =>
-        movie.title.toLowerCase().includes(searchTerm) ||
-        movie.titleEn.toLowerCase().includes(searchTerm) ||
-        movie.director.toLowerCase().includes(searchTerm)
+      return mockFilms.filter(
+        movie =>
+          movie.title.toLowerCase().includes(searchTerm) ||
+          movie.titleEn.toLowerCase().includes(searchTerm) ||
+          movie.director.toLowerCase().includes(searchTerm)
       );
     }
     return mockFilms;

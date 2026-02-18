@@ -1,11 +1,11 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { LogIn, LogOut, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { MarsAILogo } from './MarsAILogo.js';
-import { LanguageSwitcher, MobileLanguageSwitcher } from './ui/LanguageSwitcher.js';
-import { useState } from 'react';
 import Button from './ui/Button.js';
+import { LanguageSwitcher, MobileLanguageSwitcher } from './ui/LanguageSwitcher.js';
 
 export function Navbar() {
   const { t } = useTranslation();

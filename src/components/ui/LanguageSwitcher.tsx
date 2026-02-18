@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, Globe } from 'lucide-react';
 
-
 export function MobileLanguageSwitcher() {
   const { i18n } = useTranslation();
 
   // Helper to change style based on active language
   const getButtonClass = (lang: string) => {
     const isActive = i18n.language === lang;
-    return `px-1.5 py-0.5 text-xs rounded transition-colors ${isActive
+    return `px-1.5 py-0.5 text-xs rounded transition-colors ${
+      isActive
         ? 'bg-primary text-primary-foreground' // Active Style
         : 'text-muted-foreground hover:text-foreground' // Inactive Style
-      }`;
+    }`;
   };
 
   return (

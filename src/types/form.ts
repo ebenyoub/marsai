@@ -1,5 +1,5 @@
-import { iconVariants } from "@/components/utils/variants";
-import { LucideIcon } from "lucide-react";
+import { LucideIcon } from 'lucide-react';
+import { iconVariants } from '@/components/utils/variants';
 
 export interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   //extends lets us to inharite EVERYTHING that a normal HTML input has, such as onChange, required, aria- and className..
@@ -12,8 +12,8 @@ export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> 
   children: React.ReactNode;
   //extends lets us to inharite EVERYTHING that a normal HTML input has, such as onChange, required, aria- and className..
 }
-export interface SelectProps extends React.LabelHTMLAttributes<HTMLLabelElement>{
-  className?: string,
+export interface SelectProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  className?: string;
 }
 export type Step = 1 | 2 | 3 | 4 | 5;
 export interface CollaboratorType {
@@ -25,7 +25,6 @@ export interface CollaboratorType {
   email: string;
   role: string;
   movie_id: number;
-  
 }
 export interface ProgressBarProps {
   progress: number;

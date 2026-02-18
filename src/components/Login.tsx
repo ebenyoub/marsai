@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Form, Link, useNavigate } from 'react-router-dom';
 import useForm from '../hooks/useForm';
 import { loginSchema } from '../schemas/login.schema';
-import { FormGroup, Label, Input } from './ui/Form';
 import Button from './ui/Button';
+import { FormGroup, Input, Label } from './ui/Form';
 
 const Login = () => {
   const { t } = useTranslation();
