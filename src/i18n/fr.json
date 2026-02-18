@@ -8,6 +8,8 @@
   "nav.language": "Sélectionner la langue",
   "button.connect": "Se connecter",
   "button.signin": "Se connecter",
+  "button.logout": "Deconnexion",
+  "super-admin": "Super-Admin",
 
   "common.save": "Enregistrer",
   "common.cancel": "Annuler",
@@ -77,17 +79,20 @@
     }
   },
 
-  "ai.script": "Scénario",
-  "ai.image": "Image",
-  "ai.video": "Vidéo",
-  "ai.sound": "Son",
+  "errors": {
+    "required": "Ce champ est obligatoire",
+    "invalid_email": "Veuillez entrer une adresse email valide",
+    "password_too_short": "Le mot de passe doit contenir au moins 6 caractères",
+    "password_complexity": "Le mot de passe doit contenir au moins une lettre majuscule et un chiffre"
+  },
 
-  "form.remember": "Se souvenir de moi",
-  "form.password_standart": "Minimum 6 caractères",
+  "form.subtitle": "Connectez-vous à votre compte",
+  "form.title": "Se Connecter",
   "form.pass": "Mot de passe",
   "form.forgot_pass": "Mot de pass oublié?",
   "form.footer": "Pas encore de compte?",
   "form.event": "S'inscrire aux Événements",
+  "form.connection.error": "Erreur de connexion",
 
   "admin.title": "Tableau de Bord Super Admin",
   "admin.festival.instance": "Instance du Festival",
@@ -120,6 +125,9 @@
   "submit.progress": "Progression",
   "submit.step1.title": "Identité",
   "submit.step1.description": "Vos informations personnelles",
+  "submit.step1.civility1": "M.",
+  "submit.step1.civility2": "Mme",
+  "submit.step1.civility": "Civilité",
   "submit.step1.firstname": "Prénom",
   "submit.step1.lastname": "Nom",
   "submit.step1.age": "Âge",
@@ -127,6 +135,11 @@
   "submit.step1.email": "Email",
   "submit.step1.role": "Rôle Professionnel",
   "submit.step1.role.placeholder": "Réalisateur, Artiste, Développeur...",
+  "submit.step1.mobile": "Mobile", 
+  "submit.step1.address": "Adresse",
+  "submit.step1.zip": "Code Postal",
+  "submit.step1.city": "Ville",
+  "submit.step1.country": "Pays",
   "submit.step1.social": "Réseaux Sociaux",
   "submit.step2.title": "Données du Film",
   "submit.step2.description": "Informations sur votre œuvre",
@@ -219,5 +232,23 @@
   "footer.gdpr": "RGPD",
   "footer.status": "Statut",
   "footer.status.operational": "Systèmes Opérationnels",
-  "footer.copyright": "Tous droits réservés."
+  "footer.copyright": "Tous droits réservés.",
+
+
+"placeholder.submitform.firstname": "Jean",
+"placeholder.submitform.lastname": "Dupont",
+"placeholder.submitform.email": "jean.dupont@example.com",
+"placeholder.submitform.mobile": "+33 6 12 34 56 78",
+"placeholder.submitform.address": "123 Rue de la République",
+"placeholder.submitform.zip": "75001",
+"placeholder.submitform.city": "Paris",
+"placeholder.submitform.country": "France",
+"placeholder.submitform.job": "Réalisateur, Designer, Développeur...",
+"placeholder.submitform.youtubelink": "https://www.youtube.com/@nomutilisateur",
+"placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
+"placeholder.submitform.instagramlink": "https://www.instagram.com/nomutilisateur",
+"placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/nomutilisateur",
+"placeholder.submitform.twitterlink": "https://x.com/nomutilisateur",
+"placeholder.submitform.select": "Sélectionnez une option"
+
 }

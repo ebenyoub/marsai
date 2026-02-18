@@ -10,6 +10,7 @@ export const buttonVariant = {
   active: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
   outline:
     'border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+  destructive: 'bg-destructive text-secondary-foreground hover:bg-secondary/80',
 };
 
 export const iconVariants = {
@@ -37,7 +38,7 @@ export const CardTitleVariants = {
 
 export const CardSubTitleVariant = {
   default: 'text-base text-muted-foreground',
-  videoSection: 'text-[14px] text-[#9CA3AF]',
+  videoSection: 'text-6 text-muted-foreground',
 };
 
 export const buttonVariants = cva(

@@ -43,7 +43,7 @@ export interface TitleProps {
 }
 
 export interface IconBadgeProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
   variant?: keyof typeof iconVariants;
   className?: string;
 }

@@ -8,6 +8,8 @@
   "nav.language": "Select Language",
   "button.connect": "Login",
   "button.signin": "Sign in",
+  "button.logout": "Log out",
+  "super-admin": "Super-Admin",
 
   "common.save": "Save",
   "common.cancel": "Cancel",
@@ -77,17 +79,20 @@
     }
   },
 
-  "ai.script": "Script",
-  "ai.image": "Image",
-  "ai.video": "Video",
-  "ai.sound": "Sound",
-
-  "form.remember": "Remember me",
-  "form.password_standart": "Minimum 6 caracters",
+  "form.subtitle": "Sign in to your account",
+  "form.title": "Sign In",
   "form.pass": "Password",
   "form.forgot_pass": "Forgot password?",
   "form.footer": "Don't have an account?",
   "form.event": "Register for Events",
+  "form.connection.error": "Connection error",
+
+  "errors": {
+    "required": "This field is required",
+    "invalid_email": "Please enter a valid email address",
+    "password_too_short": "Password must be at least 6 characters",
+    "password_complexity": "Password must contain at least one uppercase letter and one number"
+  },
 
   "admin.title": "Super Admin Dashboard",
   "admin.festival.instance": "Festival Instance",
@@ -120,6 +125,9 @@
   "submit.progress": "Progress",
   "submit.step1.title": "Identity",
   "submit.step1.description": "Your personal information",
+  "submit.step1.civility": "Gender",
+  "submit.step1.civility1": "M.",
+  "submit.step1.civility2": "Mme",
   "submit.step1.firstname": "First Name",
   "submit.step1.lastname": "Last Name",
   "submit.step1.age": "Age",
@@ -127,6 +135,11 @@
   "submit.step1.email": "Email",
   "submit.step1.role": "Professional Role",
   "submit.step1.role.placeholder": "Director, Artist, Developer...",
+  "submit.step1.mobile": "Mobile",
+  "submit.step1.address": "Address",
+  "submit.step1.zip": "Postal Code",
+  "submit.step1.city": "City",
+  "submit.step1.country": "Country",
   "submit.step1.social": "Social Media",
   "submit.step2.title": "Film Data",
   "submit.step2.description": "Information about your work",
@@ -219,5 +232,22 @@
   "footer.gdpr": "GDPR",
   "footer.status": "Status",
   "footer.status.operational": "Systems Operational",
-  "footer.copyright": "All rights reserved."
+  "footer.copyright": "All rights reserved.",
+
+"placeholder.submitform.firstname": "John",
+"placeholder.submitform.lastname": "Doe",
+"placeholder.submitform.email": "john.doe@example.com",
+"placeholder.submitform.mobile": "+1 555 123 4567",
+"placeholder.submitform.address": "123 Main Street",
+"placeholder.submitform.zip": "62704",
+"placeholder.submitform.city": "Springfield",
+"placeholder.submitform.country": "United States",
+"placeholder.submitform.job": "Software Engineer",
+"placeholder.submitform.youtubelink": "https://www.youtube.com/@username",
+"placeholder.submitform.instagramlink": "https://www.instagram.com/username",
+"placeholder.submitform.facebooklink": "https://www.facebook.com/nomutilisateur",
+"placeholder.submitform.linkedinlink": "https://www.linkedin.com/in/username",
+"placeholder.submitform.twitterlink": "https://twitter.com/username",
+"placeholder.submitform.select": "Select an option"
+
 }
