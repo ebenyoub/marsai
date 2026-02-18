@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Film } from 'lucide-react';
 import FilmPopup from '@/components/FilmPopup';
 import Pagination from '@/components/Pagination';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/button';
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import SearchBar from '@/components/ui/SearchBar';
 import mockFilms from '@/mock/films';

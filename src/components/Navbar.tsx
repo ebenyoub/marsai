@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { LogIn, LogOut, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { MarsAILogo } from './MarsAILogo.js';
-import Button from './ui/Button.js';
+import Button from './ui/button.js';
 import { LanguageSwitcher, MobileLanguageSwitcher } from './ui/LanguageSwitcher.js';
 
 export function Navbar() {
