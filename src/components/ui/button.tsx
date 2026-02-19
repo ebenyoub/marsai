@@ -6,7 +6,7 @@ const Button = ({ children, className, variant = 'default', icon, position = 'le
   return (
     <button
       className={cn(
-        'z-10 flex w-full items-center gap-3 rounded-md px-2 py-1 transition md:w-fit cursor-pointer',
+        'z-10 flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-1 transition md:w-fit',
         buttonVariant[variant],
         className
       )}
