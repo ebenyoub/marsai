@@ -254,6 +254,12 @@
   "placeholder.submitform1.linkedinlink": "https://www.linkedin.com/in/username",
   "placeholder.submitform1.twitterlink": "https://twitter.com/username",
   "placeholder.submitform1.select": "Select an option",
+  "submit.step1.source.search": "Web Search (Google, Bing, etc.)",
+  "submit.step1.source.word_of_mouth": "From a colleague",
+  "submit.step1.source.press": "News / Media",
+  "submit.step1.source.festival": "At another film festival",
+  "submit.step1.source.partner": "Through a partner organization",
+  "submit.step1.source.other": "Other",
 
   "placeholder.submitform2.title.fr": "Original title",
   "placeholder.submitform2.title.en": "English title",

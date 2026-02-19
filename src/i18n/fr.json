@@ -256,6 +256,13 @@
   "placeholder.submitform1.linkedinlink": "https://www.linkedin.com/in/nomutilisateur",
   "placeholder.submitform1.twitterlink": "https://x.com/nomutilisateur",
   "placeholder.submitform1.select": "Sélectionnez une option",
+  "submit.step1.birthdate": "Date de naissance",
+  "submit.step1.source.search": "Moteur de recherche",
+  "submit.step1.source.word_of_mouth": "Bouche à oreille",
+  "submit.step1.source.press": "Presse / Média",
+  "submit.step1.source.festival": "Autre festival",
+  "submit.step1.source.partner": "Partenaire",
+  "submit.step1.source.other": "Autre",
 
   "placeholder.submitform2.title.fr": "Le titre de votre film",
   "placeholder.submitform2.title.en": "Titre en anglais",
