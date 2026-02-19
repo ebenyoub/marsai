@@ -28,6 +28,17 @@ export function Input({ className, ...props }: InputProps) {
     />
   );
 }
+export function TextArea({ className, ...props }: InputProps) {
+  return (
+    <input
+      className={cn(
+        'border-primary/30 bg-muted focus:ring-primary/40 rounded-md border px-2 py-1.5 pb-20 transition-all duration-200 focus:ring-2 focus:outline-none disabled:opacity-50',
+        className
+      )}
+      {...props}
+    />
+  );
+}
 // export function Select ({ className, ...props }: SelectProps) {
 //  return <select className={cn('border-primary/30 bg-muted rounded-md border px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:opacity-50 transition-all duration-200', className)} {...props} />;
 // }
