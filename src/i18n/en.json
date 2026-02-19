@@ -90,8 +90,11 @@
   "errors": {
     "required": "This field is required",
     "invalid_email": "Please enter a valid email address",
+    "invalid_url": "Invalid URL (must start with https://)",
+    "invalid_date": "Please enter a valid date",
+    "select_option": "Please select an option",
     "password_too_short": "Password must be at least 6 characters",
-    "password_complexity": "Password must contain at least one uppercase letter and one number"
+    "password_complexity": "Password must contain uppercase and numbers"
   },
 
   "admin.title": "Super Admin Dashboard",

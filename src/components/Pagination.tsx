@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Button from './ui/Button';
+import Button from './ui/button';
 
 interface PaginationProps {
   totalPosts: number;
@@ -30,7 +30,7 @@ export default function Pagination({ totalPosts, postsPerPage, currentPage, setC
           Précédent
         </Button>
 
-        <span className="min-w-[30px] text-center text-sm font-semibold">
+        <span className="min-w-7.5 text-center text-sm font-semibold">
           {currentPage}/{totalPages}
         </span>
 

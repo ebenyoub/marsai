@@ -80,10 +80,15 @@
   },
 
   "errors": {
-    "required": "Ce champ est obligatoire",
+    "required": "Ce champ est requis",
     "invalid_email": "Veuillez entrer une adresse email valide",
+    "invalid_phone": "Format invalide (ex: 06 12 34 56 78)",
+    "invalid_zip": "Code postal invalide (5 chiffres requis)",
+    "invalid_url": "URL invalide (doit commencer par https://)",
+    "invalid_date": "Veuillez entrer une date valide",
+    "select_option": "Veuillez sélectionner une option",
     "password_too_short": "Le mot de passe doit contenir au moins 6 caractères",
-    "password_complexity": "Le mot de passe doit contenir au moins une lettre majuscule et un chiffre"
+    "password_complexity": "Le mot de passe doit contenir des majuscules et des chiffres"
   },
 
   "form.subtitle": "Connectez-vous à votre compte",
