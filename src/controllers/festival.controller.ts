@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import FestivalModel from '../models/festival.model.js';
+import festivalModel from '../models/festival.model.js';
 import { FestivalType, Params } from '../types/type.js';
 
 const getAllFestivals = async (req: Request, res: Response) => {
   try {
-    const results = await FestivalModel.findAll();
+    const results = await festivalModel.findAll();
     if (results.length === 0) {
       return res.status(404).json({
         success: false,
@@ -25,7 +25,7 @@ const getAllFestivals = async (req: Request, res: Response) => {
 const getFestivalById = async (req: Request<Params>, res: Response) => {
   try {
     const id = req.params.id;
-    const festival = await FestivalModel.findById(id);
+    const festival = await festivalModel.findById(id);
     if (festival.length === 0) {
       return res.status(404).json({ message: 'Aucun festival trouvé' });
     }
@@ -39,7 +39,7 @@ const getFestivalById = async (req: Request<Params>, res: Response) => {
 const createFestival = async (req: Request, res: Response) => {
   try {
     const festival: FestivalType = req.body;
-    const results = await FestivalModel.create(festival);
+    const results = await festivalModel.create(festival);
     if (!results) {
       return res.status(400).json({
         success: false,
@@ -64,7 +64,7 @@ const updateFestival = async (req: Request<Params>, res: Response) => {
   try {
     const id = req.params.id;
     const festival: FestivalType = req.body;
-    const results = await FestivalModel.update(id, festival);
+    const results = await festivalModel.update(id, festival);
     if (!results) {
       return res.status(404).json({ message: 'Festival non trouvé' });
     }
@@ -78,7 +78,7 @@ const updateFestival = async (req: Request<Params>, res: Response) => {
 const deleteFestival = async (req: Request<Params>, res: Response) => {
   try {
     const id = req.params.id;
-    const deletedFestival = await FestivalModel.deleted(id);
+    const deletedFestival = await festivalModel.deleted(id);
     if (!deletedFestival) {
       return res.status(404).json({ message: 'Festival non trouvé' });
     }

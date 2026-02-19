@@ -1,5 +1,5 @@
 import db from '../config/database.js';
-import { FestivalType, Params } from '../types/type.js';
+import { FestivalType } from '../types/type.js';
 
 const findAll = async () => {
   const [result] = await db.execute('SELECT * FROM festival');

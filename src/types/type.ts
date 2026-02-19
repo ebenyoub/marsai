@@ -1,14 +1,22 @@
 export interface MovieType {
-  id: number;
+  id?: number;
   title: string;
+  title_en: string;
+  synopsis_fr: string;
+  synopsis_en: string;
+  duration: number;
+  main_language: string;
   yt_url: string;
   thumbnail: string;
   subtitles: string;
   stack: string;
+  methodology: string;
   ia_type: '100% IA' | 'Hybride';
   status: 'pending' | 'approved' | 'rejected';
   director_id: number;
+  created_at: Date | string;
 }
+
 export interface FestivalType {
   id: number;
   name: string;
@@ -19,9 +27,11 @@ export interface FestivalType {
   status: 'Actif' | 'Inactif';
   booking_total: number;
 }
+
 export interface Params {
   id: number;
 }
+
 export interface UserType {
   id: number;
   firstname: string;
@@ -34,6 +44,7 @@ export interface UserType {
   festival_id: number;
   insertId: number;
 }
+
 export interface CollaboratorType {
   id: number;
   firstname: string;
@@ -44,6 +55,7 @@ export interface CollaboratorType {
   role: string;
   movie_id: number;
 }
+
 export interface DirectorType {
   id: number;
   firstname: string;
@@ -63,17 +75,18 @@ export interface DirectorType {
   facebook_url: string;
   twitter_url: string;
   question_about:
-    | 'Réseaux sociaux'
-    | 'Moteur de recherche'
-    | 'Bouche-à-oreille'
-    | 'Presse / Média'
-    | 'Autre festival'
-    | 'Partenaire'
-    | 'Autre';
+  | 'Réseaux sociaux'
+  | 'Moteur de recherche'
+  | 'Bouche-à-oreille'
+  | 'Presse / Média'
+  | 'Autre festival'
+  | 'Partenaire'
+  | 'Autre';
   newsletter: boolean;
   created_at: Date;
   updated_at: Date;
 }
+
 export interface EventType {
   id: number;
   title: string;
@@ -85,6 +98,7 @@ export interface EventType {
   description: string;
   status: 'Ouvert' | 'Fermer';
 }
+
 export interface ParticipantType {
   id: number;
   firstname: string;
@@ -94,19 +108,23 @@ export interface ParticipantType {
   job: string;
   created_at: Date;
 }
+
 export interface ImageType {
   id: number;
   url: string;
   created_at: Date;
 }
+
 export interface RoleType {
   id: number;
   name: string;
 }
+
 export interface TagType {
   id: number;
   name: string;
 }
+
 export interface RatingType {
   score_creativity: number;
   score_technical: number;
@@ -115,6 +133,7 @@ export interface RatingType {
   score_total: number;
   created_at: Date;
 }
+
 export interface LoginType {
   id: number;
   email: string;

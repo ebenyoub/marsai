@@ -1,22 +1,19 @@
 import { Request, Response } from 'express';
-import MovieModel from '../models/movie.model.js';
-import { MovieType } from '../types/type.js';
+import movieModel from '../models/movie.model.js';
+import { sendError } from '../utils.js';
 
-const getAllMovies = async (req: Request, res: Response) => {
-  try {
-    const results = await MovieModel.findAll();
-    if (results.length === 0) {
-      res.status(404).json({ success: false, message: "Aucune video n'a ete trouve." });
-    }
-    res.status(201).json({
-      success: true,
-      data: results,
-      message: 'Liste des films trouvé',
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Erreur SERVEUR', error });
-  }
+const getAllMovies = async (_req: Request, res: Response) => {
+  const results = await movieModel.findAll();
+
+  if (results.length === 0) sendError("Aucune vidéo n'a été trouvée.");
+
+  res.status(200).json({
+    success: true,
+    data: results,
+    message: 'Liste des films trouvé',
+  });
 };
+
 //--------------------------------------------------------------------------------
 
 export default {

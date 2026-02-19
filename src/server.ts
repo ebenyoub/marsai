@@ -1,16 +1,20 @@
-import express, { NextFunction, Request, Response } from 'express';
-import userRoutes from './routes/user.routes.js';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
-import movieRouter from './routes/movie.router.js';
 import { testDbConnection } from './config/database.js';
-import festivalRoutes from './routes/festival.route.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
+import FestivalRoutes from './routes/festival.route.js';
+import CollaboratorRoutes from './routes/collaborator.route.js';
+import DirectorRoutes from './routes/director.route.js';
+import UserRoutes from './routes/user.routes.js';
+import AuthRoutes from './routes/auth.route.js';
+import MovieRoutes from './routes/movie.router.js';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(express.json());
+app.use(express.json()); // Middleware pour lire le JSON
 
 const startServer = async () => {
   try {
@@ -36,8 +40,19 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('Serveur MarsAI en mode ESM (EcmaScript Modules) !');
 });
 
-app.use('/users', userRoutes);
-app.use('/movies', movieRouter);
-app.use('/festivals', festivalRoutes);
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
+
+app.use('/users', UserRoutes);
+app.use('/movies', MovieRoutes);
+app.use("/festivals", FestivalRoutes);
+app.use("/collaborators", CollaboratorRoutes);
+app.use("/directors", DirectorRoutes)
+
+app.use('/festivals', FestivalRoutes);
+app.use('/collaborators', CollaboratorRoutes);
+app.use('/directors', DirectorRoutes);
+app.use('/auth', AuthRoutes);
 
 app.use(errorMiddleware);
