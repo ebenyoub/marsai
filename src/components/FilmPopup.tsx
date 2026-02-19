@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import Badge from './ui/Badge';
 import Popup from './ui/Popup';
 import { MockFilm } from './utils/movieMock';
 
@@ -10,6 +12,8 @@ interface FilmPopupProps {
 export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
   if (!film) return null;
 
+  const { t } = useTranslation();
+
   return (
     <Popup open={open} onClose={onClose} className="md:max-w-4xl">
       <div className="mb-6 pr-8">
@@ -17,14 +21,8 @@ export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
         <p className="text-muted-foreground mt-2 mb-3 text-lg">{film.director}</p>
 
         <div className="flex flex-wrap gap-3">
-          <span className="rounded-md bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
-            {film.countryName}
-          </span>
-          {film.officialSelection && (
-            <span className="rounded-md bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-600">
-              Sélection Officielle
-            </span>
-          )}
+          <Badge>{film.countryName}</Badge>
+          {film.officialSelection && <Badge variant="green">{t('badge.official')}</Badge>}
         </div>
       </div>
 
@@ -40,12 +38,7 @@ export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
 
       <div className="flex flex-wrap gap-2">
         {film.aiTools.map(tool => (
-          <span
-            key={tool}
-            className="rounded-full border border-purple-200 bg-transparent px-3 py-1 text-xs font-medium text-purple-600"
-          >
-            {tool}
-          </span>
+          <Badge key={tool}>{tool}</Badge>
         ))}
       </div>
     </Popup>

@@ -8,6 +8,7 @@
   "nav.language": "Select Language",
   "button.connect": "Login",
   "button.signin": "Sign in",
+  "button.logout": "Log out",
   "super-admin": "Super-Admin",
 
   "common.save": "Save",
@@ -78,17 +79,23 @@
     }
   },
 
-  "ai.script": "Script",
-  "ai.image": "Image",
-  "ai.video": "Video",
-  "ai.sound": "Sound",
-
-  "form.remember": "Remember me",
-  "form.password_standart": "Minimum 6 caracters",
+  "form.subtitle": "Sign in to your account",
+  "form.title": "Sign In",
   "form.pass": "Password",
   "form.forgot_pass": "Forgot password?",
   "form.footer": "Don't have an account?",
   "form.event": "Register for Events",
+  "form.connection.error": "Connection error",
+
+  "errors": {
+    "required": "This field is required",
+    "invalid_email": "Please enter a valid email address",
+    "invalid_url": "Invalid URL (must start with https://)",
+    "invalid_date": "Please enter a valid date",
+    "select_option": "Please select an option",
+    "password_too_short": "Password must be at least 6 characters",
+    "password_complexity": "Password must contain uppercase and numbers"
+  },
 
   "admin.title": "Super Admin Dashboard",
   "admin.festival.instance": "Festival Instance",

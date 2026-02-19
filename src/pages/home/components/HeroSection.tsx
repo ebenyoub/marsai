@@ -1,12 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Upload } from 'lucide-react';
-// Ajout de LogIn pour le deuxième bouton
 import heroImage from '@/assets/hero.jpg';
-// On importe le décompte
-import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import CountDown from '@/components/ui/CountDown';
-// On importe ta Card
-import Button from '@/components/ui/button';
 
 export default function HeroSection() {
   const { t } = useTranslation();

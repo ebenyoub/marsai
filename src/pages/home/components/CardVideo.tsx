@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import PlayIcon from '@/assets/PlayIcon';
 import Badge from '@/components/ui/Badge';
-import Card from '@/components/ui/Card';
+import { Card } from '@/components/ui/Card';
 
 interface FilmType {
   id: number;
@@ -19,13 +19,15 @@ interface FilmType {
 
 interface CardVideoProps {
   film: FilmType;
+  onClick: () => void;
 }
 
-function CardVideo({ film }: CardVideoProps) {
-  const { t } = useTranslation();
+function CardVideo({ film, onClick }: CardVideoProps) {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
   return (
-    <Card className="group hover:shadow-primary/20 w-full overflow-hidden hover:shadow-lg">
+    <Card className="group hover:shadow-primary/20 w-full overflow-hidden hover:shadow-lg" onClick={onClick}>
       <figure>
         <div className="relative">
           <img
@@ -46,7 +48,7 @@ function CardVideo({ film }: CardVideoProps) {
           </div>
         </div>
         <figcaption className="px-6 pt-4 pb-3">
-          <h3 className="group-hover:text-primary">{film.title}</h3>
+          <h3 className="group-hover:text-primary">{currentLanguage === 'fr' ? film.title : film.titleEn}</h3>
           <p className="text-muted-foreground mb-2 text-sm">{film.director}</p>
           <div className="flex gap-2 py-0.5">
             {film.aiTools.map((tool, index) => (

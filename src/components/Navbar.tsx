@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { LogIn, Menu, X } from 'lucide-react';
+import { LogIn, LogOut, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { MarsAILogo } from './MarsAILogo.js';
-import { LanguageSwitcher } from './ui/LanguageSwitcher.js';
-import { MobileLanguageSwitcher } from './ui/MobileLanguageSwitcher.js';
+import { LanguageSwitcher, MobileLanguageSwitcher } from './ui/LanguageSwitcher.js';
 import Button from './ui/button.js';
 
 export function Navbar() {
   const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [token, setToken] = useState(() => localStorage.getItem('token'));
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+  };
 
   return (
     <nav className="bg-card/95 border-border/50 sticky z-50 border-b py-3 backdrop-blur-md">
@@ -68,14 +73,12 @@ export function Navbar() {
           <div className="bg-border/50 h-6 w-px" role="separator" aria-hidden="true" />
 
           {/* Connexion Button - Highlighted */}
-          <NavLink to="/login">
-            {({ isActive }) => (
-              <Button variant={isActive ? 'green' : 'connexion'} aria-label={t('button.connect')}>
-                <LogIn className="mr-1.5 h-4 w-4" aria-hidden="true" />
-                {t('button.connect')}
-              </Button>
-            )}
-          </NavLink>
+          {token && (
+            <Button onClick={handleLogout} variant={'destructive'} aria-label={t('button.logout')}>
+              <LogOut className="mr-1.5 h-4 w-4" aria-hidden="true" />
+              {t('button.logout')}
+            </Button>
+          )}
         </div>
 
         {/* Desktop Right Section - Register + Language */}
