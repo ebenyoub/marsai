@@ -1,6 +1,7 @@
 import { useStepper } from '../submission/components/StepRule';
 import ProgressBarComponent from './components/ProgressBarComponent';
 import SubmitForm01 from './components/SubmitForm01';
+import SubmitForm02 from './components/SubmitForm02';
 
 export function SubmissionForm() {
   const { currentStep, steps, progress, nextStep, prevStep, validateStep } = useStepper();
@@ -22,8 +23,9 @@ export function SubmissionForm() {
       <div className="m-auto mt-10 w-4xl">
         <ProgressBarComponent steps={steps} currentStep={currentStep} variant="purple" progress={progress} />
       </div>
-      <div className="p-10">
+      <div className="flex flex-col gap-10 p-10">
         <SubmitForm01 />
+        <SubmitForm02 />
       </div>
     </>
   );
