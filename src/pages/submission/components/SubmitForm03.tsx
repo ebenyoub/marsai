@@ -1,18 +1,15 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import RadioGroup, { RadioGroupItem } from '@/components/ui/RadioGroup';
-import Form, { FormGroup, Input, Label, TextArea } from '@/components/ui/form';
+import Form, { FormGroup, Label, TextArea } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { identitySchema } from '@/schemas/identityForm.schema';
 
 export function SubmitForm03() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const schema = identitySchema(t);
-  const [loading, setLoading] = useState(false);
+  
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleSubmit, values } = useForm(
     {
       civility: '',
       firstName: '',
@@ -36,8 +33,7 @@ export function SubmitForm03() {
     schema
   );
 
-  const onSubmit = async (formValues: typeof values) => {
-    const API_URL = import.meta.env.VITE_API_URL;
+  const onSubmit = async () => {
   };
   return (
     <>

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup';
+import { AlertCircle, ChevronRight } from 'lucide-react';
 import Button from '@/components/ui/button';
-import Form, { FormGroup, Input, Label } from '@/components/ui/form';
+import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { identitySchema } from '@/schemas/identityForm.schema';
 
@@ -58,7 +59,7 @@ function SubmitForm() {
       }
 
       const data = await response.json();
-      console.log('success:', data);
+      console.error('success:', data);
 
       localStorage.setItem('token', data.token);
       navigate('/');
@@ -69,15 +70,17 @@ function SubmitForm() {
     }
   };
 
+  const hasErrors = Object.keys(errors).length > 0;
+
   return (
     <>
       <Form noValidate={true} className="m-auto w-4xl space-y-6 p-10" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <h2 className="pb-3 text-2xl font-semibold">
-            <span className="text-primary">Étape 1: </span>
-            Identité
+            <span className="text-primary">{t('submit.step')} 1: </span>
+            {t('submit.step1.title')}
           </h2>
-          <p className="text-muted-foreground">Vos informations personnelles</p>
+          <p className="text-muted-foreground">{t('submit.step1.description')}</p>
         </div>
         <div className="space-y-2">
           <Label className="text-base">
@@ -103,33 +106,35 @@ function SubmitForm() {
 
         <div className="grid grid-cols-2 gap-4">
           <FormGroup>
-            <Label required>Prénom</Label>
+            <Label required>{t('submit.step1.firstname')}</Label>
             <Input
               name="firstName"
               value={values.firstName}
               onChange={handleChange}
               placeholder={t('placeholder.submitform1.firstname')}
             />
-            {errors.firstName && <p className="mt-1 text-xs text-red-500">{errors.firstName}</p>}
+            {errors.firstName && <ErrorParagraph>{errors.firstName}</ErrorParagraph>}
           </FormGroup>
           <FormGroup>
-            <Label required>Nom</Label>
+            <Label required>{t('submit.step1.lastname')}</Label>
             <Input
               name="lastName"
               value={values.lastName}
               onChange={handleChange}
               placeholder={t('placeholder.submitform1.lastname')}
             />
-            {errors.lastName && <p className="mt-1 text-xs text-red-500">{errors.lastName}</p>}
+            {errors.lastName && <ErrorParagraph>{errors.lastName}</ErrorParagraph>}
           </FormGroup>
         </div>
+
         <FormGroup>
-          <Label required>Date de naissance</Label>
+          <Label required>{t('submit.step1.birthdate')}</Label>
           <Input type="date" name="birthDate" value={values.birthDate} onChange={handleChange} />
-          {errors.birthDate && <p className="mt-1 text-xs text-red-500">{errors.birthDate}</p>}
+          {errors.birthDate && <ErrorParagraph>{errors.birthDate}</ErrorParagraph>}
         </FormGroup>
+
         <FormGroup>
-          <Label required>Email</Label>
+          <Label required>{t('submit.step1.email')}</Label>
           <Input
             type="email"
             name="email"
@@ -137,10 +142,11 @@ function SubmitForm() {
             onChange={handleChange}
             placeholder={t('placeholder.submitform1.email')}
           />
-          {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+          {errors.email && <ErrorParagraph>{errors.email}</ErrorParagraph>}
         </FormGroup>
+
         <FormGroup>
-          <Label required>Mobile</Label>
+          <Label required>{t('submit.step1.mobile')}</Label>
           <Input
             type="tel"
             name="mobile"
@@ -148,10 +154,11 @@ function SubmitForm() {
             onChange={handleChange}
             placeholder={t('placeholder.submitform1.mobile')}
           />
-          {errors.mobile && <p className="mt-1 text-xs text-red-500">{errors.mobile}</p>}
+          {errors.mobile && <ErrorParagraph>{errors.mobile}</ErrorParagraph>}
         </FormGroup>
+
         <FormGroup>
-          <Label required>Adresse</Label>
+          <Label required>{t('submit.step1.address')}</Label>
           <Input
             type="text"
             name="address"
@@ -159,11 +166,12 @@ function SubmitForm() {
             onChange={handleChange}
             placeholder={t('placeholder.submitform1.address')}
           />
-          {errors.address && <p className="mt-1 text-xs text-red-500">{errors.address}</p>}
+          {errors.address && <ErrorParagraph>{errors.address}</ErrorParagraph>}
         </FormGroup>
+
         <div className="grid grid-cols-3 gap-4">
           <FormGroup>
-            <Label required>Code Postal</Label>
+            <Label required>{t('submit.step1.zip')}</Label>
             <Input
               type="text"
               name="postCode"
@@ -171,10 +179,10 @@ function SubmitForm() {
               onChange={handleChange}
               placeholder={t('placeholder.submitform1.zip')}
             />
-            {errors.postCode && <p className="mt-1 text-xs text-red-500">{errors.postCode}</p>}
+            {errors.postCode && <ErrorParagraph>{errors.postCode}</ErrorParagraph>}
           </FormGroup>
           <FormGroup>
-            <Label required>Ville</Label>
+            <Label required>{t('submit.step1.city')}</Label>
             <Input
               type="text"
               name="city"
@@ -182,10 +190,10 @@ function SubmitForm() {
               onChange={handleChange}
               placeholder={t('placeholder.submitform1.city')}
             />
-            {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city}</p>}
+            {errors.city && <ErrorParagraph>{errors.city}</ErrorParagraph>}
           </FormGroup>
           <FormGroup>
-            <Label required>Pays</Label>
+            <Label required>{t('submit.step1.country')}</Label>
             <Input
               type="text"
               name="country"
@@ -193,11 +201,12 @@ function SubmitForm() {
               onChange={handleChange}
               placeholder={t('placeholder.submitform1.country')}
             />
-            {errors.country && <p className="mt-1 text-xs text-red-500">{errors.country}</p>}
+            {errors.country && <ErrorParagraph>{errors.country}</ErrorParagraph>}
           </FormGroup>
         </div>
+
         <FormGroup>
-          <Label required>Métier actuel</Label>
+          <Label required>{t('submit.step1.role')}</Label>
           <Input
             type="text"
             name="job"
@@ -205,13 +214,14 @@ function SubmitForm() {
             onChange={handleChange}
             placeholder={t('placeholder.submitform1.job')}
           />
-          {errors.job && <p className="mt-1 text-xs text-red-500">{errors.job}</p>}
+          {errors.job && <ErrorParagraph>{errors.job}</ErrorParagraph>}
         </FormGroup>
+
         <div className="border-border space-y-4 border-t border-b pt-4 pb-4">
-          <Label>E-réputation & Réseaux (Optionnel)</Label>
+          <Label>{t('submit.step1.social')}</Label>
           <div className="grid grid-cols-2 gap-4">
             <FormGroup>
-              <Label>Youtube</Label>
+              <Label>{t('youtube.name')}</Label>
               <Input
                 type="url"
                 name="youtube"
@@ -219,10 +229,10 @@ function SubmitForm() {
                 onChange={handleChange}
                 placeholder={t('placeholder.submitform1.youtubelink')}
               />
-              {errors.youtube && <p className="mt-1 text-xs text-red-500">{errors.youtube}</p>}
+              {errors.youtube && <ErrorParagraph>{errors.youtube}</ErrorParagraph>}
             </FormGroup>
             <FormGroup>
-              <Label>Instagram</Label>
+              <Label>{t('instagram.name')}</Label>
               <Input
                 type="url"
                 name="instagram"
@@ -230,12 +240,12 @@ function SubmitForm() {
                 onChange={handleChange}
                 placeholder={t('placeholder.submitform1.instagramlink')}
               />
-              {errors.instagram && <p className="mt-1 text-xs text-red-500">{errors.instagram}</p>}
+              {errors.instagram && <ErrorParagraph>{errors.instagram}</ErrorParagraph>}
             </FormGroup>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <FormGroup>
-              <Label>Linkedin</Label>
+              <Label>{t('linkedin.name')}</Label>
               <Input
                 type="url"
                 name="linkedin"
@@ -243,10 +253,10 @@ function SubmitForm() {
                 onChange={handleChange}
                 placeholder={t('placeholder.submitform1.linkedinlink')}
               />
-              {errors.linkedin && <p className="mt-1 text-xs text-red-500">{errors.linkedin}</p>}
+              {errors.linkedin && <ErrorParagraph>{errors.linkedin}</ErrorParagraph>}
             </FormGroup>
             <FormGroup>
-              <Label>Facebook</Label>
+              <Label>{t('facebook.name')}</Label>
               <Input
                 type="url"
                 name="facebook"
@@ -254,11 +264,11 @@ function SubmitForm() {
                 onChange={handleChange}
                 placeholder={t('placeholder.submitform1.facebooklink')}
               />
-              {errors.facebook && <p className="mt-1 text-xs text-red-500">{errors.facebook}</p>}
+              {errors.facebook && <ErrorParagraph>{errors.facebook}</ErrorParagraph>}
             </FormGroup>
           </div>
           <FormGroup>
-            <Label>X (Twitter)</Label>
+            <Label>{t('twitter.name')}</Label>
             <Input
               type="url"
               name="twitter"
@@ -266,45 +276,53 @@ function SubmitForm() {
               onChange={handleChange}
               placeholder={t('placeholder.submitform1.twitterlink')}
             />
-            {errors.twitter && <p className="mt-1 text-xs text-red-500">{errors.twitter}</p>}
+            {errors.twitter && <ErrorParagraph>{errors.twitter}</ErrorParagraph>}
           </FormGroup>
+
           <FormGroup>
-            <Label required> Comment avez vous connu MarsAi ?</Label>
+            <Label required>{t('submit.step1.question')}</Label>
             <select
               name="source"
               value={values.source}
               onChange={handleChange}
               className="border-primary/30 bg-muted focus:ring-primary/40 rounded-md border px-3 py-1.5 transition-all duration-200 focus:ring-2 focus:outline-none disabled:opacity-50"
             >
-              <option value="search">Moteur de recherche</option>
-              <option value="word_of_mouth">Bouche à oreille</option>
-              <option value="press">Presse / Média</option>
-              <option value="festival">Autre festival</option>
-              <option value="partner">Partenaire</option>
-              <option value="other">Autre</option>
+              <option value="">{t('placeholder.submitform1.select')}</option>
+              <option value="search">{t('submit.step1.source.search')}</option>
+              <option value="word_of_mouth">{t('submit.step1.source.word_of_mouth')}</option>
+              <option value="press">{t('submit.step1.source.press')}</option>
+              <option value="festival">{t('submit.step1.source.festival')}</option>
+              <option value="partner">{t('submit.step1.source.partner')}</option>
+              <option value="other">{t('submit.step1.source.other')}</option>
             </select>
-            {errors.source && <p className="mt-1 text-xs text-red-500">{errors.source}</p>}
+            {errors.source && <ErrorParagraph>{errors.source}</ErrorParagraph>}
           </FormGroup>
+
           <FormGroup>
             <div className="flex gap-4">
               <Input type="checkbox" name="newsletter" checked={values.newsletter} onChange={handleChange} />
-              <Label required>Je souhaite recevoir les Newsletter MarsAI</Label>
+              <Label>{t('submit.step1.newsletter')}</Label>
             </div>
-            {errors.newsletter && <p className="mt-1 text-xs text-red-500">{errors.newsletter}</p>}
+            {errors.newsletter && <ErrorParagraph>{errors.newsletter}</ErrorParagraph>}
           </FormGroup>
         </div>
 
-        <div className="flex justify-between">
-          <Button
-            variant={'active'}
-            type="button" // Important: preventing submit
-            onClick={() => navigate(-1)}
-          >
-            {t('common.previous')}
-          </Button>
-          <Button variant={'purple'} type="submit">
-            {loading ? 'Connexion...' : t('common.next')}
-          </Button>
+        <div className="border-border space-y-4 border-t pt-4 pb-4">
+          {hasErrors && (
+            <div className="bg-destructive/10 border-destructive/20 text-destructive mb-4 flex items-center gap-2 rounded-md border p-3 text-sm">
+              <AlertCircle className="size-4" />
+              <p>{t('submit.validation.error')}</p>
+            </div>
+          )}
+          <div className="flex justify-between">
+            <Button variant={'active'} type="button" onClick={() => navigate(-1)}>
+              {t('common.previous')}
+            </Button>
+            <Button variant={'purple'} type="submit">
+              {loading ? t('common.loading') : t('common.next')}
+              <ChevronRight className="size-4" />
+            </Button>
+          </div>
         </div>
       </Form>
     </>

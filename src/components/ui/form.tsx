@@ -57,3 +57,16 @@ export default function Form({ children, className, ...props }: FormProps) {
     </form>
   );
 }
+
+interface ErrorProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function ErrorParagraph({ children, className, ...props }: ErrorProps) {
+  return (
+    <p className={cn('mt-1 text-xs text-red-500', className)} {...props}>
+      {children}
+    </p>
+  );
+}

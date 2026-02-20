@@ -3,21 +3,24 @@ import ProgressBarComponent from './components/ProgressBarComponent';
 import SubmitForm01 from './components/SubmitForm01';
 import SubmitForm02 from './components/SubmitForm02';
 import SubmitForm03 from './components/SubmitForm03';
+import SubmitForm04 from './components/SubmitForm04';
+
+// nextStep, prevStep, validateStep 
 
 export function SubmissionForm() {
-  const { currentStep, steps, progress, nextStep, prevStep, validateStep } = useStepper();
+  const { currentStep, steps, progress} = useStepper();
 
-  let StepComponent;
+  // let StepComponent;
   switch (currentStep) {
     case 1:
-      StepComponent = SubmitForm01;
+      // StepComponent = SubmitForm01;
       break;
     // case 2: StepComponent = Step2; break;
     // case 3: StepComponent = Step3; break;
     // case 4: StepComponent = Step4; break;
     // case 5: StepComponent = Step5; break;
-    default:
-      StepComponent = SubmitForm01;
+    // default:
+      // StepComponent = SubmitForm01;
   }
   return (
     <>
@@ -28,6 +31,7 @@ export function SubmissionForm() {
         <SubmitForm01 />
         <SubmitForm02 />
         <SubmitForm03 />
+        <SubmitForm04 />
       </div>
     </>
   );
