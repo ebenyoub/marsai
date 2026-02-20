@@ -14,7 +14,8 @@ export default function ProgramCard({
   icon: Icon,
   className,
 }: ProgramCardProps) {
-  const activeIconVariant = iconVariant;
+  const baseVariant = variant === 'time_green' ? 'green' : variant === 'time_purple' ? 'purple' : variant;
+  const activeIconVariant = iconVariant || baseVariant;
 
   return (
     <Card className={cn('flex h-full flex-col items-center p-4 text-center', className)} variant={variant}>
