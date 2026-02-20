@@ -9,12 +9,13 @@ import UserRoutes from './routes/user.routes.js';
 import AuthRoutes from './routes/auth.route.js';
 import MovieRoutes from './routes/movie.router.js';
 import cors from 'cors';
+import logger from './config/logger.js';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(express.json()); // Middleware pour lire le JSON
+app.use(express.json());
 
 const startServer = async () => {
   try {
@@ -22,14 +23,14 @@ const startServer = async () => {
 
     app
       .listen(port, () => {
-        console.log(`🚀 Serveur prêt sur http://localhost:${port}`);
+        logger.info(`Serveur prêt sur http://localhost:${port}`);
       })
       .on('error', (err: Error) => {
-        console.error('❌ Impossible de lancer le serveur Express:', err.message);
+        logger.error('Impossible de lancer le serveur Express:', err.message);
         process.exit(1);
       });
   } catch (error) {
-    console.error('💥 Erreur fatale lors du démarrage du serveur:', error);
+    logger.error('Erreur fatale lors du démarrage du serveur:', error);
     process.exit(1);
   }
 };
@@ -37,7 +38,7 @@ const startServer = async () => {
 startServer();
 
 app.get('/', (_req: Request, res: Response) => {
-  res.send('Serveur MarsAI en mode ESM (EcmaScript Modules) !');
+  res.send('Bienvenue sur MarsAI, le festival des futurs souhaitables !');
 });
 
 app.use(cors({

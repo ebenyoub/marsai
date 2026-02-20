@@ -1,18 +1,18 @@
 import { ResultSetHeader } from 'mysql2';
 import db from '../config/database.js';
-import { UserType } from '../types/type.js';
+import { UserRow, UserType } from '../types/type.js';
 
-const findAll = async () => {
+const findAll = async (): Promise<UserRow[]> => {
   const query = 'SELECT * FROM user';
-  const [result] = await db.execute(query);
-  return result as UserType[];
+  const [rows] = await db.execute<UserRow[]>(query);
+  return rows;
 };
 //--------------------------------------------------------------------------------
 
-const findOne = async (id: number) => {
-  const query = 'SELCET * FROM user WHERE id = ?';
-  const [result] = await db.execute(query, [id]);
-  return result as UserType[];
+const findOne = async (id: number): Promise<UserRow | null> => {
+  const query = 'SELECT * FROM user WHERE id = ?';
+  const [result] = await db.execute<UserRow[]>(query, [id]);
+  return result.length > 0 ? result[0] : null;
 };
 //--------------------------------------------------------------------------------
 
@@ -24,14 +24,14 @@ const create = async (user: UserType): Promise<ResultSetHeader> => {
     user.firstname,
     user.lastname,
     user.email,
-    user.hashedPassword,
+    user.password,
     user.festival_id,
   ]);
   return result;
 };
 //--------------------------------------------------------------------------------
 
-const update = async (id: number, data: UserType): Promise<ResultSetHeader> => {
+const update = async (id: number, data: Partial<UserType>): Promise<ResultSetHeader> => {
   const query =
     'UPDATE user SET firstname = ?, lastname = ?, email = ?, password = ?, updated_at = NOW(), festival_id = ? WHERE id = ?';
 
@@ -48,10 +48,10 @@ const update = async (id: number, data: UserType): Promise<ResultSetHeader> => {
 };
 //--------------------------------------------------------------------------------
 
-const deleted = async (id: number) => {
+const deleted = async (id: number): Promise<ResultSetHeader> => {
   const query = 'DELETE FROM user WHERE id = ?';
-  const [result] = await db.execute(query, [id]);
-  return result as ResultSetHeader;
+  const [result] = await db.execute<ResultSetHeader>(query, [id]);
+  return result;
 };
 //--------------------------------------------------------------------------------
 

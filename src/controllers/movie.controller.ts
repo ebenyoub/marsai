@@ -1,12 +1,21 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import movieModel from '../models/movie.model.js';
-import { sendError } from '../utils.js';
+import { RequestEmpty } from '../types/type.js';
+import logger from '../config/logger.js';
 
-const getAllMovies = async (_req: Request, res: Response) => {
+const getAllMovies = async (_req: RequestEmpty, res: Response) => {
   const results = await movieModel.findAll();
 
-  if (results.length === 0) sendError("Aucune vidéo n'a été trouvée.");
+  if (results.length === 0) {
+    logger.warn(`Aucune vidéo n'a été trouvé.`);
+    return res.status(200).json({
+    success: true,
+    data: [],
+    message: 'Aucune vidéo n\'a été trouvé',
+  });
+  }
 
+  logger.info(`${results.length} vidéos ont été trouvées`);
   res.status(200).json({
     success: true,
     data: results,

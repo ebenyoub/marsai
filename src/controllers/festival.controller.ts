@@ -1,39 +1,38 @@
 import { Request, Response } from 'express';
 import festivalModel from '../models/festival.model.js';
-import { FestivalType, Params } from '../types/type.js';
+import { FestivalType, Params, RequestEmpty, RequestParams } from '../types/type.js';
+import { sendError } from '../utils.js';
+import logger from '../config/logger.js';
 
-const getAllFestivals = async (req: Request, res: Response) => {
-  try {
-    const results = await festivalModel.findAll();
-    if (results.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: 'Aucun festival dans la base de donnée',
-      });
-    }
-    return res.status(200).json({ success: true, data: results });
-  } catch (error) {
-    console.error('Erreur lors de la récupération des festivaux : ', error);
-    return res.status(500).json({
-      success: false,
-      message: 'Une erreur interne est survenue sur le serveur.',
-    });
+const getAllFestivals = async (_req: RequestEmpty, res: Response) => {
+  const results = await festivalModel.findAll();
+  if (results.length === 0) {
+    logger.error('Aucun festival dans la base de donné');
+    sendError("Aucun festival dans la base de donné");
   }
+
+  logger.info(`${results.length} festiva${results.length ? 'l' : 'ux'} récupéré.`);
+  return res.status(200).json({
+    success: true,
+    data: results
+  });
 };
 //--------------------------------------------------------------------------------
 
-const getFestivalById = async (req: Request<Params>, res: Response) => {
-  try {
-    const id = req.params.id;
-    const festival = await festivalModel.findById(id);
-    if (festival.length === 0) {
-      return res.status(404).json({ message: 'Aucun festival trouvé' });
-    }
-    res.status(200).json(festival);
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la récupération du festival', error });
+const getFestivalById = async (req: RequestParams<Params>, res: Response) => {
+  const { id } = req.params;
+
+  const festival = await festivalModel.findById(id);
+
+  if (!festival) {
+    logger.error("Aucun festival trouvé");
+    return sendError("Aucun festinal trouvé.")
   }
+
+  logger.info(`Festival "${festival.name}" récupéré avec succès.`);
+  res.status(200).json(festival);
 };
+
 //--------------------------------------------------------------------------------
 
 const createFestival = async (req: Request, res: Response) => {

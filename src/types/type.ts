@@ -1,3 +1,6 @@
+import { RowDataPacket } from "mysql2/promise";
+import { Request } from 'express';
+
 export interface MovieType {
   id?: number;
   title: string;
@@ -145,3 +148,12 @@ export interface AppError extends Error {
   status?: number;
   statusCode?: number;
 }
+
+export type RequestBody<T> = Request<Record<string, never>, Record<string, never>, T>;
+export type RequestParams<P> = Request<P, Record<string, never>, Record<string, never>>;
+export type RequestParamsBody<P, T> = Request<P, Record<string, never>, T>;
+export type RequestEmpty = Request<Record<string, never>, Record<string, never>, Record<string, never>>;
+
+export interface UserRow extends RowDataPacket, UserType { }
+export interface MovieRow extends RowDataPacket, MovieType { }
+export interface FestivalRow extends RowDataPacket, FestivalType { }

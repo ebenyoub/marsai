@@ -1,13 +1,15 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import UserModel from '../models/user.model.js';
-import { Params, UserType } from '../types/type.js';
+import { Params, RequestBody, RequestEmpty, RequestParams, RequestParamsBody, UserType } from '../types/type.js';
 import bcrypt from 'bcrypt';
 import { sendError } from '../utils.js';
+import logger from '../config/logger.js';
 
-const getAllUsers = async (_req: Request, res: Response) => {
+const getAllUsers = async (_req: RequestEmpty, res: Response) => {
   const results = await UserModel.findAll();
 
   if (results.length === 0) {
+    logger.warn('Aucun utilisateur présent dans la base de données');
     return res.status(200).json({
       success: false,
       data: [],
@@ -15,6 +17,7 @@ const getAllUsers = async (_req: Request, res: Response) => {
     });
   }
 
+  logger.info(`${results.length} utilisateurs récupérés avec succès`);
   return res.status(200).json({
     success: true,
     data: results,
@@ -23,29 +26,37 @@ const getAllUsers = async (_req: Request, res: Response) => {
 
 //--------------------------------------------------------------------------------
 
-const getOneUser = async (req: Request<Params>, res: Response) => {
+const getOneUser = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;
-  const results = await UserModel.findOne(id);
+  const user = await UserModel.findOne(id);
 
-  if (!results || results.length === 0) sendError('Cet utilisateur est introuvable.');
+  if (!user) {
+    logger.warn(`L'ID ${id} est introuvable.`);
+    return sendError('Cet utilisateur est introuvable.');
+  }
 
+  logger.info(`Utilisateurs récupéré avec succès`);
   return res.status(200).json({
     success: true,
-    data: results,
+    data: user,
     message: 'Utilisateur trouvé'
   });
 };
 
 //--------------------------------------------------------------------------------
 
-const createUser = async (req: Request<{}, {}, UserType>, res: Response) => {
+const createUser = async (req: RequestBody<UserType>, res: Response) => {
   const { password, ...userData } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   const results = await UserModel.create({ ...userData, password: hashedPassword });
 
-  if (results.affectedRows === 0) sendError('Erreur inscription Utilisateur');
+  if (results.affectedRows === 0) {
+    logger.warn(`Création d'un utilisateur intérompue.`);
+    sendError('Erreur inscription Utilisateur');
+  }
 
   const userId = results.insertId;
+   logger.info(`Nouvel utilisateur créé avec l'id ${userId}.`);
 
   return res.status(201).json({
     success: true,
@@ -56,18 +67,28 @@ const createUser = async (req: Request<{}, {}, UserType>, res: Response) => {
 
 //--------------------------------------------------------------------------------
 
-const updateUser = async (req: Request<Params, {}, UserType>, res: Response) => {
+const updateUser = async (req: RequestParamsBody<Params, UserType>, res: Response) => {
   const { id } = req.params;
   const user = req.body;
 
-  if (!id || !user || !user.email) sendError('Veuillez remplir tous les champs');
+  if (!id || !user || !user.email) {
+    logger.error(`Tous les champs sont requis.`);
+    sendError('Veuillez remplir tous les champs');
+  }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(user.email)) sendError('Format d\'email invalide.');
+  if (!emailRegex.test(user.email)) {
+    logger.error(`Le format de l\'email est invalide.`);
+    sendError('Format d\'email invalide.');
+  }
 
   const results = await UserModel.update(id, user);
-  if (results.affectedRows === 0) sendError('Utilisateur introuvable');
+  if (results.affectedRows === 0) {
+    logger.warn(`L'utilisateur est introuvable.`);
+    sendError('Utilisateur introuvable');
+  }
 
+  logger.info(`Utilisateur modifié avec succès`);
   return res.status(200).json({
     success: true,
     data: results,
@@ -77,13 +98,21 @@ const updateUser = async (req: Request<Params, {}, UserType>, res: Response) => 
 
 //--------------------------------------------------------------------------------
 
-const deleteUser = async (req: Request<Params>, res: Response) => {
+const deleteUser = async (req: RequestBody<UserType>, res: Response) => {
   const { id } = req.params;
-  if (!id) sendError('L\'ID est requis');
+
+  if (!id) {
+    logger.error(`Id manquant.`);
+    sendError('L\'ID est requis');
+  }
 
   const results = await UserModel.deleted(id);
-  if (results.affectedRows === 0) sendError("Utilisateur introuvable.")
+  if (results.affectedRows === 0) {
+    logger.warn(`Utilisateur introuvable`);
+    sendError("Utilisateur introuvable.");
+  }
 
+  logger.info(`Utilisateurs supprimé avec succès`);
   return res.status(200).json({
     success: true,
     data: results,

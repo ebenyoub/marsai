@@ -1,17 +1,17 @@
-import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
+import { ResultSetHeader } from 'mysql2/promise';
 import db from '../config/database.js';
-import { MovieType } from '../types/type.js';
+import { MovieRow, MovieType } from '../types/type.js';
 
-const findAll = async () => {
-  const [result] = await db.execute('SELECT * FROM movie');
-  return result as MovieType[];
+const findAll = async (): Promise<MovieType[]> => {
+  const [result] = await db.execute<MovieRow[]>('SELECT * FROM movie');
+  return result;
 };
 
 //--------------------------------------------------------------------------------
 
-const findById = async (id: number) => {
-  const [rows] = await db.execute<RowDataPacket[]>('SELECT * FROM movie WHERE id = ?', [id]);
-  return rows[0] as MovieType;
+const findById = async (id: number): Promise<MovieType | null> => {
+  const [rows] = await db.execute<MovieRow[]>('SELECT * FROM movie WHERE id = ?', [id]);
+  return rows.length > 0 ? rows[0] : null;
 };
 
 //--------------------------------------------------------------------------------
