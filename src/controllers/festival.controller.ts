@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import festivalModel from '../models/festival.model.js';
-import { FestivalType, Params, RequestEmpty, RequestParams } from '../types/type.js';
+import { FestivalType, Params, RequestBody, RequestEmpty, RequestParams, RequestParamsBody } from '../types/type.js';
 import { sendError } from '../utils.js';
 import logger from '../config/logger.js';
 
@@ -35,56 +35,53 @@ const getFestivalById = async (req: RequestParams<Params>, res: Response) => {
 
 //--------------------------------------------------------------------------------
 
-const createFestival = async (req: Request, res: Response) => {
-  try {
-    const festival: FestivalType = req.body;
-    const results = await festivalModel.create(festival);
-    if (!results) {
-      return res.status(400).json({
-        success: false,
-        message: 'Erreur lors de la création du Festival',
-      });
-    }
-    return res.status(201).json({
-      success: true,
-      data: results,
-      message: 'Festival créé avec succès',
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: 'Erreur lors de la création du réalisateur',
-    });
+const createFestival = async (req: RequestBody<FestivalType>, res: Response) => {
+  const festival: FestivalType = req.body;
+
+  const results = await festivalModel.create(festival);
+  if (results.affectedRows === 0) {
+    logger.error("Error lors d ela création du festival.");
+    return sendError("Erreur lors de la création du Festival");
   }
+
+  logger.info(`Le festival ${festival.name} a été créé.`)
+  return res.status(201).json({
+    success: true,
+    data: results,
+    message: 'Festival créé avec succès',
+  });
 };
 //--------------------------------------------------------------------------------
 
-const updateFestival = async (req: Request<Params>, res: Response) => {
-  try {
-    const id = req.params.id;
-    const festival: FestivalType = req.body;
-    const results = await festivalModel.update(id, festival);
-    if (!results) {
-      return res.status(404).json({ message: 'Festival non trouvé' });
-    }
-    res.status(201).json({ message: 'Festival mis à jour avec succès' });
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la mise à jour du festival', error });
+const updateFestival = async (req: RequestParamsBody<Params, Partial<FestivalType>>, res: Response) => {
+  const { id } = req.params;
+  const festival = req.body;
+
+  const results = await festivalModel.update(id, festival);
+  if (results.affectedRows === 0) {
+    logger.error("Le festival n'a pas été trouvé.")
+    return sendError("Le festival n'a pas été trouvé.");
   }
+
+  logger.info(`Le festival ${festival.name} a été modifié.`)
+  res.status(201).json({
+    success: true,
+    message: 'Festival mis à jour avec succès'
+  });
 };
 //--------------------------------------------------------------------------------
 
-const deleteFestival = async (req: Request<Params>, res: Response) => {
-  try {
-    const id = req.params.id;
-    const deletedFestival = await festivalModel.deleted(id);
-    if (!deletedFestival) {
-      return res.status(404).json({ message: 'Festival non trouvé' });
-    }
-    res.status(200).json({ message: 'Festival supprimé avec succès' });
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la suppression du festival', error });
+const deleteFestival = async (req: RequestParams<Params>, res: Response) => {
+  const { id } = req.params;
+
+  const results = await festivalModel.deleted(id);
+  if (results.affectedRows === 0) {
+    logger.error("Le festival n'a pas été trouvé.")
+    return sendError("Le festival n'a pas été trouvé.");
   }
+
+  logger.info(`Le festival ${id} a été créé.`)
+  res.status(200).json({ message: 'Festival supprimé avec succès' });
 };
 //--------------------------------------------------------------------------------
 export default {

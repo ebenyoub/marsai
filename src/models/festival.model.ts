@@ -35,12 +35,12 @@ const create = async (festival: FestivalType): Promise<ResultSetHeader> => {
 const update = async (id: number, data: Partial<FestivalType>): Promise<ResultSetHeader> => {
   const query = `UPDATE festival SET name = ?, description = ?, start_at = ?, end_at = ?, status = ?, booking_total = ? WHERE id = ?`;
   const [result] = await db.execute<ResultSetHeader>(query, [
-    data.name,
-    data.description,
-    data.start_at,
-    data.end_at,
-    data.status,
-    data.booking_total,
+    data.name || null,
+    data.description || null,
+    data.start_at || null,
+    data.end_at || null,
+    data.status || null,
+    data.booking_total || null,
     id,
   ]);
   return result;

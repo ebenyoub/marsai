@@ -36,11 +36,11 @@ const update = async (id: number, data: Partial<UserType>): Promise<ResultSetHea
     'UPDATE user SET firstname = ?, lastname = ?, email = ?, password = ?, updated_at = NOW(), festival_id = ? WHERE id = ?';
 
   const [result] = await db.execute<ResultSetHeader>(query, [
-    data.firstname,
-    data.lastname,
-    data.email,
-    data.password,
-    data.festival_id,
+    data.firstname || null,
+    data.lastname || null,
+    data.email || null,
+    data.password || null,
+    data.festival_id || null,
     id,
   ]);
 
