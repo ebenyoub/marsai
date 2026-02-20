@@ -12,7 +12,7 @@ const useForm = <T extends Record<string, FormValue>>(initialValues: T, schema?:
     const target = event.target as HTMLInputElement;
     const { name, value, type, checked, files } = target;
 
-    let newValue: any = value;
+    let newValue: FormValue = value;
 
     if (type === 'checkbox') {
       newValue = checked;

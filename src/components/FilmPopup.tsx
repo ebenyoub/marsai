@@ -10,10 +10,8 @@ interface FilmPopupProps {
 }
 
 export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
-  if (!film) return null;
-
   const { t } = useTranslation();
-
+  if (!film) return null;
   return (
     <Popup open={open} onClose={onClose} className="md:max-w-4xl">
       <div className="mb-6 pr-8">

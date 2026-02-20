@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup';
 import { AlertCircle, ChevronRight } from 'lucide-react';
 import Button from '@/components/ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
@@ -58,7 +59,7 @@ function SubmitForm() {
       }
 
       const data = await response.json();
-      console.log('success:', data);
+      console.error('success:', data);
 
       localStorage.setItem('token', data.token);
       navigate('/');
@@ -81,31 +82,27 @@ function SubmitForm() {
           </h2>
           <p className="text-muted-foreground">{t('submit.step1.description')}</p>
         </div>
-
-        <FormGroup>
-          <Label>{t('submit.step1.civility')}</Label>
-          <div className="flex gap-4">
-            <Label>{t('submit.step1.civility1')}</Label>
-            <Input
-              type="radio"
-              name="civility"
-              value="M."
-              checked={values.civility === 'M.'}
-              onChange={handleChange}
-              className="border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50"
-            />
-            <Label>{t('submit.step1.civility2')}</Label>
-            <Input
-              type="radio"
-              name="civility"
-              value="Mme"
-              checked={values.civility === 'Mme'}
-              onChange={handleChange}
-              className="border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50"
-            />
-          </div>
-          {errors.civility && <ErrorParagraph>{errors.civility}</ErrorParagraph>}
-        </FormGroup>
+        <div className="space-y-2">
+          <Label className="text-base">
+            Civilité <span className="text-primary">*</span>
+          </Label>
+          <RadioGroup
+            value={values.civility}
+            onValueChange={value =>
+              handleChange({ target: { name: 'civility', value } } as unknown as React.ChangeEvent<HTMLInputElement>)
+            }
+            className="flex gap-4"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="M" id="m" />
+              <Label htmlFor="m">M.</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="Mme" id="mme" />
+              <Label htmlFor="mme">Mme</Label>
+            </div>
+          </RadioGroup>
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <FormGroup>
