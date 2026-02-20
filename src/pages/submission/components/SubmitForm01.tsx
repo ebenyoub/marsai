@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { AlertCircle, ChevronRight } from 'lucide-react';
 import Button from '@/components/ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
@@ -67,6 +68,8 @@ function SubmitForm() {
       setLoading(false);
     }
   };
+
+  const hasErrors = Object.keys(errors).length > 0;
 
   return (
     <>
@@ -307,13 +310,22 @@ function SubmitForm() {
           </FormGroup>
         </div>
 
-        <div className="flex justify-between">
-          <Button variant={'active'} type="button" onClick={() => navigate(-1)}>
-            {t('common.previous')}
-          </Button>
-          <Button variant={'purple'} type="submit">
-            {loading ? t('common.loading') : t('common.next')}
-          </Button>
+        <div className="border-border space-y-4 border-t pt-4 pb-4">
+          {hasErrors && (
+            <div className="bg-destructive/10 border-destructive/20 text-destructive mb-4 flex items-center gap-2 rounded-md border p-3 text-sm">
+              <AlertCircle className="size-4" />
+              <p>{t('submit.validation.error')}</p>
+            </div>
+          )}
+          <div className="flex justify-between">
+            <Button variant={'active'} type="button" onClick={() => navigate(-1)}>
+              {t('common.previous')}
+            </Button>
+            <Button variant={'purple'} type="submit">
+              {loading ? t('common.loading') : t('common.next')}
+              <ChevronRight className="size-4" />
+            </Button>
+          </div>
         </div>
       </Form>
     </>
