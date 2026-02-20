@@ -95,7 +95,10 @@
     "select_option": "Please select an option",
     "password_too_short": "Password must be at least 6 characters",
     "password_complexity": "Password must contain uppercase and numbers",
-    "max_length": "Maximum 300 characters allowed"
+    "max_length": "Maximum 300 characters allowed",
+    "errors.invalid_url": "Please enter a valid URL",
+    "errors.invalid_youtube": "The URL must be a YouTube link",
+    "errors.max_gallery": "You cannot upload more than 3 images"
   },
 
   "admin.title": "Super Admin Dashboard",
@@ -169,7 +172,6 @@
   "submit.step4.title": "Media",
   "submit.step4.description": "Files and multimedia content",
   "submit.step4.youtube": "YouTube URL",
-  "submit.step4.youtube.hint": "Upload your film to YouTube (unlisted or public)",
   "submit.step4.poster": "Film Poster",
   "submit.step4.poster.hint": "JPG format, max 2MB",
   "submit.step4.subtitles": "Subtitles File",
@@ -273,6 +275,14 @@
   "submit.step2.tags": "Semantic tags \"Desirable Futures\"",
   "submit.step2.synopsis.label.fr": "Original language synopsis",
   "submit.step2.synopsis.label.en": "English synopsis",
+  "submit.step4.youtube.label": "YouTube URL of the film",
+  "placeholder.submitform4.youtube": "https://youtube.com/watch?v=...",
+  "submit.step4.youtube.hint": "Format: Public or Unlisted",
+  "submit.step4.subtitles.checkbox": "Presence of voice or text requiring subtitles",
+  "submit.step4.thumbnail.label": "Official Thumbnail (16:9)",
+  "submit.step4.thumbnail.hint": "Recommended format: 1920x1080px, JPG, PNG or GIF",
+  "submit.step4.gallery.label": "Media Gallery (up to 3 screenshots)",
+  "submit.step4.gallery.hint": "Optional - Maximum 3 images",
 
   "youtube.name": "Youtube",
   "instagram.name": "Instagram",
