@@ -88,7 +88,8 @@
     "invalid_date": "Veuillez entrer une date valide",
     "select_option": "Veuillez sélectionner une option",
     "password_too_short": "Le mot de passe doit contenir au moins 6 caractères",
-    "password_complexity": "Le mot de passe doit contenir des majuscules et des chiffres"
+    "password_complexity": "Le mot de passe doit contenir des majuscules et des chiffres",
+    "max_length": "Maximum 300 caractères autorisés"
   },
 
   "form.subtitle": "Connectez-vous à votre compte",
@@ -263,13 +264,17 @@
   "submit.step1.source.festival": "Autre festival",
   "submit.step1.source.partner": "Partenaire",
   "submit.step1.source.other": "Autre",
+  "submit.step2.language": "Langue parlée/principale du film",
+  "submit.step2.tags": "Tags sémantiques \"Futurs souhaitables\"",
+  "submit.step2.synopsis.label.fr": "Synopsis langue originale",
+  "submit.step2.synopsis.label.en": "Synopsis anglais",
 
   "placeholder.submitform2.title.fr": "Le titre de votre film",
   "placeholder.submitform2.title.en": "Titre en anglais",
   "placeholder.submitform2.duration": "60",
   "placeholder.submitform2.language": "Sélectionnez une langue",
   "placeholder.submitform2.tag": "Écologie, Technologie, Humanisme, Innovation…",
-  "placeholder.submitform2.synopsis.fr": "Décrivez votre film en quelques phrases…",
+  "placeholder.submitform2.synopsis": "Décrivez votre film en quelques phrases…",
   "placeholder.submitform2.synopsis.en": "Décrivez votre film en quelques phrases (en anglais)…",
 
   "youtube.name": "Youtube",

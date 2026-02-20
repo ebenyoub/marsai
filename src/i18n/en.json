@@ -94,7 +94,8 @@
     "invalid_date": "Please enter a valid date",
     "select_option": "Please select an option",
     "password_too_short": "Password must be at least 6 characters",
-    "password_complexity": "Password must contain uppercase and numbers"
+    "password_complexity": "Password must contain uppercase and numbers",
+    "max_length": "Maximum 300 characters allowed"
   },
 
   "admin.title": "Super Admin Dashboard",
@@ -266,8 +267,12 @@
   "placeholder.submitform2.duration": "60",
   "placeholder.submitform2.language": "Select a language",
   "placeholder.submitform2.tag": "Ecology, Technology, Humanism, Innovation...",
-  "placeholder.submitform2.synopsis.fr": "Describe your film in a few sentences...",
+  "placeholder.submitform2.synopsis": "Describe your film in a few sentences...",
   "placeholder.submitform2.synopsis.en": "Describe your film in a few sentences...",
+  "submit.step2.language": "Spoken/main language of the film",
+  "submit.step2.tags": "Semantic tags \"Desirable Futures\"",
+  "submit.step2.synopsis.label.fr": "Original language synopsis",
+  "submit.step2.synopsis.label.en": "English synopsis",
 
   "youtube.name": "Youtube",
   "instagram.name": "Instagram",
