@@ -8,7 +8,9 @@ const useForm = <T extends Record<string, FormValue>>(initialValues: T, schema?:
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Errors<T>>({});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>): void => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLDivElement>
+  ): void => {
     const { name, value, type, checked } = event.target as HTMLInputElement;
 
     setValues(prev => ({

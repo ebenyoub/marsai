@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup';
 import Button from '@/components/ui/button';
 import Form, { FormGroup, Input, Label } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
@@ -78,31 +79,28 @@ function SubmitForm() {
           </h2>
           <p className="text-muted-foreground">Vos informations personnelles</p>
         </div>
+        <div className="space-y-2">
+          <Label className="text-base">
+            Civilité <span className="text-primary">*</span>
+          </Label>
+          <RadioGroup
+            value={values.civility}
+            onValueChange={value =>
+              handleChange({ target: { name: 'civility', value } } as unknown as React.ChangeEvent<HTMLInputElement>)
+            }
+            className="flex gap-4"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="M" id="m" />
+              <Label htmlFor="m">M.</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="Mme" id="mme" />
+              <Label htmlFor="mme">Mme</Label>
+            </div>
+          </RadioGroup>
+        </div>
 
-        <FormGroup>
-          <Label>Civilité</Label>
-          <div className="flex gap-4">
-            <Label>M.</Label>
-            <Input
-              type="radio"
-              name="civility" // REQUIRED
-              value="M."
-              checked={values.civility === 'M.'}
-              onChange={handleChange}
-              className="border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50"
-            />
-            <Label>Mme</Label>
-            <Input
-              type="radio"
-              name="civility"
-              value="Mme"
-              checked={values.civility === 'Mme'}
-              onChange={handleChange}
-              className="border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50"
-            />
-          </div>
-          {errors.civility && <p className="mt-1 text-xs text-red-500">{errors.civility}</p>}
-        </FormGroup>
         <div className="grid grid-cols-2 gap-4">
           <FormGroup>
             <Label required>Prénom</Label>
@@ -110,7 +108,7 @@ function SubmitForm() {
               name="firstName"
               value={values.firstName}
               onChange={handleChange}
-              placeholder={t('placeholder.submitform.firstname')}
+              placeholder={t('placeholder.submitform1.firstname')}
             />
             {errors.firstName && <p className="mt-1 text-xs text-red-500">{errors.firstName}</p>}
           </FormGroup>
@@ -120,7 +118,7 @@ function SubmitForm() {
               name="lastName"
               value={values.lastName}
               onChange={handleChange}
-              placeholder={t('placeholder.submitform.lastname')}
+              placeholder={t('placeholder.submitform1.lastname')}
             />
             {errors.lastName && <p className="mt-1 text-xs text-red-500">{errors.lastName}</p>}
           </FormGroup>
@@ -137,7 +135,7 @@ function SubmitForm() {
             name="email"
             value={values.email}
             onChange={handleChange}
-            placeholder={t('placeholder.submitform.email')}
+            placeholder={t('placeholder.submitform1.email')}
           />
           {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
         </FormGroup>
@@ -148,7 +146,7 @@ function SubmitForm() {
             name="mobile"
             value={values.mobile}
             onChange={handleChange}
-            placeholder={t('placeholder.submitform.mobile')}
+            placeholder={t('placeholder.submitform1.mobile')}
           />
           {errors.mobile && <p className="mt-1 text-xs text-red-500">{errors.mobile}</p>}
         </FormGroup>
@@ -159,7 +157,7 @@ function SubmitForm() {
             name="address"
             value={values.address}
             onChange={handleChange}
-            placeholder={t('placeholder.submitform.address')}
+            placeholder={t('placeholder.submitform1.address')}
           />
           {errors.address && <p className="mt-1 text-xs text-red-500">{errors.address}</p>}
         </FormGroup>
@@ -171,7 +169,7 @@ function SubmitForm() {
               name="postCode"
               value={values.postCode}
               onChange={handleChange}
-              placeholder={t('placeholder.submitform.zip')}
+              placeholder={t('placeholder.submitform1.zip')}
             />
             {errors.postCode && <p className="mt-1 text-xs text-red-500">{errors.postCode}</p>}
           </FormGroup>
@@ -182,7 +180,7 @@ function SubmitForm() {
               name="city"
               value={values.city}
               onChange={handleChange}
-              placeholder={t('placeholder.submitform.city')}
+              placeholder={t('placeholder.submitform1.city')}
             />
             {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city}</p>}
           </FormGroup>
@@ -193,7 +191,7 @@ function SubmitForm() {
               name="country"
               value={values.country}
               onChange={handleChange}
-              placeholder={t('placeholder.submitform.country')}
+              placeholder={t('placeholder.submitform1.country')}
             />
             {errors.country && <p className="mt-1 text-xs text-red-500">{errors.country}</p>}
           </FormGroup>
@@ -205,7 +203,7 @@ function SubmitForm() {
             name="job"
             value={values.job}
             onChange={handleChange}
-            placeholder={t('placeholder.submitform.job')}
+            placeholder={t('placeholder.submitform1.job')}
           />
           {errors.job && <p className="mt-1 text-xs text-red-500">{errors.job}</p>}
         </FormGroup>
@@ -219,7 +217,7 @@ function SubmitForm() {
                 name="youtube"
                 value={values.youtube}
                 onChange={handleChange}
-                placeholder={t('placeholder.submitform.youtubelink')}
+                placeholder={t('placeholder.submitform1.youtubelink')}
               />
               {errors.youtube && <p className="mt-1 text-xs text-red-500">{errors.youtube}</p>}
             </FormGroup>
@@ -230,7 +228,7 @@ function SubmitForm() {
                 name="instagram"
                 value={values.instagram}
                 onChange={handleChange}
-                placeholder={t('placeholder.submitform.instagramlink')}
+                placeholder={t('placeholder.submitform1.instagramlink')}
               />
               {errors.instagram && <p className="mt-1 text-xs text-red-500">{errors.instagram}</p>}
             </FormGroup>
@@ -243,7 +241,7 @@ function SubmitForm() {
                 name="linkedin"
                 value={values.linkedin}
                 onChange={handleChange}
-                placeholder={t('placeholder.submitform.linkedinlink')}
+                placeholder={t('placeholder.submitform1.linkedinlink')}
               />
               {errors.linkedin && <p className="mt-1 text-xs text-red-500">{errors.linkedin}</p>}
             </FormGroup>
@@ -254,7 +252,7 @@ function SubmitForm() {
                 name="facebook"
                 value={values.facebook}
                 onChange={handleChange}
-                placeholder={t('placeholder.submitform.facebooklink')}
+                placeholder={t('placeholder.submitform1.facebooklink')}
               />
               {errors.facebook && <p className="mt-1 text-xs text-red-500">{errors.facebook}</p>}
             </FormGroup>
@@ -266,7 +264,7 @@ function SubmitForm() {
               name="twitter"
               value={values.twitter}
               onChange={handleChange}
-              placeholder={t('placeholder.submitform.twitterlink')}
+              placeholder={t('placeholder.submitform1.twitterlink')}
             />
             {errors.twitter && <p className="mt-1 text-xs text-red-500">{errors.twitter}</p>}
           </FormGroup>

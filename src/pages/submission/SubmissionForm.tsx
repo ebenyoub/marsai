@@ -2,6 +2,7 @@ import { useStepper } from '../submission/components/StepRule';
 import ProgressBarComponent from './components/ProgressBarComponent';
 import SubmitForm01 from './components/SubmitForm01';
 import SubmitForm02 from './components/SubmitForm02';
+import SubmitForm03 from './components/SubmitForm03';
 
 export function SubmissionForm() {
   const { currentStep, steps, progress, nextStep, prevStep, validateStep } = useStepper();
@@ -26,6 +27,7 @@ export function SubmissionForm() {
       <div className="flex flex-col gap-10 p-10">
         <SubmitForm01 />
         <SubmitForm02 />
+        <SubmitForm03 />
       </div>
     </>
   );

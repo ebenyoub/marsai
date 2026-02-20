@@ -32,7 +32,7 @@ export function TextArea({ className, ...props }: InputProps) {
   return (
     <input
       className={cn(
-        'border-primary/30 bg-muted focus:ring-primary/40 rounded-md border px-2 py-1.5 pb-20 transition-all duration-200 focus:ring-2 focus:outline-none disabled:opacity-50',
+        'border-primary/30 bg-muted focus:ring-primary/40 rounded-md border px-2 py-1.5 pb-15 transition-all duration-200 focus:ring-2 focus:outline-none disabled:opacity-50',
         className
       )}
       {...props}
