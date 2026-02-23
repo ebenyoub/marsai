@@ -16,7 +16,7 @@ const getAllMovies = async (_req: RequestEmpty, res: Response) => {
     });
   }
 
-  logger.info(`${results.length} vidéos ont été trouvées`);
+  logger.info(`${results.length} ${results.length > 1 ? "vidéos ont été trouvées" : "vidéo a éte trouvé" }`);
   res.status(200).json({
     success: true,
     data: results,
@@ -26,7 +26,9 @@ const getAllMovies = async (_req: RequestEmpty, res: Response) => {
 
 const getMovieById = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;
-  if (!id) {
+  const numericId = Number(id);
+
+  if (isNaN(numericId)) {
     return sendError("Ce film est introuvable.", 400, "error");
   }
 

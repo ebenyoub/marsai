@@ -223,3 +223,152 @@
 {"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 11:21:21"}
 {"level":"error","message":"Le film 4 est introuvable","timestamp":"2026-02-23 11:21:23"}
 {"level":"error","message":"404 - Le film 4 est introuvable - /movies/4 - GET","timestamp":"2026-02-23 11:21:23"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 12:52:18"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 12:52:18"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 12:53:04"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 12:53:04"}
+{"level":"error","message":"Le film 4 est introuvable","timestamp":"2026-02-23 12:53:06"}
+{"level":"error","message":"404 - Le film 4 est introuvable - /movies/4 - GET","timestamp":"2026-02-23 12:53:06"}
+{"level":"info","message":"Film : Le Souffle du Nexus #1 trouvé.","timestamp":"2026-02-23 13:55:18"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:08:27"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:08:27"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:08:31"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:08:31"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:09:30"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:09:30"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:09:44"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:09:44"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:09:48"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:09:48"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:09:49"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:09:49"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:04"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:04"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:21"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:21"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:24"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:24"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:26"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:26"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:32"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:32"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:34"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:34"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:36"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:36"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:42"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:42"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:44"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:44"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:48"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:48"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:54"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:54"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:10:55"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:10:55"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:11:36"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:11:36"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:11:47"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:11:47"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:11:49"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:11:49"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:11:53"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:11:53"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:12:02"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:12:02"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:13:25"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:13:25"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:17:33"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:17:33"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:18:17"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:18:17"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:21:42"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:21:42"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:21:48"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:21:48"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:21:55"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:21:55"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:21:57"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:21:57"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:22:09"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:22:09"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:22:13"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:22:13"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:23:03"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:23:03"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:24:19"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:24:19"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:24:45"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:24:45"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:24:47"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:24:47"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:24:50"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:24:50"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:24:53"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:24:53"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:24:56"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:24:56"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:24:59"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:24:59"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:25:12"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:25:12"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:25:41"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:25:41"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:25:42"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:25:42"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:26:38"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:26:38"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:27:23"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:27:23"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:28:21"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:28:21"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:02"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:02"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:04"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:04"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:07"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:07"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:42"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:42"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:43"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:43"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:49"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:49"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:52"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:52"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:30:58"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:30:58"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:45:49"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:45:49"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:46:02"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:46:02"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:49:14"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:49:14"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:49:24"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:49:24"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:50:27"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:50:27"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:50:52"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:50:52"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:52:38"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:52:38"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:53:18"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:53:18"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:53:19"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:53:19"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:53:54"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:53:54"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:53:58"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:53:58"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:53:59"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:53:59"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:54:01"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:54:01"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:54:06"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:54:06"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:54:07"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:54:07"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:54:09"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:54:09"}
+{"level":"info","message":"Connexion au Pool MySQL réussie","timestamp":"2026-02-23 14:54:38"}
+{"level":"info","message":"Serveur prêt sur http://localhost:3000","timestamp":"2026-02-23 14:54:38"}

@@ -5,3 +5,5 @@
 {"level":"error","message":"404 - Cet utilisateur est introuvable. - /users/12333 - GET","timestamp":"2026-02-23 09:34:32"}
 {"level":"error","message":"Le film 4 est introuvable","timestamp":"2026-02-23 11:21:23"}
 {"level":"error","message":"404 - Le film 4 est introuvable - /movies/4 - GET","timestamp":"2026-02-23 11:21:23"}
+{"level":"error","message":"Le film 4 est introuvable","timestamp":"2026-02-23 12:53:06"}
+{"level":"error","message":"404 - Le film 4 est introuvable - /movies/4 - GET","timestamp":"2026-02-23 12:53:06"}
