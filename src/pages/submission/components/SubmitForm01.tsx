@@ -306,8 +306,7 @@ function SubmitForm() {
             {errors.newsletter && <ErrorParagraph>{errors.newsletter}</ErrorParagraph>}
           </FormGroup>
         </div>
-
-        <div className="border-border space-y-4 border-t pt-4 pb-4">
+        <div className="border-border ">
           {hasErrors && (
             <div className="bg-destructive/10 border-destructive/20 text-destructive mb-4 flex items-center gap-2 rounded-md border p-3 text-sm">
               <AlertCircle className="size-4" />
@@ -319,7 +318,7 @@ function SubmitForm() {
               {t('common.previous')}
             </Button>
             <Button variant={'purple'} type="submit">
-              {loading ? t('common.loading') : t('common.next')}
+              {t('common.next')}
               <ChevronRight className="size-4" />
             </Button>
           </div>
