@@ -6,15 +6,6 @@ export function Footer() {
   const { t } = useTranslation();
 
   return (
-<<<<<<< Updated upstream
-    <footer className="mt-auto border-t border-[#2A3142] bg-[#1A1F2E]">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          {/* Column 1: Logo + Tagline */}
-          <div className="space-y-3">
-            <MarsAILogo />
-            <p className="text-muted-foreground text-sm leading-relaxed">{t('footer.tagline')}</p>
-=======
     <footer className="border-t border-[#2A3142] bg-[#1A1F2E] mt-auto">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -110,7 +101,6 @@ export function Footer() {
             <p className="text-sm text-muted-foreground leading-relaxed">
               {t('footer.tagline')}
             </p>
->>>>>>> Stashed changes
           </div>
 
           {/* Column 2: Navigation Links */}
@@ -118,50 +108,34 @@ export function Footer() {
             <h4 className="text-card-foreground text-sm font-medium">{t('footer.navigation')}</h4>
             <ul className="space-y-2">
               <li>
-<<<<<<< Updated upstream
-                <Link to="/" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-=======
                 <Link
                   to="/"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
->>>>>>> Stashed changes
                   {t('footer.gallery')}
                 </Link>
               </li>
               <li>
-<<<<<<< Updated upstream
-                <Link to="/submit" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-=======
                 <Link
                   to="/submit"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
->>>>>>> Stashed changes
                   {t('footer.submit')}
                 </Link>
               </li>
               <li>
-<<<<<<< Updated upstream
-                <Link to="/jury" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-=======
                 <Link
                   to="/jury"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
->>>>>>> Stashed changes
                   {t('footer.jury')}
                 </Link>
               </li>
               <li>
-<<<<<<< Updated upstream
-                <Link to="/about" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-=======
                 <Link
                   to="/about"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
->>>>>>> Stashed changes
                   {t('footer.about')}
                 </Link>
               </li>
@@ -173,38 +147,26 @@ export function Footer() {
             <h4 className="text-card-foreground text-sm font-medium">{t('footer.legal')}</h4>
             <ul className="space-y-2">
               <li>
-<<<<<<< Updated upstream
-                <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-=======
                 <a
                   href="#"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
->>>>>>> Stashed changes
                   {t('footer.legal.notice')}
                 </a>
               </li>
               <li>
-<<<<<<< Updated upstream
-                <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-=======
                 <a
                   href="#"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
->>>>>>> Stashed changes
                   {t('footer.privacy')}
                 </a>
               </li>
               <li>
-<<<<<<< Updated upstream
-                <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
-=======
                 <a
                   href="#"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
->>>>>>> Stashed changes
                   {t('footer.gdpr')}
                 </a>
               </li>
@@ -218,11 +180,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:contact@marsai.fr"
-<<<<<<< Updated upstream
-                  className="text-muted-foreground hover:text-primary text-sm transition-colors"
-=======
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
->>>>>>> Stashed changes
                 >
                   contact@marsai.fr
                 </a>

@@ -7,9 +7,9 @@ import { Navbar } from './components/Navbar.js';
 import './i18n';
 // import i18n
 import { Home } from './pages/home/Home.js';
-import SubmissionForm from './pages/submission/SubmissionForm.js';
 import './styles/index.css';
 import './styles/index.css';
+import { FilmUpload } from './pages/submission/FilmUpload.js';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
       <main className="min-h-screen min-w-80">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/submit" element={<SubmissionForm />} />
+          <Route path="/submit" element={<FilmUpload />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </main>

@@ -6,8 +6,9 @@ import Button from '@/components/ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label, TextArea } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { filmSchema } from '@/schemas/filmData.schema';
+import { WizardStepProps } from '@/types/form';
 
-function SubmitForm02() {
+export default function FormData({ onNext, onBack }: WizardStepProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const schema = filmSchema(t);
@@ -25,8 +26,8 @@ function SubmitForm02() {
     schema
   );
 
-  const onSubmit = (formValue: typeof values) => {
-    return console.log('success:', formValue);
+  const onSubmit = (formValues: typeof values) => {
+    onNext(formValues);
   };
 
   const hasErrors = Object.keys(errors).length > 0;
@@ -126,7 +127,7 @@ function SubmitForm02() {
             </div>
           )}
           <div className="flex justify-between">
-            <Button variant={'active'} type="button" onClick={() => navigate(-1)}>
+            <Button variant={'active'} type="button" onClick={onBack}>
               {t('common.previous')}
             </Button>
             <Button variant={'purple'} type="submit">
@@ -140,4 +141,3 @@ function SubmitForm02() {
   );
 }
 
-export default SubmitForm02;

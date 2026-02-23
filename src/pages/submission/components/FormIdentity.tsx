@@ -7,8 +7,9 @@ import Button from '@/components/ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { identitySchema } from '@/schemas/identityForm.schema';
+import { FirstStepProps } from '@/types/form';
 
-function SubmitForm() {
+export default function FormIdentity({ onNext }: FirstStepProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -38,36 +39,10 @@ function SubmitForm() {
     schema
   );
 
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
   const onSubmit = async (formValues: typeof values) => {
-    const API_URL = import.meta.env.VITE_API_URL;
-
-    try {
-      setLoading(true);
-
-      const response = await fetch(`${API_URL}/directors`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formValues),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Creation failed:', response.status, errorData);
-        return;
-      }
-
-      const data = await response.json();
-      console.error('success:', data);
-
-      localStorage.setItem('token', data.token);
-      navigate('/');
-    } catch (err) {
-      console.error('Network error:', err);
-    } finally {
-      setLoading(false);
-    }
+    onNext(formValues); 
   };
 
   const hasErrors = Object.keys(errors).length > 0;
@@ -94,7 +69,7 @@ function SubmitForm() {
             className="flex gap-4"
           >
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="M" id="m" />
+              <RadioGroupItem value="M." id="m" /> 
               <Label htmlFor="m">M.</Label>
             </div>
             <div className="flex items-center space-x-2">
@@ -314,7 +289,7 @@ function SubmitForm() {
             </div>
           )}
           <div className="flex justify-between">
-            <Button variant={'active'} type="button" onClick={() => navigate(-1)}>
+            <Button variant={'active'} type="button" onClick={() => navigate('/')}>
               {t('common.previous')}
             </Button>
             <Button variant={'purple'} type="submit">
@@ -328,4 +303,3 @@ function SubmitForm() {
   );
 }
 
-export default SubmitForm;

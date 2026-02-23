@@ -47,3 +47,16 @@ export interface StepperHeaderProps {
   progress: number;
   variant?: keyof typeof iconVariants;
 }
+
+export interface FirstStepProps {
+  onNext: (stepData?: any) => void; 
+}
+
+export interface WizardStepProps {
+  onNext: (stepData?: any) => void;
+  onBack: () => void;
+}
+
+export interface LastStepProps {
+  onBack: () => void;
+}
