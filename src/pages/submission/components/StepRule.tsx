@@ -1,57 +1,71 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FileText, Sparkles, Upload, User, Users } from 'lucide-react';
 import { CollaboratorType, Step } from '@/types/form';
 
 export function useStepper() {
-  const [currentStep, setCurrentStep] = useState<Step>(1);
-  const { t } = useTranslation();
-  
-  // This is the "Big Bucket" that holds everything
-  const [formData, setFormData] = useState({
-    // Step 1 
-    civility: 'M.',
-    firstName: '',
-    lastName: '',
-    birthDate: '',
-    email: '',
-    mobile: '',
-    address: '',
-    postCode: '',
-    city: '',
-    country: '',
-    job: '',
-    youtube: '',
-    instagram: '',
-    linkedin: '',
-    facebook: '',
-    twitter: '',
-    source: '',
-    newsletter: false,
-
-    // Step 2 
-    title: '',
-    titleEn: '',
-    duration: 0,
-    language: '',
-    semanticTags: '',
-    synopsis: '',
-    synopsisEn: '',
-
-    // Step 3 
-    deploymentType: '100',
-    techStack: '',
-    methodology: '',
-
-    // Step 4 
-    youtubeUrl: '',
-    hasSubtitles: false,
-    thumbnail: null as File | null,
-    gallery: [] as File[],
-
-    // Step 5 
-    collaborators: [] as CollaboratorType[],
+  const [currentStep, setCurrentStep] = useState<Step>(() => {
+    const savedStep = localStorage.getItem('marsai_step');
+    return savedStep ? (Number(savedStep) as Step) : 1;
   });
+  const { t } = useTranslation();
+
+  // This is the "Big Bucket" that holds everything
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem('marsai_data');
+    if (savedData) {
+      return JSON.parse(savedData);
+    }
+    return {
+      // Step 1
+      civility: 'M.',
+      firstName: '',
+      lastName: '',
+      birthDate: '',
+      email: '',
+      mobile: '',
+      address: '',
+      postCode: '',
+      city: '',
+      country: '',
+      job: '',
+      youtube: '',
+      instagram: '',
+      linkedin: '',
+      facebook: '',
+      twitter: '',
+      source: '',
+      newsletter: false,
+
+      // Step 2
+      title: '',
+      titleEn: '',
+      duration: 0,
+      language: '',
+      semanticTags: '',
+      synopsis: '',
+      synopsisEn: '',
+
+      // Step 3
+      deploymentType: '100',
+      techStack: '',
+      methodology: '',
+
+      // Step 4
+      youtubeUrl: '',
+      hasSubtitles: false,
+      thumbnail: null as File | null,
+      gallery: [] as File[],
+
+      // Step 5
+      collaborators: [] as CollaboratorType[],
+    };
+  });
+
+  useEffect(() => {
+    localStorage.setItem('marsai_step', currentStep.toString());
+    localStorage.setItem('marsai_data', JSON.stringify(formData));
+  }, [currentStep, formData]);
 
   const steps = [
     { number: 1, title: t('submit.step1.title'), icon: User },
@@ -66,9 +80,9 @@ export function useStepper() {
   // This accepts the local data from the form and merges it into the Big Bucket
   const nextStep = (stepData?: Partial<typeof formData>) => {
     if (stepData) {
-      setFormData((prev) => ({ ...prev, ...stepData }));
+      setFormData((prev: any) => ({ ...prev, ...stepData }));
     }
-    
+
     if (currentStep < 5) {
       setCurrentStep((currentStep + 1) as Step);
     }

@@ -22,7 +22,7 @@ export interface ProgramCardProps {
   iconVariant?: keyof typeof iconVariants;
 }
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement>{
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   className?: string;
   variant?: keyof typeof cartVariants;

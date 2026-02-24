@@ -1,32 +1,19 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { MarsAILogo } from './MarsAILogo';
 
 export function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="border-t border-[#2A3142] bg-[#1A1F2E] mt-auto">
+    <footer className="mt-auto border-t border-[#2A3142] bg-[#1A1F2E]">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Column 1: Logo + Tagline */}
           <div className="space-y-3">
             {/* Mini Logo SVG */}
-            <svg
-              width="120"
-              height="32"
-              viewBox="0 0 120 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Water waves */}
-              <path
-                d="M2 26 Q4 24 6 26 T10 26 T14 26"
-                stroke="#10B981"
-                strokeWidth="1"
-                fill="none"
-                opacity="0.5"
-              />
+              <path d="M2 26 Q4 24 6 26 T10 26 T14 26" stroke="#10B981" strokeWidth="1" fill="none" opacity="0.5" />
 
               {/* Neural nodes */}
               <circle cx="6" cy="22" r="1" fill="#10B981" opacity="0.6" />
@@ -34,43 +21,13 @@ export function Footer() {
               <circle cx="10" cy="22" r="1" fill="#10B981" opacity="0.6" />
 
               {/* Connections */}
-              <line
-                x1="6"
-                y1="22"
-                x2="8"
-                y2="18"
-                stroke="#7C3AED"
-                strokeWidth="0.5"
-                opacity="0.3"
-              />
-              <line
-                x1="8"
-                y1="18"
-                x2="10"
-                y2="22"
-                stroke="#7C3AED"
-                strokeWidth="0.5"
-                opacity="0.3"
-              />
+              <line x1="6" y1="22" x2="8" y2="18" stroke="#7C3AED" strokeWidth="0.5" opacity="0.3" />
+              <line x1="8" y1="18" x2="10" y2="22" stroke="#7C3AED" strokeWidth="0.5" opacity="0.3" />
 
               {/* Basilica icon */}
               <g transform="translate(4, 6)">
-                <rect
-                  x="4"
-                  y="8"
-                  width="6"
-                  height="4"
-                  fill="#7C3AED"
-                  opacity="0.6"
-                />
-                <rect
-                  x="5.5"
-                  y="5"
-                  width="3"
-                  height="3"
-                  fill="#7C3AED"
-                  opacity="0.7"
-                />
+                <rect x="4" y="8" width="6" height="4" fill="#7C3AED" opacity="0.6" />
+                <rect x="5.5" y="5" width="3" height="3" fill="#7C3AED" opacity="0.7" />
                 <circle cx="7" cy="3.5" r="0.8" fill="#10B981" opacity="0.8" />
               </g>
 
@@ -86,21 +43,12 @@ export function Footer() {
               >
                 FESTIVAL
               </text>
-              <text
-                x="20"
-                y="24"
-                fill="#7C3AED"
-                fontSize="14"
-                fontFamily="Inter, sans-serif"
-                fontWeight="700"
-              >
+              <text x="20" y="24" fill="#7C3AED" fontSize="14" fontFamily="Inter, sans-serif" fontWeight="700">
                 mars<tspan fill="#10B981">AI</tspan>
               </text>
             </svg>
 
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {t('footer.tagline')}
-            </p>
+            <p className="text-muted-foreground text-sm leading-relaxed">{t('footer.tagline')}</p>
           </div>
 
           {/* Column 2: Navigation Links */}
@@ -108,34 +56,22 @@ export function Footer() {
             <h4 className="text-card-foreground text-sm font-medium">{t('footer.navigation')}</h4>
             <ul className="space-y-2">
               <li>
-                <Link
-                  to="/"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
+                <Link to="/" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.gallery')}
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/submit"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
+                <Link to="/submit" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.submit')}
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/jury"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
+                <Link to="/jury" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.jury')}
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/about"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
+                <Link to="/about" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.about')}
                 </Link>
               </li>
@@ -147,26 +83,17 @@ export function Footer() {
             <h4 className="text-card-foreground text-sm font-medium">{t('footer.legal')}</h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
+                <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.legal.notice')}
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
+                <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.privacy')}
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
+                <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.gdpr')}
                 </a>
               </li>
@@ -180,7 +107,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:contact@marsai.fr"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="text-muted-foreground hover:text-primary text-sm transition-colors"
                 >
                   contact@marsai.fr
                 </a>

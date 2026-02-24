@@ -1,9 +1,9 @@
+import { forwardRef } from 'react';
 import { CardProps, DescribeProps } from '@/types/home';
 import { TitleProps } from '@/types/home';
 import { cartVariants } from '../utils/variants';
 import { CardTitleVariants } from '../utils/variants';
 import { cn } from './utils';
-import { forwardRef } from 'react';
 
 const CardHeader = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex flex-col p-3">{children}</div>;
@@ -28,20 +28,18 @@ const CardTitle = ({ children, className, variant = 'default', icon }: TitleProp
   );
 };
 
-const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ children, className, variant = 'default', ...props }, ref) => {
-    return (
-      <div
-        ref={ref} // Attach the ref to the actual DOM element
-        className={cn('rounded-2xl border', className, cartVariants[variant])}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  }
-);
+const Card = forwardRef<HTMLDivElement, CardProps>(({ children, className, variant = 'default', ...props }, ref) => {
+  return (
+    <div
+      ref={ref} // Attach the ref to the actual DOM element
+      className={cn('rounded-2xl border', className, cartVariants[variant])}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+});
 
-Card.displayName = "Card"; // Good practice for debugging
+Card.displayName = 'Card'; // Good practice for debugging
 
 export { Card, CardTitle, CardDescription, CardHeader };

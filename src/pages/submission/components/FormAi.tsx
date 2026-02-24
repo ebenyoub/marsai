@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
+import { AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import RadioGroup, { RadioGroupItem } from '@/components/ui/RadioGroup';
-import Form, { FormGroup, Label, TextArea, ErrorParagraph } from '@/components/ui/form';
 import Button from '@/components/ui/button';
+import Form, { ErrorParagraph, FormGroup, Label, TextArea } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { aiDeclarationSchema } from '@/schemas/aiDeclaration.schema';
 import { WizardStepProps } from '@/types/form';
@@ -27,7 +27,7 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
   const hasErrors = Object.keys(errors).length > 0;
 
   return (
-    <Form noValidate className="m-auto w-full max-w-4xl space-y-8 p-10" onSubmit={handleSubmit(onSubmit)}>
+    <Form noValidate className="m-auto w-full max-w-4xl space-y-8 p-4 md:p-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <h2 className="pb-3 text-2xl font-semibold text-white">
           <span className="text-primary">{t('submit.step')} 3: </span>
@@ -42,23 +42,23 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
         </Label>
         <RadioGroup
           value={values.aiClassification}
-          onValueChange={(value) =>
-            handleChange({ target: { name: 'aiClassification', value } } as any)
-          }
+          onValueChange={value => handleChange({ target: { name: 'aiClassification', value } } as any)}
           className="grid grid-cols-1 gap-4"
         >
-          <div className={`flex items-start gap-3 rounded-xl border p-5 transition-all ${values.aiClassification === '100' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}>
-            <RadioGroupItem value="100" id="type-100" className="mt-1" />
+          <div
+            className={`flex items-start gap-3 rounded-xl border p-4 transition-all md:p-5 ${values.aiClassification === '100' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}
+          >
+            <RadioGroupItem value="100" id="type-100" className="mt-1 shrink-0" />
             <Label htmlFor="type-100" className="cursor-pointer font-medium text-slate-200">
               {t('submit.step3.type.100')}
-              <span className="mt-1 block text-sm font-normal text-slate-400">
-                {t('submit.step3.type.100.desc')}
-              </span>
+              <span className="mt-1 block text-sm font-normal text-slate-400">{t('submit.step3.type.100.desc')}</span>
             </Label>
           </div>
 
-          <div className={`flex items-start gap-3 rounded-xl border p-5 transition-all ${values.aiClassification === 'hybrid' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}>
-            <RadioGroupItem value="hybrid" id="type-hybrid" className="mt-1" />
+          <div
+            className={`flex items-start gap-3 rounded-xl border p-4 transition-all md:p-5 ${values.aiClassification === 'hybrid' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}
+          >
+            <RadioGroupItem value="hybrid" id="type-hybrid" className="mt-1 shrink-0" />
             <Label htmlFor="type-hybrid" className="cursor-pointer font-medium text-slate-200">
               {t('submit.step3.type.hybrid')}
               <span className="mt-1 block text-sm font-normal text-slate-400">
@@ -94,7 +94,7 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
         {errors.methodology && <ErrorParagraph>{errors.methodology}</ErrorParagraph>}
       </FormGroup>
 
-      <div className="border-border space-y-4 border-t pt-6 mt-8">
+      <div className="border-border mt-8 space-y-4 border-t pt-6">
         {hasErrors && (
           <div className="bg-destructive/10 border-destructive/20 text-destructive mb-4 flex items-center gap-2 rounded-md border p-3 text-sm">
             <AlertCircle className="size-4" />
@@ -102,12 +102,12 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
           </div>
         )}
 
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <Button variant="active" type="button" onClick={onBack} className="flex items-center gap-2">
             <ChevronLeft className="size-4" />
             {t('common.previous')}
           </Button>
-          
+
           <Button variant="purple" type="submit" className="flex items-center gap-2 px-6">
             {t('common.next')}
             <ChevronRight className="size-4" />

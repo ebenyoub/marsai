@@ -3,8 +3,8 @@ import { AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from '@/components/ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
-import { WizardStepProps } from '@/types/form';
 import { mediaSchema } from '@/schemas/mediaSchema.schema';
+import { WizardStepProps } from '@/types/form';
 
 export default function FormMedia({ onNext, onBack }: WizardStepProps) {
   const { t } = useTranslation();
@@ -14,31 +14,28 @@ export default function FormMedia({ onNext, onBack }: WizardStepProps) {
     {
       youtubeUrl: '',
       hasSubtitles: false,
-      thumbnail: null,
-      gallery: [],
+      thumbnail: null as File | null,
+      gallery: [] as File[],
     },
     schema
   );
 
-const onSubmit = (formValues: typeof values) => {
+  const onSubmit = (formValues: typeof values) => {
     onNext(formValues);
   };
 
-  // Custom handler to extract files from the input event
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: 'thumbnail' | 'gallery') => {
     const files = e.target.files;
     if (!files) return;
 
     const value = fieldName === 'gallery' ? Array.from(files) : files[0];
-    
-    // Pass the extracted file(s) to your custom hook
     handleChange({ target: { name: fieldName, value } } as any);
   };
 
   const hasErrors = Object.keys(errors).length > 0;
 
   return (
-    <Form noValidate className="m-auto w-full max-w-4xl space-y-8 p-10" onSubmit={handleSubmit(onSubmit)}>
+    <Form noValidate className="m-auto w-full max-w-4xl space-y-8 p-4 md:p-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <h2 className="pb-3 text-2xl font-semibold text-white">
           <span className="text-primary">{t('submit.step')} 4: </span>
@@ -60,14 +57,14 @@ const onSubmit = (formValues: typeof values) => {
         {errors.youtubeUrl && <ErrorParagraph>{errors.youtubeUrl}</ErrorParagraph>}
       </FormGroup>
 
-      <FormGroup className="border-border bg-slate-900/50 flex flex-row items-center space-y-0 space-x-3 rounded-xl border p-5 shadow-sm">
-        <Input
+      <FormGroup className="border-border flex flex-row items-center gap-3 space-y-0 rounded-xl border bg-slate-900/50 p-4 shadow-sm md:p-5">
+        <input
           type="checkbox"
           name="hasSubtitles"
           id="hasSubtitles"
           checked={values.hasSubtitles}
-          onChange={(e) => handleChange({ target: { name: 'hasSubtitles', value: e.target.checked } } as any)}
-          className="size-5 accent-primary"
+          onChange={e => handleChange({ target: { name: 'hasSubtitles', value: e.target.checked } } as any)}
+          className="accent-primary size-5 shrink-0 cursor-pointer"
         />
         <Label htmlFor="hasSubtitles" className="m-0 cursor-pointer font-normal text-slate-200">
           {t('submit.step4.subtitles.checkbox')}
@@ -80,8 +77,8 @@ const onSubmit = (formValues: typeof values) => {
           type="file"
           name="thumbnail"
           accept="image/jpeg, image/png, image/gif"
-          onChange={(e) => handleFileChange(e, 'thumbnail')}
-          className="file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer file:mr-4 file:rounded-md file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold text-slate-300"
+          onChange={e => handleFileChange(e, 'thumbnail')}
+          className="file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer text-slate-300 file:mr-4 file:rounded-md file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold"
         />
         <p className="text-muted-foreground mt-1 text-xs">{t('submit.step4.thumbnail.hint')}</p>
         {errors.thumbnail && <ErrorParagraph>{errors.thumbnail}</ErrorParagraph>}
@@ -94,8 +91,8 @@ const onSubmit = (formValues: typeof values) => {
           name="gallery"
           accept="image/jpeg, image/png, image/gif"
           multiple
-          onChange={(e) => handleFileChange(e, 'gallery')}
-          className="file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer file:mr-4 file:rounded-md file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold text-slate-300"
+          onChange={e => handleFileChange(e, 'gallery')}
+          className="file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer text-slate-300 file:mr-4 file:rounded-md file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold"
         />
         <div className="mt-1 flex items-center justify-between">
           <p className="text-muted-foreground text-xs">{t('submit.step4.gallery.hint')}</p>
@@ -106,7 +103,7 @@ const onSubmit = (formValues: typeof values) => {
         {errors.gallery && <ErrorParagraph>{errors.gallery}</ErrorParagraph>}
       </FormGroup>
 
-      <div className="border-border space-y-4 border-t pt-6 mt-8">
+      <div className="border-border mt-8 space-y-4 border-t pt-6">
         {hasErrors && (
           <div className="bg-destructive/10 border-destructive/20 text-destructive mb-4 flex items-center gap-2 rounded-md border p-3 text-sm">
             <AlertCircle className="size-4" />
@@ -114,7 +111,7 @@ const onSubmit = (formValues: typeof values) => {
           </div>
         )}
 
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <Button variant="active" type="button" onClick={onBack} className="flex items-center gap-2">
             <ChevronLeft className="size-4" />
             {t('common.previous')}
