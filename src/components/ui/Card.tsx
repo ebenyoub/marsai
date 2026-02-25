@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { CardProps, DescribeProps } from '@/types/home';
 import { TitleProps } from '@/types/home';
 import { cartVariants } from '../utils/variants';
@@ -27,12 +28,18 @@ const CardTitle = ({ children, className, variant = 'default', icon }: TitleProp
   );
 };
 
-function Card({ children, className, variant = 'default', ...props }: CardProps) {
+const Card = forwardRef<HTMLDivElement, CardProps>(({ children, className, variant = 'default', ...props }, ref) => {
   return (
-    <div className={cn('rounded-2xl border', className, cartVariants[variant])} {...props}>
+    <div
+      ref={ref} // Attach the ref to the actual DOM element
+      className={cn('rounded-2xl border', className, cartVariants[variant])}
+      {...props}
+    >
       {children}
     </div>
   );
-}
+});
+
+Card.displayName = 'Card'; // Good practice for debugging
 
 export { Card, CardTitle, CardDescription, CardHeader };
