@@ -27,20 +27,19 @@ const getAllUsers = async (_req: RequestEmpty, res: Response) => {
 
 const getOneUser = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;
-  const user = await UserModel.findOne(id);
+  const numericId = Number(id);
+  const user = await UserModel.findOne(numericId);
 
   if (!user) {
-    logger.warn(`L'ID ${id} est introuvable.`);
-    return sendError('Cet utilisateur est introuvable.', 404, "warn");
+    return sendError('Cet utilisateur est introuvable.', 404);
   }
 
-  logger.info(`Utilisateurs récupéré avec succès`);
+  logger.info(`L'utilisateur ${user.firstname} ${user.lastname} récupéré avec succès`);
   return res.status(200).json({
     success: true,
     data: user,
   });
 };
-
 
 const createUser = async (req: RequestBody<UserType>, res: Response) => {
   const { password, ...userData } = req.body;
@@ -48,7 +47,7 @@ const createUser = async (req: RequestBody<UserType>, res: Response) => {
   const results = await UserModel.create({ ...userData, password: hashedPassword });
 
   if (results.affectedRows === 0) {
-    return sendError("Échec inattendu côté serveur lors de l\'insertion.", 500, "error");
+    return sendError("Échec inattendu côté serveur lors de l\'insertion.", 500);
   }
 
   const userId = results.insertId;
@@ -56,29 +55,22 @@ const createUser = async (req: RequestBody<UserType>, res: Response) => {
 
   return res.status(201).json({
     success: true,
-    data: { ...results, userId },
-    message: 'Utilisateur créer avec succès',
+    data: { userId, ...results },
+    message: 'Utilisateur créé avec succès',
   });
 };
 
 
-const updateUser = async (req: RequestParamsBody<Params, UserType>, res: Response) => {
+const updateUser = async (req: RequestParamsBody<Params, Partial<UserType>>, res: Response) => {
   const { id } = req.params;
   const user = req.body;
+
   const numericId = Number(id);
 
-  if (isNaN(numericId) || !user || !user.email) {
-    return sendError('Erreur de syntaxe ou données manquantes dans la requête.', 400, "warn");
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(user.email)) {
-    return sendError("Format de donnée invalide.", 400, 'error');
-  }
-
   const results = await UserModel.update(numericId, user);
+
   if (results.affectedRows === 0) { 
-    return sendError(`L'utilisateur ${id} néxiste pas.`, 404, 'warn');
+    return sendError(`L'utilisateur ${id} néxiste pas.`);
   }
 
   logger.info(`Utilisateur modifié avec succès`);
@@ -90,19 +82,15 @@ const updateUser = async (req: RequestParamsBody<Params, UserType>, res: Respons
 };
 
 
-const deleteUser = async (req: RequestParams<UserType>, res: Response) => {
+const deleteUser = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;
 
   const numericId = Number(id);
 
-  if (isNaN(numericId)) {
-    return sendError("L'ID doit être un nombre valide.", 400, "error");
-  }
-
   const results = await UserModel.deleted(numericId);
+
   if (results.affectedRows === 0) {
-    logger.warn(`Utilisateur introuvable`);
-    return sendError('Utilisateur introuvable.', 404, "warn");
+    return sendError('Utilisateur introuvable.');
   }
 
   logger.info(`Utilisateurs supprimé avec succès`);

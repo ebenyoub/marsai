@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Response } from 'express';
 import dotenv from 'dotenv';
 import { testDbConnection } from './config/database.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
@@ -6,10 +6,12 @@ import FestivalRoutes from './routes/festival.route.js';
 import CollaboratorRoutes from './routes/collaborator.route.js';
 import DirectorRoutes from './routes/director.route.js';
 import UserRoutes from './routes/user.routes.js';
+import RatingRoutes from './routes/rating.route.js';
 import AuthRoutes from './routes/auth.route.js';
 import MovieRoutes from './routes/movie.router.js';
 import cors from 'cors';
 import logger from './config/logger.js';
+import { RequestEmpty } from './types/type.js';
 
 dotenv.config();
 
@@ -37,9 +39,6 @@ const startServer = async () => {
 
 await startServer();
 
-app.get('/', (_req: Request, res: Response) => {
-  res.send('Bienvenue sur MarsAI, le festival des futurs souhaitables !');
-});
 
 app.use(
   cors({
@@ -47,15 +46,16 @@ app.use(
   }),
 );
 
+app.get('/', (_req: RequestEmpty, res: Response) => {
+  res.send('Bienvenue sur MarsAI, le festival des futurs souhaitables !');
+});
+
 app.use('/users', UserRoutes);
 app.use('/movies', MovieRoutes);
 app.use('/festivals', FestivalRoutes);
 app.use('/collaborators', CollaboratorRoutes);
 app.use('/directors', DirectorRoutes);
-
-app.use('/festivals', FestivalRoutes);
-app.use('/collaborators', CollaboratorRoutes);
-app.use('/directors', DirectorRoutes);
+app.use('/rating', RatingRoutes);
 app.use('/auth', AuthRoutes);
 
 app.use(errorMiddleware);

@@ -1,47 +1,52 @@
 import { Response } from 'express';
 import festivalModel from '../models/festival.model.js';
 import { FestivalType, Params, RequestBody, RequestEmpty, RequestParams, RequestParamsBody } from '../types/type.js';
-import { sendError } from '../utils.js';
+import { s, sendError } from '../utils.js';
 import logger from '../config/logger.js';
 
 const getAllFestivals = async (_req: RequestEmpty, res: Response) => {
   const results = await festivalModel.findAll();
+
   if (results.length === 0) {
-    logger.error('Aucun festival dans la base de donné');
-    sendError('Aucun festival dans la base de donné');
+    logger.info(`Aucun festival n'a été trouvé.`);
+    return res.status(200).json({
+      success: true,
+      data: [],
+      message: "Aucun festival n'a été trouvé."
+    });
   }
 
-  logger.info(`${results.length} festiva${results.length ? 'l' : 'ux'} récupéré.`);
+  logger.info(`${results.length} festival${s(results.length)} récupéré${s(results.length)}.`);
   return res.status(200).json({
     success: true,
     data: results,
   });
 };
-//--------------------------------------------------------------------------------
 
 const getFestivalById = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;
+  const numericId = Number(id);
 
-  const festival = await festivalModel.findById(id);
+  const festival = await festivalModel.findById(numericId);
 
   if (!festival) {
-    logger.error('Aucun festival trouvé');
-    return sendError('Aucun festinal trouvé.');
+    return sendError('Aucun festinal n\'a été trouvé.', 404);
   }
 
   logger.info(`Festival "${festival.name}" récupéré avec succès.`);
-  res.status(200).json(festival);
+  res.status(200).json({
+    success: true,
+    data: festival
+  });
 };
 
-//--------------------------------------------------------------------------------
 
 const createFestival = async (req: RequestBody<FestivalType>, res: Response) => {
-  const festival: FestivalType = req.body;
+  const festival = req.body;
 
   const results = await festivalModel.create(festival);
   if (results.affectedRows === 0) {
-    logger.error('Error lors d ela création du festival.');
-    return sendError('Erreur lors de la création du Festival');
+    return sendError('Erreur lors de la création du Festival', 500);
   }
 
   logger.info(`Le festival ${festival.name} a été créé.`);
@@ -51,39 +56,50 @@ const createFestival = async (req: RequestBody<FestivalType>, res: Response) => 
     message: 'Festival créé avec succès',
   });
 };
-//--------------------------------------------------------------------------------
 
 const updateFestival = async (req: RequestParamsBody<Params, Partial<FestivalType>>, res: Response) => {
   const { id } = req.params;
   const festival = req.body;
 
-  const results = await festivalModel.update(id, festival);
+  const numericId = Number(id);
+
+  const results = await festivalModel.update(numericId, festival);
+
   if (results.affectedRows === 0) {
-    logger.error("Le festival n'a pas été trouvé.");
-    return sendError("Le festival n'a pas été trouvé.");
+    const exists = await festivalModel.findById(numericId);
+
+    if (!exists) {
+      logger.warn(`Tentative de modification d'un festival inexistant (ID: ${numericId})`);
+      return sendError("Le festival n'a pas été trouvé.", 404);
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Aucun changement nécessaire (données identiques)',
+    });
   }
 
   logger.info(`Le festival ${festival.name} a été modifié.`);
-  res.status(201).json({
+  res.status(200).json({
     success: true,
     message: 'Festival mis à jour avec succès',
   });
 };
-//--------------------------------------------------------------------------------
 
 const deleteFestival = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;
+  const numericId = Number(id);
 
-  const results = await festivalModel.deleted(id);
+  const results = await festivalModel.deleted(numericId);
+
   if (results.affectedRows === 0) {
-    logger.error("Le festival n'a pas été trouvé.");
-    return sendError("Le festival n'a pas été trouvé.");
+    return sendError("Le festival n'a pas été trouvé.", 404);
   }
 
-  logger.info(`Le festival ${id} a été créé.`);
+  logger.info(`Le festival avec l'id ${numericId} a été supprimé.`);
   res.status(200).json({ message: 'Festival supprimé avec succès' });
 };
-//--------------------------------------------------------------------------------
+
 export default {
   getAllFestivals,
   getFestivalById,

@@ -1,5 +1,6 @@
 import { RowDataPacket } from 'mysql2/promise';
 import { Request } from 'express';
+import { ParamsDictionary } from 'express-serve-static-core';
 
 export interface MovieType {
   id?: number;
@@ -31,10 +32,6 @@ export interface FestivalType {
   booking_total: number;
 }
 
-export interface Params {
-  id: number;
-}
-
 export interface UserType {
   id: number;
   firstname: string;
@@ -63,7 +60,7 @@ export interface DirectorType {
   id?: number;
   firstname: string;
   lastname: string;
-  genre: 'M.' | 'Mme';
+  gender: 'M.' | 'Mme';
   birthday: string;
   email: string;
   mobile: string;
@@ -129,12 +126,14 @@ export interface TagType {
 }
 
 export interface RatingType {
-  score_creativity: number;
-  score_technical: number;
-  score_message: number;
-  comment: string;
-  score_total: number;
-  created_at: Date;
+  user_id: number;
+  movie_id: number;
+  score_creativity: number; 
+  score_technical: number;  
+  score_message: number;    
+  comment: string;          
+  score_total: number;      
+  created_at?: Date | string;
 }
 
 export interface LoginType {
@@ -149,11 +148,17 @@ export interface AppError extends Error {
   statusCode?: number;
 }
 
-export type RequestBody<T> = Request<Record<string, never>, Record<string, never>, T>;
-export type RequestParams<P> = Request<P, Record<string, never>, Record<string, never>>;
-export type RequestParamsBody<P, T> = Request<P, Record<string, never>, T>;
+export interface Params extends ParamsDictionary {
+  id: string;
+}
+
+export type RequestBody<T> = Request<ParamsDictionary, object, T, object>;
+export type RequestParams<P extends ParamsDictionary> = Request<P, object, object, object>;
+export type RequestParamsBody<P extends ParamsDictionary, T> = Request<P, object, T, object>;
 export type RequestEmpty = Request<Record<string, never>, Record<string, never>, Record<string, never>>;
 
 export interface UserRow extends RowDataPacket, UserType {}
 export interface MovieRow extends RowDataPacket, MovieType {}
 export interface FestivalRow extends RowDataPacket, FestivalType {}
+export interface DirectorRow extends RowDataPacket, DirectorType {}
+export interface RatingRow extends RowDataPacket, RatingType {}
