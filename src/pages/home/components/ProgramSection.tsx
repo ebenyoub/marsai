@@ -54,7 +54,7 @@ export default function ProgramSection() {
         ))}
       </div>
       <div className="mt-16 flex w-full justify-center">
-        <Card className="p-4 text-center">
+        <Card className="flex flex-col items-center p-4">
           <div className="mb-4 flex items-center justify-center gap-3">
             <Users className="text-accent h-6 w-6" />
             <h2 className="text-2xl font-semibold text-white md:text-3xl">{t('landing.cta.title')}</h2>
