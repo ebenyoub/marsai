@@ -1,10 +1,20 @@
 import { Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next'; // Adjust import based on your i18n library
 import Form, { Input } from './form';
+import { cn } from './utils';
 
-export default function SearchBar({ setQuery }: { setQuery: (query: string) => void }) {
+interface SearchBarProps {
+  setQuery: (query: string) => void;
+  className?: string;
+}
+
+export default function SearchBar({ setQuery, className }: SearchBarProps) {
+  const { t } = useTranslation();
+
   return (
     <Form
-      className="relative mx-auto mb-8 w-full border-none bg-transparent p-0 shadow-none ring-0"
+      // Removed the hardcoded 'mb-8' so the parent container handles the spacing
+      className="relative mx-auto w-full border-none bg-transparent p-0 shadow-none ring-0"
       onSubmit={e => e.preventDefault()}
     >
       <div className="group relative">
@@ -12,10 +22,12 @@ export default function SearchBar({ setQuery }: { setQuery: (query: string) => v
         <Input
           id="searchbar"
           type="search"
-          placeholder="Rechercher un film..."
-          // On envoie la valeur au parent à chaque changement
+          placeholder={t('search.placeholder', 'Rechercher un film...')}
           onChange={e => setQuery(e.target.value)}
-          className="focus:border-primary focus:shadow-primary h-14 w-full rounded-md border-2 border-transparent bg-white/10 pl-14 text-lg transition-all duration-200 outline-none focus:ring-0"
+          className={cn(
+            "focus:border-primary focus:shadow-primary h-14 w-full rounded-md border-2 border-transparent bg-white/10 pl-14 text-lg transition-all duration-200 outline-none focus:ring-0",
+            className
+          )}
         />
       </div>
     </Form>
