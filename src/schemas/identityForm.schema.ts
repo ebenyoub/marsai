@@ -16,7 +16,7 @@ export const identitySchema = (t: TFunction) =>
     civility: z.string().min(1, t('errors.required')),
     firstName: z.string().min(1, t('errors.required')),
     lastName: z.string().min(1, t('errors.required')),
-    birthDate: z.string().min(1, t('errors.required')),
+    birthDate : z.string().min(1, t('errors.required')),
     email: z.email({
       error: issue => (!issue.input ? t('errors.required') : t('errors.invalid_email')),
     }),
