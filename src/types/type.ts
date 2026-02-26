@@ -128,11 +128,11 @@ export interface TagType {
 export interface RatingType {
   user_id: number;
   movie_id: number;
-  score_creativity: number; 
-  score_technical: number;  
-  score_message: number;    
-  comment: string;          
-  score_total: number;      
+  score_creativity: number;
+  score_technical: number;
+  score_message: number;
+  comment: string;
+  score_total: number;
   created_at?: Date | string;
 }
 

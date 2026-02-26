@@ -39,7 +39,6 @@ const startServer = async () => {
 
 await startServer();
 
-
 app.use(
   cors({
     origin: 'http://localhost:5173',

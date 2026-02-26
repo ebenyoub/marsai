@@ -1,5 +1,5 @@
 import express from 'express';
-import RatingController from "../controllers/rating.controller.js";
+import RatingController from '../controllers/rating.controller.js';
 import { validate } from '../middlewares/validate.middleware.js';
 import { ratingSchema } from '../validation/rating.schema.js';
 

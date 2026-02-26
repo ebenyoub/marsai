@@ -12,7 +12,7 @@ const getAllFestivals = async (_req: RequestEmpty, res: Response) => {
     return res.status(200).json({
       success: true,
       data: [],
-      message: "Aucun festival n'a été trouvé."
+      message: "Aucun festival n'a été trouvé.",
     });
   }
 
@@ -30,16 +30,15 @@ const getFestivalById = async (req: RequestParams<Params>, res: Response) => {
   const festival = await festivalModel.findById(numericId);
 
   if (!festival) {
-    return sendError('Aucun festinal n\'a été trouvé.', 404);
+    return sendError("Aucun festinal n'a été trouvé.", 404);
   }
 
   logger.info(`Festival "${festival.name}" récupéré avec succès.`);
   res.status(200).json({
     success: true,
-    data: festival
+    data: festival,
   });
 };
-
 
 const createFestival = async (req: RequestBody<FestivalType>, res: Response) => {
   const festival = req.body;

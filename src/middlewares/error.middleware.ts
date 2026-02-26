@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import logger from "../config/logger.js";
-import { AppError } from "../types/type.js";
+import { NextFunction, Request, Response } from 'express';
+import logger from '../config/logger.js';
+import { AppError } from '../types/type.js';
 
 export const errorMiddleware = (err: AppError, req: Request, res: Response, next: NextFunction) => {
   if (res.headersSent) return next(err);

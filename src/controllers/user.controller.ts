@@ -24,7 +24,6 @@ const getAllUsers = async (_req: RequestEmpty, res: Response) => {
   });
 };
 
-
 const getOneUser = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;
   const numericId = Number(id);
@@ -60,7 +59,6 @@ const createUser = async (req: RequestBody<UserType>, res: Response) => {
   });
 };
 
-
 const updateUser = async (req: RequestParamsBody<Params, Partial<UserType>>, res: Response) => {
   const { id } = req.params;
   const user = req.body;
@@ -69,7 +67,7 @@ const updateUser = async (req: RequestParamsBody<Params, Partial<UserType>>, res
 
   const results = await UserModel.update(numericId, user);
 
-  if (results.affectedRows === 0) { 
+  if (results.affectedRows === 0) {
     return sendError(`L'utilisateur ${id} néxiste pas.`);
   }
 
@@ -80,7 +78,6 @@ const updateUser = async (req: RequestParamsBody<Params, Partial<UserType>>, res
     message: 'Utilisateur mis à jour avec succès',
   });
 };
-
 
 const deleteUser = async (req: RequestParams<Params>, res: Response) => {
   const { id } = req.params;

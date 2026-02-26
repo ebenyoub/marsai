@@ -8,23 +8,22 @@ const getAllDirectors = async (_req: RequestEmpty, res: Response) => {
   const result = await directorModel.findAll();
 
   if (result.length === 0) {
-    logger.info("Aucun réalisateur trouvé.");
+    logger.info('Aucun réalisateur trouvé.');
     return res.status(200).json({
       success: true,
       data: [],
-      message: "Aucun réalisateur trouvé."
-    })
+      message: 'Aucun réalisateur trouvé.',
+    });
   }
 
-  logger.info(`${result.length} réalisateur${s(result.length)} trouvé${s(result.length)}.`)
+  logger.info(`${result.length} réalisateur${s(result.length)} trouvé${s(result.length)}.`);
   return res.status(200).json({
     success: true,
-    data: result
+    data: result,
   });
-}
+};
 
 const getDirectorById = async (req: RequestParams<Params>, res: Response) => {
-
   const { id } = req.params;
 
   const numericId = Number(id);
@@ -37,7 +36,7 @@ const getDirectorById = async (req: RequestParams<Params>, res: Response) => {
   return res.status(200).json({
     success: true,
     data: result,
-    message: 'Réalisateur trouvé '
+    message: 'Réalisateur trouvé ',
   });
 };
 
@@ -49,7 +48,7 @@ const createDirector = async (req: RequestBody<DirectorType>, res: Response) => 
   }
 
   return res.status(201).json({ success: true, data: result });
-}
+};
 
 export default {
   getAllDirectors,

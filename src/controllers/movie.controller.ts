@@ -37,9 +37,9 @@ const getMovieById = async (req: RequestParams<Params>, res: Response) => {
   logger.info(`Film : ${movie?.title} trouvé.`);
   return res.status(200).json({
     success: true,
-    data: [movie]
-  })
-}
+    data: [movie],
+  });
+};
 
 const create = async (req: RequestBody<MovieType>, res: Response) => {
   const results = await Movie.create(req.body);
@@ -54,13 +54,11 @@ const create = async (req: RequestBody<MovieType>, res: Response) => {
     data: results,
     message: 'Festival créé avec succès',
   });
-}
+};
 
 const update = async (req: RequestParamsBody<Params, Partial<MovieType>>, res: Response) => {
   const { id } = req.params;
-
   const numericId = Number(id);
-
   const results = await Movie.update(numericId, req.body);
 
   if (results.affectedRows === 0) {
@@ -88,5 +86,5 @@ export default {
   getAllMovies,
   getMovieById,
   create,
-  update
+  update,
 };

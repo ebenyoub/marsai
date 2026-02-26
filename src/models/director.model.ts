@@ -16,15 +16,28 @@ const findById = async (id: number): Promise<DirectorType | null> => {
 };
 
 const create = async (director: DirectorType): Promise<ResultSetHeader> => {
-
   const columns: (keyof DirectorType)[] = [
-    'firstname', 'lastname', 'gender', 'birthday', 'email', 'mobile',
-    'address', 'zip_code', 'town', 'country', 'job', 'youtube_url',
-    'instagram_url', 'linkedin_url', 'facebook_url', 'twitter_url',
-    'question_about', 'newsletter'
+    'firstname',
+    'lastname',
+    'gender',
+    'birthday',
+    'email',
+    'mobile',
+    'address',
+    'zip_code',
+    'town',
+    'country',
+    'job',
+    'youtube_url',
+    'instagram_url',
+    'linkedin_url',
+    'facebook_url',
+    'twitter_url',
+    'question_about',
+    'newsletter',
   ];
 
-  return insertEntity("director", director, columns, db);
+  return insertEntity('director', director, columns, db);
 };
 
 export default {
