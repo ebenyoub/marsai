@@ -16,6 +16,7 @@ export function useStepper() {
     if (savedData) {
       return JSON.parse(savedData);
     }
+
     return {
       // Step 1
       civility: 'M.',
@@ -67,6 +68,13 @@ export function useStepper() {
     localStorage.setItem('marsai_data', JSON.stringify(formData));
   }, [currentStep, formData]);
 
+  const resetStepper = () => {
+    localStorage.removeItem('marsai_step');
+    localStorage.removeItem('marsai_data');
+    setCurrentStep(1);
+    // Optional: Set formData back to initial state if you want a total wipe
+    window.location.reload(); // Quickest way to ensure a clean state for your video
+  };
   const steps = [
     { number: 1, title: t('submit.step1.title'), icon: User },
     { number: 2, title: t('submit.step2.title'), icon: FileText },
@@ -102,5 +110,6 @@ export function useStepper() {
     setFormData,
     nextStep,
     prevStep,
+    resetStepper,
   };
 }

@@ -29,7 +29,7 @@ export const cartVariants = {
   gold: 'border-amber-400/50 bg-amber-400/5 hover:border-amber-400',
   time_green: 'bg-black/30 border-accent/20 hover:bg-accent/20',
   time_purple: 'ring-primary/30 text-primary hover:bg-primary/20 bg-black/30 border-primary/20',
-  dashboard: "rounded-2xl border border-slate-800 bg-slate-900/40 p-4 md:p-6",
+  dashboard: 'rounded-2xl border border-slate-800 bg-slate-900/40 p-4 md:p-6',
 };
 
 export const CardTitleVariants = {
