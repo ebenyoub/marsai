@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
-import { FormGroup, Input, Label } from '@/components/ui/form';
+import { FormGroup, Input, Label } from '@/components/ui/Form';
 import { CollaboratorType } from '@/types/form';
 
 interface TeamMemberProps {

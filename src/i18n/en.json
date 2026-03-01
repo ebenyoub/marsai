@@ -9,7 +9,7 @@
   "button.connect": "Login",
   "button.signin": "Sign in",
   "button.logout": "Log out",
-  "super-admin": "Super-Admin",
+  "nav.super-admin": "Super-Admin",
 
   "common.save": "Save",
   "common.cancel": "Cancel",

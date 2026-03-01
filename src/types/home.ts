@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { LucideIcon } from 'lucide-react';
-import { CardTitleVariants, buttonVariant, cartVariants, iconVariants } from '@/components/utils/variants';
+import { ButtonVariant, CardTitleVariants, cartVariants, iconVariants } from '@/components/utils/variants';
 
 export interface StatCardProps {
   icon: LucideIcon;
@@ -27,6 +27,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   variant?: keyof typeof cartVariants;
   icon?: LucideIcon;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 export interface DescribeProps {
@@ -50,7 +51,7 @@ export interface IconBadgeProps {
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
-  variant?: keyof typeof buttonVariant;
+  variant?: ButtonVariant;
   icon?: React.ReactNode;
   position?: 'left' | 'right';
 }
@@ -60,13 +61,21 @@ export type AITool = 'Image' | 'Sound' | 'Video' | 'Voice' | 'Script';
 export interface FilmType {
   id: number;
   title: string;
-  titleEn: string;
-  director: string;
-  country: string;
-  countryName: string;
+  title_en: string | null; // "title_en" dans ta table SQL
+  director_id: number;
   thumbnail: string;
-  aiTools: string[];
-  category: string;
-  officialSelection: boolean;
-  youtubeUrl: string;
+  ia_type: '100% IA' | 'Hybride' | null;
+  status: 'pending' | 'approved' | 'rejected';
+  yt_url: string;
+  duration: number | null;
+  ai_tools: AITool[];
+  countryName?: string;
+  officialSelection?: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FilmWithDirector extends FilmType {
+  director_firstname: string;
+  director_lastname: string;
 }

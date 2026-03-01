@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { CollaboratorType } from '@/types/form';
@@ -31,7 +31,7 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
     }
 
     try {
-      console.log('🚀 PREPARING CLEAN MULTIPART DATA...');
+      console.log('PREPARING CLEAN MULTIPART DATA...');
 
       // --- 2. INITIALISATION DU MULTIPART ---
       // FormData est une API du navigateur indispensable pour envoyer des fichiers (images) au backend
@@ -107,7 +107,7 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
       // if (!response.ok) throw new Error('Submission failed');
 
       // --- 6. SUCCÈS ---
-      console.log('✅ Final Payload Prepared:', dataPayload);
+      console.log('Final Payload Prepared:', dataPayload);
       alert('Test complet! Données prêtes pour le backend.');
       // Redirige l'utilisateur vers la page de succès
       navigate('/success');
@@ -126,3 +126,4 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
   // On renvoie la fonction de soumission et l'état de chargement pour que le composant UI puisse les utiliser
   return { handleSubmitFinal, isSubmitting };
 };
+*/

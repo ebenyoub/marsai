@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Award, Presentation, Users, Video } from 'lucide-react';
+import Button from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import ProgramCard from '@/components/ui/ProgramCard';
-import Button from '@/components/ui/button';
 
 export default function ProgramSection() {
   const { t } = useTranslation();
@@ -54,13 +54,13 @@ export default function ProgramSection() {
         ))}
       </div>
       <div className="mt-16 flex w-full justify-center">
-        <Card className="p-4 text-center">
+        <Card className="shadow-accent/15 flex flex-col items-center p-8 shadow-2xl">
           <div className="mb-4 flex items-center justify-center gap-3">
             <Users className="text-accent h-6 w-6" />
             <h2 className="text-2xl font-semibold text-white md:text-3xl">{t('landing.cta.title')}</h2>
           </div>
           <p className="text-muted-foreground mb-8 max-w-xl text-lg">{t('landing.cta.description')}</p>
-          <Button className="bg-accent hover:bg-accent/90">
+          <Button className="bg-accent hover:bg-accent/90 border-accent-foreground/30">
             <Users />
             {t('landing.cta.button')}
           </Button>

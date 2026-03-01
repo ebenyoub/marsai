@@ -1,12 +1,15 @@
-import { forwardRef } from 'react';
 import { CardProps, DescribeProps } from '@/types/home';
 import { TitleProps } from '@/types/home';
 import { cartVariants } from '../utils/variants';
 import { CardTitleVariants } from '../utils/variants';
 import { cn } from './utils';
 
-const CardHeader = ({ children }: { children: React.ReactNode }) => {
-  return <div className="flex flex-col p-3">{children}</div>;
+const CardHeader = ({ className, children }: { children: React.ReactNode; className: string }) => {
+  return <div className={cn('flex flex-col p-3', className)}>{children}</div>;
+};
+
+const CardContent = ({ className, children }: { children: React.ReactNode; className: string }) => {
+  return <div className={cn('flex flex-col p-3', className)}>{children}</div>;
 };
 
 const CardDescription = ({ children, className }: DescribeProps) => {
@@ -28,18 +31,14 @@ const CardTitle = ({ children, className, variant = 'default', icon }: TitleProp
   );
 };
 
-const Card = forwardRef<HTMLDivElement, CardProps>(({ children, className, variant = 'default', ...props }, ref) => {
+const Card: React.FC<CardProps> = ({ children, className, variant = 'default', ref, ...props }: CardProps) => {
   return (
-    <div
-      ref={ref} // Attach the ref to the actual DOM element
-      className={cn('rounded-2xl border', className, cartVariants[variant])}
-      {...props}
-    >
+    <div ref={ref} className={cn('rounded-2xl border', className, cartVariants[variant])} {...props}>
       {children}
     </div>
   );
-});
+};
 
-Card.displayName = 'Card'; // Good practice for debugging
+Card.displayName = 'Card';
 
-export { Card, CardTitle, CardDescription, CardHeader };
+export { Card, CardTitle, CardDescription, CardHeader, CardContent };

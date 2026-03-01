@@ -9,7 +9,7 @@
   "button.connect": "Se connecter",
   "button.signin": "Se connecter",
   "button.logout": "Deconnexion",
-  "super-admin": "Super-Admin",
+  "nav.super-admin": "Super-Admin",
 
   "common.save": "Enregistrer",
   "common.cancel": "Annuler",
@@ -284,9 +284,9 @@
   "placeholder.submitform2.title.en": "Titre en anglais",
   "placeholder.submitform2.duration": "60",
   "placeholder.submitform2.language": "Sélectionnez une langue",
-  "placeholder.submitform2.tag": "Écologie, Technologie, Humanisme, Innovation…",
-  "placeholder.submitform2.synopsis": "Décrivez votre film en quelques phrases…",
-  "placeholder.submitform2.synopsis.en": "Décrivez votre film en quelques phrases (en anglais)…",
+  "placeholder.submitform2.tag": "Écologie, Technologie, Humanisme, Innovation...",
+  "placeholder.submitform2.synopsis": "Décrivez votre film en quelques phrases...",
+  "placeholder.submitform2.synopsis.en": "Décrivez votre film en quelques phrases (en anglais)...",
 
   "youtube.name": "Youtube",
   "instagram.name": "Instagram",
