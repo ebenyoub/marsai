@@ -1,12 +1,12 @@
-/*import { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, Plus, Users } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
-import Form from '@/components/ui/Form';
-import Button from '@/components/ui/Button';
-// import { useFilmSubmission } from '@/hooks/useFilmSubmission';
+import Form from '@/components/ui/form';
+import Button from '@/components/ui/button';
 import { CollaboratorType, LastStepProps } from '@/types/form';
 import TeamMember from './TeamMember';
+import { useFilmSubmission } from '@/hooks/useFilmSubmission';
 
 interface FormMemberProps extends LastStepProps {
   masterData: Record<string, unknown>;
@@ -16,7 +16,7 @@ export default function FormMember({ onBack, masterData }: FormMemberProps) {
   const { t } = useTranslation();
   const [members, setMembers] = useState<CollaboratorType[]>([]);
 
-  // const { handleSubmitFinal, isSubmitting } = useFilmSubmission(masterData, members);
+  const { handleSubmitFinal, isSubmitting } = useFilmSubmission(masterData, members);
 
   const nextId = useRef(1);
 
@@ -106,4 +106,3 @@ export default function FormMember({ onBack, masterData }: FormMemberProps) {
     </Form>
   );
 }
-*/

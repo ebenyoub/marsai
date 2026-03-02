@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import useForm from '../hooks/useForm';
 import { loginSchema } from '../schemas/login.schema';
-import Button from './ui/Button';
-import Form, { FormGroup, Input, Label } from './ui/Form';
+import Button from './ui/button';
+import Form, { FormGroup, Input, Label } from './ui/form';
 
 const Login = () => {
   const { t } = useTranslation();
