@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/Form';
 import Button from '@/components/ui/button';
+import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { mediaSchema } from '@/schemas/mediaSchema.schema';
 import { WizardStepProps } from '@/types/form';

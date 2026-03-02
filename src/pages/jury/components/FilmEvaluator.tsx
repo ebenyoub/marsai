@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Brain, Send, Star } from 'lucide-react';
+import Button from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { FormGroup, Label, TextArea } from '@/components/ui/Form';
-import Button from '@/components/ui/Button';
 
 // Helper to safely extract the YouTube ID from various URL formats
 const getYouTubeId = (url: string) => {

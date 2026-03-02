@@ -80,7 +80,6 @@
   },
 
   "errors": {
-    "required": "Ce champ est requis",
     "invalid_email": "Veuillez entrer une adresse email valide",
     "invalid_phone": "Format invalide (ex: 06 12 34 56 78)",
     "invalid_zip": "Code postal invalide (5 chiffres requis)",
@@ -92,11 +91,19 @@
     "max_length": "Maximum 300 caractères autorisés",
     "errors.invalid_url": "Veuillez entrer une URL valide",
     "errors.invalid_youtube": "L'URL doit provenir de YouTube",
-    "errors.max_gallery": "Vous ne pouvez pas uploader plus de 3 images"
+    "errors.max_gallery": "Vous ne pouvez pas uploader plus de 3 images",
+    "required": "Ce champ est obligatoire",
+    "min_2_chars": "Ce champ doit contenir au moins 2 caractères",
+    "pass_min_8": "Le mot de passe doit contenir au moins 8 caractères",
+    "pass_uppercase": "Le mot de passe doit contenir au moins une majuscule",
+    "pass_number": "Le mot de passe doit contenir au moins un chiffre",
+    "invalid_festival": "ID de festival invalide"
   },
 
   "form.subtitle": "Connectez-vous à votre compte",
   "form.title": "Se Connecter",
+  "register_title": "Créer un compte",
+  "register_subtitle": "Rejoignez la plateforme marsAI",
   "form.pass": "Mot de passe",
   "form.forgot_pass": "Mot de pass oublié?",
   "form.footer": "Pas encore de compte?",

@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { AlertCircle, ChevronRight } from 'lucide-react';
-import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/Form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup';
 import Button from '@/components/ui/button';
+import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { identitySchema } from '@/schemas/identityForm.schema';
 import { FirstStepProps } from '@/types/form';

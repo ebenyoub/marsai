@@ -31,36 +31,36 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [navigate]);
 
   useEffect(() => {
-  const initializeAuth = async () => {
-    const storedToken = localStorage.getItem('token');
-    
-    if (!storedToken) {
-      setIsLoading(false);
-      return;
-    }
-    
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/profile`, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      });
+    const initializeAuth = async () => {
+      const storedToken = localStorage.getItem('token');
 
-      if (response.ok) {
-        const result = await response.json();
-        setUser(result.user);
-      } else {
-        logout();
+      if (!storedToken) {
+        setIsLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error(error);
-      logout();
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
-  initializeAuth();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/profile`, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setUser(result.user);
+        } else {
+          logout();
+        }
+      } catch (error) {
+        console.error(error);
+        logout();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const value = useMemo(
     () => ({
