@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { Footer } from './components/Footer.js';
 import Login from './components/Login.js';
 import { Navbar } from './components/Navbar.js';
+import Register from './components/Register.js';
 import { AuthProvider } from './context/AuthContext.js';
 import './i18n';
 // import i18n
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/" element={<Home />} />
             <Route path="/submit" element={<FilmUpload />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/jury" element={<JuryDashboard />} />
           </Routes>
         </main>

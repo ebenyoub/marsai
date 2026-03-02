@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Award, Presentation, Users, Video } from 'lucide-react';
-import Button from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import ProgramCard from '@/components/ui/ProgramCard';
+import Button from '@/components/ui/button';
 
 export default function ProgramSection() {
   const { t } = useTranslation();

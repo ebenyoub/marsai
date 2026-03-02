@@ -2,19 +2,22 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { registerSchema } from '@/schemas/register.schema';
 import useForm from '../hooks/useForm';
-import { loginSchema } from '../schemas/login.schema';
 import Button from './ui/button';
-import Form, { FormGroup, Input, Label } from './ui/form';
+import Form, { ErrorParagraph, FormGroup, Input, Label } from './ui/form';
 
-const Login = () => {
+const Register = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const schema = loginSchema(t);
+  const schema = registerSchema(t);
 
   const [loading, setLoading] = useState(false);
 
-  const { handleChange, handleSubmit, values, errors } = useForm({ email: '', password: '' }, schema);
+  const { handleChange, handleSubmit, values, errors } = useForm(
+    { firstname: '', lastname: '', email: '', password: '', festival_id: 1 },
+    schema
+  );
 
   const { login: authLogin } = useAuth();
 
@@ -23,7 +26,7 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/auth/login`, {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formValues),
@@ -52,8 +55,33 @@ const Login = () => {
   return (
     <Form noValidate={true} className="mx-auto w-full max-w-md space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <h2 className="pb-3 text-2xl font-semibold">{t('form.title')}</h2>
-        <p className="text-muted-foreground">{t('form.subtitle')}</p>
+        <h2 className="pb-3 text-2xl font-semibold">{t('register_title')}</h2>
+        <p className="text-muted-foreground">{t('register_subtitle')}</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <FormGroup>
+          <Label required>Prénom</Label>
+          <Input
+            name="firstname"
+            type="text"
+            placeholder={t('placeholder.submitform1.firstname')}
+            value={values.firstname}
+            onChange={handleChange}
+          />
+          {errors.firstname && <ErrorParagraph>{errors.firstname}</ErrorParagraph>}
+        </FormGroup>
+        <FormGroup>
+          <Label required>Nom</Label>
+          <Input
+            name="lastname"
+            type="text"
+            placeholder={t('placeholder.submitform1.lastname')}
+            value={values.lastname}
+            onChange={handleChange}
+          />
+          {errors.lastname && <ErrorParagraph>{errors.lastname}</ErrorParagraph>}
+        </FormGroup>
       </div>
 
       <div className="flex flex-col gap-5">
@@ -68,7 +96,7 @@ const Login = () => {
             onChange={handleChange}
             className={errors.email ? 'border-red-500 focus:ring-red-500' : ''}
           />
-          {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+          {errors.email && <ErrorParagraph>{errors.email}</ErrorParagraph>}
         </FormGroup>
 
         <FormGroup>
@@ -82,13 +110,9 @@ const Login = () => {
             onChange={handleChange}
             className={errors.password ? 'border-red-500 focus:ring-red-500' : ''}
           />
-          {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password}</p>}
+          {errors.password && <ErrorParagraph>{errors.password}</ErrorParagraph>}
         </FormGroup>
       </div>
-
-      <Link to="/" className="text-primary border-none text-sm">
-        {t('form.forgot_pass')}
-      </Link>
 
       <Button type="submit" variant="purple" disabled={loading}>
         {loading ? 'Connexion...' : t('button.signin')}
@@ -96,4 +120,4 @@ const Login = () => {
     </Form>
   );
 };
-export default Login;
+export default Register;
