@@ -9,30 +9,27 @@ const useForm = <T extends Record<string, FormValue>>(initialValues: T, schema?:
   const [errors, setErrors] = useState<Errors<T>>({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>): void => {
-    const target = event.target as HTMLInputElement;
+    const target = event.target as any; // Cast as any to handle files/checked easily
     const { name, value, type, checked, files } = target;
 
-    let newValue: FormValue = value;
+    let newValue: any = value;
 
-    if (type === 'checkbox') {
-      newValue = checked;
-    } else if (type === 'number') {
-      newValue = Number(value);
-    } else if (type === 'file') {
-      // if it's a file input, grab the actual files, NOT the fake string path
-      if (target.multiple) {
-        // for the gallery (up to 3 images)
-        newValue = files ? Array.from(files) : [];
-      } else {
-        // for the single official thumbnail
-        newValue = files && files.length > 0 ? files[0] : null;
-      }
+    if (type === 'checkbox') newValue = checked;
+    else if (type === 'number') newValue = Number(value);
+    else if (type === 'file') {
+      newValue = target.multiple ? (files ? Array.from(files) : []) : files?.[0] || null;
     }
 
-    setValues(prev => ({
-      ...prev,
-      [name]: newValue,
-    }));
+    // UPDATE 1: Clear the error for this specific field when the user types
+    if (errors[name as keyof T]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name as keyof T];
+        return newErrors;
+      });
+    }
+
+    setValues(prev => ({ ...prev, [name]: newValue }));
   };
 
   const validate = (): boolean => {
