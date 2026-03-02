@@ -30,14 +30,10 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className="flex border border-[#2a3242] bg-[#171b29] py-7 md:px-80">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
-          {stats.map((stat, index) => (
-            <StatCard key={index} {...stat} />
-          ))}
-        </div>
-      </div>
+    <section className="bg-background/40 flex w-full justify-evenly border py-7 shadow-xl shadow-white/5">
+      {stats.map((stat, index) => (
+        <StatCard key={index} {...stat} />
+      ))}
     </section>
   );
 }

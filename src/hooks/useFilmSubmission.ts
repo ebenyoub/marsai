@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { CollaboratorType } from '@/types/form';
@@ -22,7 +22,10 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
     }
 
     try {
-      console.log('🚀 PREPARING CLEAN MULTIPART DATA...');
+      console.log('PREPARING CLEAN MULTIPART DATA...');
+
+      // --- 2. INITIALISATION DU MULTIPART ---
+      // FormData est une API du navigateur indispensable pour envoyer des fichiers (images) au backend
       const formData = new FormData();
 
       // --- 2. PAYLOAD CONSTRUCTION ---
@@ -82,6 +85,12 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
       // });
       // if (!response.ok) throw new Error('Submission failed');
 
+<<<<<<< HEAD
+      // --- 6. SUCCÈS ---
+      console.log('Final Payload Prepared:', dataPayload);
+      alert('Test complet! Données prêtes pour le backend.');
+      // Redirige l'utilisateur vers la page de succès
+=======
       // --- 4. THE CLEANUP (Crucial for the video) ---
       // Clear localStorage so the next visit starts at Step 1
       localStorage.removeItem('marsai_step');
@@ -90,6 +99,7 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
       console.log('✅ Final Payload Prepared and Storage Cleared');
 
       // Redirect to success page
+>>>>>>> origin/dev
       navigate('/success');
     } catch (error) {
       console.error('Submission Error:', error);
@@ -101,3 +111,4 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
 
   return { handleSubmitFinal, isSubmitting };
 };
+*/

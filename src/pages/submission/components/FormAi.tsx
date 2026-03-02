@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import Form, { ErrorParagraph, FormGroup, Label, TextArea } from '@/components/ui/Form';
 import RadioGroup, { RadioGroupItem } from '@/components/ui/RadioGroup';
 import Button from '@/components/ui/button';
-import Form, { ErrorParagraph, FormGroup, Label, TextArea } from '@/components/ui/form';
 import useForm from '@/hooks/useForm';
 import { aiDeclarationSchema } from '@/schemas/aiDeclaration.schema';
 import { WizardStepProps } from '@/types/form';

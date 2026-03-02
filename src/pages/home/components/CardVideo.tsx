@@ -2,23 +2,10 @@ import { useTranslation } from 'react-i18next';
 import PlayIcon from '@/assets/PlayIcon';
 import Badge from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
-
-interface FilmType {
-  id: number;
-  title: string;
-  titleEn: string;
-  director: string;
-  country: string;
-  countryName: string;
-  thumbnail: string;
-  aiTools: string[];
-  category: string;
-  officialSelection: boolean;
-  youtubeUrl: string;
-}
+import { FilmWithDirector } from '@/types/home';
 
 interface CardVideoProps {
-  film: FilmType;
+  film: FilmWithDirector;
   onClick: () => void;
 }
 
@@ -48,13 +35,8 @@ function CardVideo({ film, onClick }: CardVideoProps) {
           </div>
         </div>
         <figcaption className="px-6 pt-4 pb-3">
-          <h3 className="group-hover:text-primary">{currentLanguage === 'fr' ? film.title : film.titleEn}</h3>
-          <p className="text-muted-foreground mb-2 text-sm">{film.director}</p>
-          <div className="flex gap-2 py-0.5">
-            {film.aiTools.map((tool, index) => (
-              <Badge key={index}>{tool}</Badge>
-            ))}
-          </div>
+          <h3 className="group-hover:text-primary">{currentLanguage === 'fr' ? film.title : film.title_en}</h3>
+          <p className="text-muted-foreground mb-2 text-sm">{`${film.director_firstname} ${film.director_lastname}`}</p>
         </figcaption>
       </figure>
     </Card>

@@ -1,52 +1,49 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import useForm from '../hooks/useForm';
 import { loginSchema } from '../schemas/login.schema';
-import Button from './ui/button';
-import Form, { FormGroup, Input, Label } from './ui/form';
+import Button from './ui/Button';
+import Form, { FormGroup, Input, Label } from './ui/Form';
 
 const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const schema = loginSchema(t);
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    {
-      email: '',
-      password: '',
-    },
-    schema
-  );
-
   const [loading, setLoading] = useState(false);
+
+  const { handleChange, handleSubmit, values, errors } = useForm({ email: '', password: '' }, schema);
+
+  const { login: authLogin } = useAuth();
 
   const onSubmit = async (formValues: typeof values) => {
     const API_URL = import.meta.env.VITE_API_URL;
 
     try {
       setLoading(true);
-
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formValues),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Login failed:', response.status, errorData);
+        alert(result.message || 'Erreur de connexion');
         return;
       }
 
-      const data = await response.json();
-      console.log('Login success:', data);
+      // 2. ON UTILISE LE PROVIDER (C'est l'étape magique)
+      // On passe le token et l'objet 'user' que l'on voit sur ta capture Postman
+      authLogin(result.token, result.user);
 
-      localStorage.setItem('token', data.token);
+      // 3. Redirection (si pas déjà gérée dans le provider)
       navigate('/');
     } catch (err) {
-      console.error('Network error:', err);
+      console.error('Erreur réseau :', err);
     } finally {
       setLoading(false);
     }
@@ -80,7 +77,7 @@ const Login = () => {
             id="password"
             name="password"
             type="password"
-            placeholder="••••••••"
+            placeholder="**********"
             value={values.password}
             onChange={handleChange}
             className={errors.password ? 'border-red-500 focus:ring-red-500' : ''}

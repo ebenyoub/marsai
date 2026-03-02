@@ -6,8 +6,8 @@ export default function StatCard({ icon: Icon, value, label, color, variant = 'd
   return (
     <div className={cn('flex flex-col items-center space-y-4 text-center', className)}>
       <IconBadge icon={Icon} variant={variant} />
-      <span className={cn('text-4xl font-bold md:text-3xl', color)}>{value}</span>
-      <span className="text-muted-foreground text-lg font-medium">{label}</span>
+      <span className={cn('text-xl font-bold md:text-2xl', color)}>{value}</span>
+      <span className="text-muted-foreground text-sm font-medium md:text-xl">{label}</span>
     </div>
   );
 }

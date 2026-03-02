@@ -7,38 +7,46 @@ import prettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules'] },
+  { 
+    ignores: ['dist', 'node_modules', 'build'] 
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+      },
       parser: tseslint.parser,
       parserOptions: {
-        // Détecte automatiquement le tsconfig approprié
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    settings: { react: { version: 'detect' } },
+    settings: { 
+      react: { version: 'detect' } 
+    },
     plugins: {
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
     rules: {
+      ...reactHooks.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      // Interdiction stricte du type any
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'eqeqeq': ['error', 'always'],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'semi': ['error', 'always'],
-      '@typescript-eslint/semi': ['error', 'always']
+      'semi': 'off', // Désactivé au profit de la règle TS
+      '@typescript-eslint/semi': ['error', 'always'],
     },
   },
   prettier,

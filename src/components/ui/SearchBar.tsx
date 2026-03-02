@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Search } from 'lucide-react';
 // Adjust import based on your i18n library
-import Form, { Input } from './form';
+import Form, { Input } from './Form';
 import { cn } from './utils';
 
 interface SearchBarProps {
@@ -14,7 +14,6 @@ export default function SearchBar({ setQuery, className }: SearchBarProps) {
 
   return (
     <Form
-      // Removed the hardcoded 'mb-8' so the parent container handles the spacing
       className="relative mx-auto w-full border-none bg-transparent p-0 shadow-none ring-0"
       onSubmit={e => e.preventDefault()}
     >

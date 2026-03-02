@@ -1,170 +1,95 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 import { LogIn, LogOut, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { MarsAILogo } from './MarsAILogo.js';
-import { LanguageSwitcher, MobileLanguageSwitcher } from './ui/LanguageSwitcher.js';
-import Button from './ui/button.js';
+import { useAuth } from '../hooks/useAuth';
+import { MarsAILogo } from './MarsAILogo';
+import Button from './ui/Button';
+import { LanguageSwitcher } from './ui/LanguageSwitcher';
+
+const navLinks = [
+  { path: '/', label: 'nav.gallery', protected: false },
+  { path: '/submit', label: 'nav.submit', protected: true },
+  { path: '/jury', label: 'nav.jury', protected: true },
+  { path: '/admin', label: 'nav.admin', protected: true, adminOnly: true },
+];
+
+const mobileAnimation = {
+  initial: { opacity: 0, height: 0 },
+  animate: { opacity: 1, height: 'auto' },
+  exit: { opacity: 0, height: 0 },
+  transition: {
+    duration: 0.3,
+  },
+};
 
 export function Navbar() {
   const { t } = useTranslation();
+  const { isAuthenticated, user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
 
-  const closeMobileMenu = () => setMobileMenuOpen(false);
+  const visibleLinks = navLinks.filter(link => {
+    if (link.protected && !isAuthenticated) return false;
+    if (link.adminOnly && user?.role !== 'admin') return false;
+    return true;
+  });
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-  };
-
-  return (
-    <nav className="bg-card/95 border-border/50 sticky z-50 border-b py-3 backdrop-blur-md">
-      <div className="container mx-auto flex h-full items-center justify-between gap-4 px-4 md:px-6">
-        {/* Logo */}
-        <div className="shrink-0">
-          <MarsAILogo />
-        </div>
-
-        {/* Desktop Navigation - Hidden on Mobile */}
-        <div className="hidden items-center gap-3 md:flex">
-          <NavLink to="/">
-            {({ isActive }) => (
-              <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.gallery')}>
-                {t('nav.gallery')}
-              </Button>
-            )}
-          </NavLink>
-
-          <NavLink to="/submit">
-            {({ isActive }) => (
-              <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.submit')}>
-                {t('nav.submit')}
-              </Button>
-            )}
-          </NavLink>
-
-          <NavLink to="/jury">
-            {({ isActive }) => (
-              <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.jury')}>
-                {t('nav.jury')}
-              </Button>
-            )}
-          </NavLink>
-
-          <NavLink to="/admin">
-            {({ isActive }) => (
-              <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.admin')}>
-                {t('nav.admin')}
-              </Button>
-            )}
-          </NavLink>
-
-          <NavLink to="/super-admin">
-            {({ isActive }) => (
-              <Button variant={isActive ? 'active' : 'ghost'} aria-label="Super Admin">
-                {t('super-admin')}
-              </Button>
-            )}
-          </NavLink>
-
-          {/* Separator */}
-          <div className="bg-border/50 h-6 w-px" role="separator" aria-hidden="true" />
-
-          {/* Connexion Button - Highlighted */}
-          {token && (
-            <Button onClick={handleLogout} variant={'destructive'} aria-label={t('button.logout')}>
-              <LogOut className="mr-1.5 h-4 w-4" aria-hidden="true" />
-              {t('button.logout')}
+  const renderNavLinks = (onClick?: () => void) => (
+    <>
+      {visibleLinks.map(link => (
+        <NavLink key={link.path} to={link.path} onClick={onClick}>
+          {({ isActive }) => (
+            <Button variant={isActive ? 'active' : 'ghost'} className="w-full md:w-auto">
+              {t(link.label)}
             </Button>
           )}
-        </div>
+        </NavLink>
+      ))}
+    </>
+  );
 
-        {/* Desktop Right Section - Register + Language */}
+  return (
+    <nav className="bg-card/95 border-border/50 sticky z-50 border-b py-3 shadow-xl shadow-white/5 backdrop-blur-md">
+      <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
+        <MarsAILogo />
+
+        {/* Desktop Navigation */}
         <div className="hidden items-center gap-3 md:flex">
-          {/* Desktop Language Selector */}
+          {renderNavLinks()}
+
+          {isAuthenticated ? (
+            <Button onClick={logout} variant="destructive">
+              <LogOut className="mr-1.5 h-4 w-4" />
+              {t('button.logout')}
+            </Button>
+          ) : (
+            <NavLink to="/login">
+              <Button variant="connexion">
+                <LogIn className="mr-1.5 h-4 w-4" />
+                {t('button.connect')}
+              </Button>
+            </NavLink>
+          )}
           <LanguageSwitcher />
         </div>
 
-        {/* Mobile Right Section - Language + Burger */}
+        {/* Mobile Toggle */}
         <div className="flex items-center gap-3 md:hidden">
-          {/* Mobile Language Switcher */}
-          <MobileLanguageSwitcher />
-
-          {/* Burger Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="border-border hover:border-primary hover:bg-primary/10 rounded-lg border p-2 transition-colors"
-            aria-label="Menu"
-            aria-expanded={mobileMenuOpen}
-          >
-            {mobileMenuOpen ? <X className="text-foreground h-5 w-5" /> : <Menu className="text-foreground h-5 w-5" />}
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="...">
+            {mobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-card/98 border-border/50 overflow-hidden border-b backdrop-blur-lg md:hidden"
-            role="navigation"
-            aria-label="Menu mobile"
-          >
-            <div className="container mx-auto space-y-2 px-4 py-4">
-              <NavLink to="/" onClick={closeMobileMenu}>
-                {({ isActive }) => (
-                  <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.gallery')}>
-                    {t('nav.gallery')}
-                  </Button>
-                )}
-              </NavLink>
-              <NavLink to="/submit" onClick={closeMobileMenu}>
-                {({ isActive }) => (
-                  <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.submit')}>
-                    {t('nav.submit')}
-                  </Button>
-                )}
-              </NavLink>
-              <NavLink to="/jury" onClick={closeMobileMenu}>
-                {({ isActive }) => (
-                  <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.jury')}>
-                    {t('nav.jury')}
-                  </Button>
-                )}
-              </NavLink>
-              <NavLink to="/admin" onClick={closeMobileMenu}>
-                {({ isActive }) => (
-                  <Button variant={isActive ? 'active' : 'ghost'} aria-label={t('nav.admin')}>
-                    {t('nav.admin')}
-                  </Button>
-                )}
-              </NavLink>
-              <NavLink to="/super-admin" onClick={closeMobileMenu}>
-                {({ isActive }) => (
-                  <Button variant={isActive ? 'active' : 'ghost'} aria-label="Super Admin">
-                    Super Admin
-                  </Button>
-                )}
-              </NavLink>
-
-              {/* Separator */}
-              <div className="bg-border/50 my-2 h-px" role="separator" aria-hidden="true" />
-
-              {/* Connexion Button - Highlighted in Mobile */}
-              <NavLink to="/login" onClick={closeMobileMenu}>
-                {({ isActive }) => (
-                  <Button variant={isActive ? 'green' : 'connexion'} aria-label={t('button.connect')}>
-                    <LogIn className="mr-2 h-5 w-5" aria-hidden="true" />
-                    {t('button.connect')}
-                  </Button>
-                )}
-              </NavLink>
+          <motion.div className="md:hidden" {...mobileAnimation}>
+            <div className="flex flex-col gap-2 p-4">
+              {renderNavLinks(() => setMobileMenuOpen(false))}
+              <div className="bg-border/50 my-2 h-px" />
+              <LanguageSwitcher />
             </div>
           </motion.div>
         )}
