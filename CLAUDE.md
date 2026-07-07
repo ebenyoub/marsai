@@ -13,7 +13,8 @@ Plateforme web de festival de courts-métrages IA. Monorepo : `marsai_backend/` 
 
 - MVP fonctionnel et testé E2E : galerie, détail film, auth JWT, tunnel de soumission 5 étapes (`POST /api/submissions`, multer), vote jury (upsert).
 - Dette assumée : soumissions créées en `approved` (pas d'UI de modération) ; dashboards admin/super-admin décoratifs (aucun appel API) ; ~88 erreurs `tsc --noEmit` préexistantes côté frontend (le build Vite passe) ; `/rating` sans verifyToken ; pas de garde de rôle sur `/jury`, `/admin`, `/superadmin` ; `PUT /movies/:id` cassé (`updated_at` inexistant).
-- Le dossier n'est **pas un dépôt git**. `AGENTS.md` est historique (pré-MVP) : ne pas suivre ses instructions "restaurer depuis git".
+- Le dossier **est un dépôt git** (`origin` sur GitHub, branche `main`). `AGENTS.md` est historique (pré-MVP) : ne pas suivre ses instructions "restaurer depuis git".
+- ⚠️ La liste de dette ci-dessus contient des points obsolètes découverts le 2026-07-07 (voir `docs/decisions.md`) — correction reportée à une phase de documentation globale, ne pas s'y fier sans revérifier dans le code. Voir `PROJECT_STATE.md` pour l'état réel et à jour.
 
 ## Règles
 
