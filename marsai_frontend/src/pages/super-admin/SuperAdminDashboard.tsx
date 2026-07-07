@@ -7,44 +7,8 @@ import { EditFestivalDialog } from "./components/EditFestivalDialog"
 import { useFetch } from "@/hooks/useFetch"
 import { apiRequest } from "@/lib/api"
 
-const festivalsTab: FestivalInstance[] = [
-  {
-    id: '1',
-    name: 'marsAI Marseille 2026',
-    slug: 'marseille-2026',
-    year: 2026,
-    city: 'Marseille',
-    status: 'active',
-    primaryColor: '#00F2FF',
-    submissionsCount: 247,
-    createdAt: '2025-01-01',
-  },
-  {
-    id: '2',
-    name: 'marsAI Lyon 2027',
-    slug: 'lyon-2027',
-    year: 2027,
-    city: 'Lyon',
-    status: 'upcoming',
-    primaryColor: '#FF6B9D',
-    submissionsCount: 0,
-    createdAt: '2026-01-15',
-  },
-  {
-    id: '3',
-    name: 'marsAI Paris 2025',
-    slug: 'paris-2025',
-    year: 2025,
-    city: 'Paris',
-    status: 'archived',
-    primaryColor: '#FFD700',
-    submissionsCount: 189,
-    createdAt: '2024-01-01',
-  },
-];
-
 function SuperAdminDashboard() {
-  const [festivals, setFestivals] = useState<FestivalInstance[]>(festivalsTab);
+  const [festivals, setFestivals] = useState<FestivalInstance[]>([]);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [editingFestival, setEditingFestival] = useState<FestivalInstance | null>(null);
   const [newFestival, setNewFestival] = useState<Partial<FestivalInstance>>({
@@ -75,6 +39,7 @@ function SuperAdminDashboard() {
         city: f.city,
         year: new Date(f.start_at || Date.now()).getFullYear(),
         submissionsCount: f.submissionsCount || 0,
+        status: (f.status as unknown as string) === 'Actif' ? 'active' : 'archived',
       })));
     }
   }, [data]);

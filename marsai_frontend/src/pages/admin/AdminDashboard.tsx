@@ -33,10 +33,13 @@ export default function AdminDashboard() {
     { label: t('admin.stats.directors'), value: statsData?.directorsCount ?? 0, icon: User, className: 'text-primary' },
     { label: t('admin.stats.selection'), value: statsData?.selectionsCount ?? 0, icon: User, className: 'text-primary' },
   ]
-  const festivals: Festival[] = [
-    { id: '1', name: 'Festival A', status: 'Actif' },
-    { id: '2', name: 'Festival B', status: 'Brouillon' },
-  ]
+
+  const { data: festivalsData } = useFetch<{ id: number; name: string; status: string }[]>('/festivals');
+  const festivals: Festival[] = (festivalsData ?? []).map((f) => ({
+    id: String(f.id),
+    name: f.name,
+    status: f.status,
+  }))
 
   return (
     <div className="flex flex-col lg:flex-row min-h-[calc(100vh-60px)]">
