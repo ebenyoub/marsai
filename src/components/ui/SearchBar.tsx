@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Search } from 'lucide-react';
 // Adjust import based on your i18n library
-import Form, { Input } from './Form';
+import Form, { Input } from './form';
 import { cn } from './utils';
 
 interface SearchBarProps {
