@@ -3,11 +3,8 @@ import { z } from 'zod';
 
 const optionalSocialUrl = (t: TFunction) =>
   z
-    .url({
-      protocol: /^https?$/,
-      hostname: z.regexes.domain,
-      error: t('errors.invalid_url'),
-    })
+    .string()
+    .url(t('errors.invalid_url'))
     .optional()
     .or(z.literal(''));
 
@@ -17,9 +14,7 @@ export const identitySchema = (t: TFunction) =>
     firstName: z.string().min(1, t('errors.required')),
     lastName: z.string().min(1, t('errors.required')),
     birthDate: z.string().min(1, t('errors.required')),
-    email: z.email({
-      error: issue => (!issue.input ? t('errors.required') : t('errors.invalid_email')),
-    }),
+    email: z.string().min(1, t('errors.required')).email(t('errors.invalid_email')),
     mobile: z.string().min(1, t('errors.required')),
     postCode: z.string().min(1, t('errors.required')),
     address: z.string().min(1, t('errors.required')),

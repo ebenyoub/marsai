@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { LucideIcon } from 'lucide-react';
-import { ButtonVariant, CardTitleVariants, cartVariants, iconVariants } from '@/components/utils/variants';
+import { ButtonVariant, CardTitleVariants, cartVariants, iconVariants } from '@/utils/variants';
 
 export interface StatCardProps {
   icon: LucideIcon;
@@ -68,7 +68,13 @@ export interface FilmType {
   status: 'pending' | 'approved' | 'rejected';
   yt_url: string;
   duration: number | null;
-  ai_tools: AITool[];
+  ai_tools?: AITool[]; // absent des réponses API actuelles (pas de colonne en base)
+  stack?: string | null;
+  synopsis_fr?: string | null;
+  synopsis_en?: string | null;
+  main_language?: string | null;
+  methodology?: string | null;
+  director?: string;
   countryName?: string;
   officialSelection?: boolean;
   created_at: string;

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiRequest } from '../lib/api';
 import { AuthContext } from '../hooks/useAuth';
 import { User } from '../types/auth';
 
@@ -7,21 +8,8 @@ import { User } from '../types/auth';
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // État critique
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-
-  const login = useCallback(
-    (newToken: string, userData: User) => {
-      localStorage.setItem('token', newToken);
-      setToken(newToken);
-      setUser(userData);
-
-      navigate('/profile', {
-        replace: true,
-      });
-    },
-    [navigate]
-  );
 
   const logout = useCallback(() => {
     localStorage.removeItem('token');
@@ -29,6 +17,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
     navigate('/', { replace: true });
   }, [navigate]);
+
+  const login = useCallback(
+    (newToken: string, userData: User) => {
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      setUser(userData);
+      navigate('/', { replace: true });
+    },
+    [navigate]
+  );
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -40,18 +38,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/profile`, {
+        const result = await apiRequest<{ user: User }>('/auth/profile', {
           headers: { Authorization: `Bearer ${storedToken}` },
         });
-
-        if (response.ok) {
-          const result = await response.json();
-          setUser(result.user);
-        } else {
-          logout();
-        }
+        setUser(result.user);
       } catch (error) {
-        console.error(error);
+        console.error('Auth initialization failed:', error);
         logout();
       } finally {
         setIsLoading(false);
@@ -59,8 +51,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     initializeAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [logout]);
 
   const value = useMemo(
     () => ({

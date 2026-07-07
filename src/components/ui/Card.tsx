@@ -1,7 +1,7 @@
 import { CardProps, DescribeProps } from '@/types/home';
 import { TitleProps } from '@/types/home';
-import { cartVariants } from '../utils/variants';
-import { CardTitleVariants } from '../utils/variants';
+import { cartVariants } from '../../utils/variants';
+import { CardTitleVariants } from '../../utils/variants';
 import { cn } from './utils';
 
 const CardHeader = ({ className, children }: { children: React.ReactNode; className: string }) => {

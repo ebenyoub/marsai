@@ -1,28 +1,27 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
-import { CollaboratorType } from '@/types/form';
+import { useNavigate } from 'react-router-dom';
+import { CollaboratorType, FilmSubmissionData } from '@/types/form';
 
-export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) => {
+export const useFilmSubmission = (masterData: FilmSubmissionData, members: CollaboratorType[]) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handleSubmitFinal = async (e: React.FormEvent) => {
+  const handleSubmitFinal = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     // --- 1. VALIDATION LOCALE ---
     const isValid = members.every(m => m.firstname && m.lastname && m.job && m.email);
     if (!isValid && members.length > 0) {
-      // Removed alert for a smoother video experience; logic just stops here
-      console.warn('Validation failed: Some members have empty fields');
+      alert(t('submit.step5.incomplete', 'Veuillez remplir tous les champs de chaque membre de l\'équipe (ou supprimer les membres vides).'));
       setIsSubmitting(false);
       return;
     }
 
     try {
-      console.log('PREPARING CLEAN MULTIPART DATA...');
+      console.warn('PREPARING CLEAN MULTIPART DATA...');
 
       // --- 2. INITIALISATION DU MULTIPART ---
       // FormData est une API du navigateur indispensable pour envoyer des fichiers (images) au backend
@@ -61,7 +60,7 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
           hasSubtitles: masterData.hasSubtitles,
           techStack: masterData.techStack,
           methodology: masterData.methodology,
-          iaType: masterData.deploymentType,
+          iaType: masterData.aiClassification ?? masterData.deploymentType,
           tags: masterData.semanticTags,
         },
         collaborators: members,
@@ -78,25 +77,35 @@ export const useFilmSubmission = (masterData: any, members: CollaboratorType[]) 
       }
 
       // --- 3. SEND TO BACKEND ---
-      // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      // const response = await fetch(`${API_URL}/api/submissions`, {
-      //   method: 'POST',
-      //   body: formData
-      // });
-      // if (!response.ok) throw new Error('Submission failed');
+      const API_URL = import.meta.env.VITE_API_URL;
+      
+      if (!API_URL) {
+        // Fallback to mock
+        console.warn('No API URL found, falling back to mock submission.');
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      } else {
+        const response = await fetch(`${API_URL}/api/submissions`, {
+          method: 'POST',
+          body: formData
+        });
+        if (!response.ok) {
+          const errorBody = await response.json().catch(() => null);
+          throw new Error(errorBody?.message || `Submission failed (${response.status})`);
+        }
+      }
 
       // --- 4. THE CLEANUP (Crucial for the video) ---
       // Clear localStorage so the next visit starts at Step 1
       localStorage.removeItem('marsai_step');
       localStorage.removeItem('marsai_data');
 
-      console.log('✅ Final Payload Prepared and Storage Cleared');
+      console.warn('✅ Final Payload Prepared and Storage Cleared');
 
       // Redirect to success page
       navigate('/success');
     } catch (error) {
       console.error('Submission Error:', error);
-      // Fallback for errors
+      alert(error instanceof Error ? error.message : t('submit.error', 'Une erreur est survenue lors de la soumission.'));
     } finally {
       setIsSubmitting(false);
     }

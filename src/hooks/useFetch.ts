@@ -1,4 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+import { apiRequest } from '../lib/api';
+
+interface ApiListResponse<T> {
+  data?: T;
+}
 
 export function useFetch<T>(url: string, options: RequestInit = {}) {
   const [data, setData] = useState<T | null>(null);
@@ -10,29 +15,26 @@ export function useFetch<T>(url: string, options: RequestInit = {}) {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
+      const result = await apiRequest<T | ApiListResponse<T>>(url, {
         ...options,
         headers: {
-          'Content-Type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
           ...options.headers,
         },
       });
 
-      if (!response.ok) throw new Error('Erreur lors de la récupération');
-
-      const result = await response.json();
-      setData(result.data || result);
+      setData('data' in Object(result) ? (result as ApiListResponse<T>).data ?? null : result as T);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Une erreur');
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
-  }, [url]);
+  }, [url, options]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
 
   return { data, isLoading, error, refetch: fetchData };
 }

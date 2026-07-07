@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Award, Presentation, Users, Video } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import ProgramCard from '@/components/ui/ProgramCard';
@@ -60,10 +61,12 @@ export default function ProgramSection() {
             <h2 className="text-2xl font-semibold text-white md:text-3xl">{t('landing.cta.title')}</h2>
           </div>
           <p className="text-muted-foreground mb-8 max-w-xl text-lg">{t('landing.cta.description')}</p>
-          <Button className="bg-accent hover:bg-accent/90 border-accent-foreground/30">
-            <Users />
-            {t('landing.cta.button')}
-          </Button>
+          <Link to="/register">
+            <Button className="bg-accent hover:bg-accent/90 border-accent-foreground/30">
+              <Users />
+              {t('landing.cta.button')}
+            </Button>
+          </Link>
         </Card>
       </div>
     </section>

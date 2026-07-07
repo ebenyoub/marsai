@@ -1,26 +1,39 @@
 import { useTranslation } from 'react-i18next';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useForm, useWatch } from 'react-hook-form';
 import Button from '@/components/ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
-import useForm from '@/hooks/useForm';
 import { mediaSchema } from '@/schemas/mediaSchema.schema';
 import { WizardStepProps } from '@/types/form';
+import type { z } from 'zod';
 
 export default function FormMedia({ onNext, onBack }: WizardStepProps) {
   const { t } = useTranslation();
   const schema = mediaSchema(t);
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
       youtubeUrl: '',
       hasSubtitles: false,
       thumbnail: null as File | null,
       gallery: [] as File[],
     },
-    schema
-  );
+  });
 
-  const onSubmit = (formValues: typeof values) => {
+  const hasSubtitles = useWatch({ control, name: 'hasSubtitles' });
+  const gallery = useWatch({ control, name: 'gallery' });
+
+  type MediaValues = z.infer<typeof schema>;
+
+  const onSubmit = (formValues: MediaValues) => {
     onNext(formValues);
   };
 
@@ -28,8 +41,12 @@ export default function FormMedia({ onNext, onBack }: WizardStepProps) {
     const files = e.target.files;
     if (!files) return;
 
-    const value = fieldName === 'gallery' ? Array.from(files) : files[0];
-    handleChange({ target: { name: fieldName, value } } as any);
+    if (fieldName === 'gallery') {
+      setValue('gallery', Array.from(files));
+      return;
+    }
+
+    setValue('thumbnail', files[0]);
   };
 
   const hasErrors = Object.keys(errors).length > 0;
@@ -48,22 +65,19 @@ export default function FormMedia({ onNext, onBack }: WizardStepProps) {
         <Label required>{t('submit.step4.youtube.label')}</Label>
         <Input
           type="url"
-          name="youtubeUrl"
-          value={values.youtubeUrl}
-          onChange={handleChange}
           placeholder={t('placeholder.submitform4.youtube')}
+          {...register('youtubeUrl')}
         />
         <p className="text-muted-foreground mt-1 text-xs">{t('submit.step4.youtube.hint')}</p>
-        {errors.youtubeUrl && <ErrorParagraph>{errors.youtubeUrl}</ErrorParagraph>}
+        {errors.youtubeUrl && <ErrorParagraph>{errors.youtubeUrl.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <FormGroup className="border-border flex flex-row items-center gap-3 space-y-0 rounded-xl border bg-slate-900/50 p-4 shadow-sm md:p-5">
         <input
           type="checkbox"
-          name="hasSubtitles"
           id="hasSubtitles"
-          checked={values.hasSubtitles}
-          onChange={e => handleChange({ target: { name: 'hasSubtitles', value: e.target.checked } } as any)}
+          checked={hasSubtitles}
+          {...register('hasSubtitles')}
           className="accent-primary size-5 shrink-0 cursor-pointer"
         />
         <Label htmlFor="hasSubtitles" className="m-0 cursor-pointer font-normal text-slate-200">
@@ -75,20 +89,18 @@ export default function FormMedia({ onNext, onBack }: WizardStepProps) {
         <Label required>{t('submit.step4.thumbnail.label')}</Label>
         <Input
           type="file"
-          name="thumbnail"
           accept="image/jpeg, image/png, image/gif"
           onChange={e => handleFileChange(e, 'thumbnail')}
           className="file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer text-slate-300 file:mr-4 file:rounded-md file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold"
         />
         <p className="text-muted-foreground mt-1 text-xs">{t('submit.step4.thumbnail.hint')}</p>
-        {errors.thumbnail && <ErrorParagraph>{errors.thumbnail}</ErrorParagraph>}
+        {errors.thumbnail && <ErrorParagraph>{errors.thumbnail.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <FormGroup>
         <Label>{t('submit.step4.gallery.label')}</Label>
         <Input
           type="file"
-          name="gallery"
           accept="image/jpeg, image/png, image/gif"
           multiple
           onChange={e => handleFileChange(e, 'gallery')}
@@ -96,11 +108,11 @@ export default function FormMedia({ onNext, onBack }: WizardStepProps) {
         />
         <div className="mt-1 flex items-center justify-between">
           <p className="text-muted-foreground text-xs">{t('submit.step4.gallery.hint')}</p>
-          {Array.isArray(values.gallery) && values.gallery.length > 0 && (
-            <p className="text-primary text-xs font-medium">{values.gallery.length} / 3</p>
+          {Array.isArray(gallery) && gallery.length > 0 && (
+            <p className="text-primary text-xs font-medium">{gallery.length} / 3</p>
           )}
         </div>
-        {errors.gallery && <ErrorParagraph>{errors.gallery}</ErrorParagraph>}
+        {errors.gallery && <ErrorParagraph>{errors.gallery.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <div className="border-border mt-8 space-y-4 border-t pt-6">

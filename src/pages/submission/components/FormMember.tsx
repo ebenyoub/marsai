@@ -5,11 +5,11 @@ import { Card } from '@/components/ui/Card';
 import Button from '@/components/ui/button';
 import Form from '@/components/ui/form';
 import { useFilmSubmission } from '@/hooks/useFilmSubmission';
-import { CollaboratorType, LastStepProps } from '@/types/form';
+import { CollaboratorType, FilmSubmissionData, LastStepProps } from '@/types/form';
 import TeamMember from './TeamMember';
 
 interface FormMemberProps extends LastStepProps {
-  masterData: Record<string, unknown>;
+  masterData: FilmSubmissionData;
 }
 
 export default function FormMember({ onBack, masterData }: FormMemberProps) {
@@ -28,6 +28,7 @@ export default function FormMember({ onBack, masterData }: FormMemberProps) {
       job: '',
       email: '',
     };
+    nextId.current += 1;
     setMembers([...members, newMember]);
   };
 
@@ -41,7 +42,7 @@ export default function FormMember({ onBack, masterData }: FormMemberProps) {
 
   return (
     <Form
-      // onSubmit={handleSubmitFinal}
+      onSubmit={handleSubmitFinal}
       className="m-auto w-full max-w-4xl space-y-8 border-none bg-transparent p-4 ring-0 md:p-10"
     >
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">

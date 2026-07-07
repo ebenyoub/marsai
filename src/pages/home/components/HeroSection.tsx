@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Upload } from 'lucide-react';
 import heroImage from '@/assets/hero.jpg';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/button';
 import { Card } from '@/components/ui/Card';
 import CountDown from '@/components/ui/CountDown';
 
@@ -28,9 +29,11 @@ export default function HeroSection() {
           <CountDown />
         </Card>
         <div className="flex flex-wrap justify-center gap-4">
-          <Button icon={<Upload size={15} />} variant="purple" className="px-3 py-2 text-xl">
-            Soumettre mon Film
-          </Button>
+          <Link to="/submit">
+            <Button icon={<Upload size={15} />} variant="purple" className="px-3 py-2 text-xl">
+              Soumettre mon Film
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

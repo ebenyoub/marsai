@@ -105,7 +105,8 @@
     "pass_min_8": "Password must be at least 8 characters long",
     "pass_uppercase": "Password must contain at least one uppercase letter",
     "pass_number": "Password must contain at least one number",
-    "invalid_festival": "Invalid festival ID"
+    "invalid_festival": "Invalid festival ID",
+    "passwords_dont_match": "Passwords don't match"
   },
 
   "admin.title": "Super Admin Dashboard",

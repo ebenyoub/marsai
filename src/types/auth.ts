@@ -6,9 +6,9 @@ export interface User {
   lastname: string;
   email: string;
   role: UserRole;
-  password: string;
-  created_at: Date;
-  updated_at: Date;
+  password?: string;
+  created_at?: Date | string;
+  updated_at?: Date | string;
 }
 
 export interface AuthContextType {

@@ -97,7 +97,8 @@
     "pass_min_8": "Le mot de passe doit contenir au moins 8 caractères",
     "pass_uppercase": "Le mot de passe doit contenir au moins une majuscule",
     "pass_number": "Le mot de passe doit contenir au moins un chiffre",
-    "invalid_festival": "ID de festival invalide"
+    "invalid_festival": "ID de festival invalide",
+    "passwords_dont_match": "Les mots de passe ne correspondent pas"
   },
 
   "form.subtitle": "Connectez-vous à votre compte",

@@ -1,7 +1,42 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FileText, Sparkles, Upload, User, Users } from 'lucide-react';
-import { CollaboratorType, Step } from '@/types/form';
+import { FilmSubmissionData, Step, SubmissionStepData } from '@/types/form';
+
+const initialFormData: FilmSubmissionData = {
+  civility: 'M.',
+  firstName: '',
+  lastName: '',
+  birthDate: '',
+  email: '',
+  mobile: '',
+  address: '',
+  postCode: '',
+  city: '',
+  country: '',
+  job: '',
+  youtube: '',
+  instagram: '',
+  linkedin: '',
+  facebook: '',
+  twitter: '',
+  source: '',
+  newsletter: false,
+  title: '',
+  titleEn: '',
+  duration: '',
+  language: '',
+  semanticTags: [],
+  synopsis: '',
+  synopsisEn: '',
+  deploymentType: '100',
+  techStack: '',
+  methodology: '',
+  youtubeUrl: '',
+  hasSubtitles: false,
+  thumbnail: null,
+  gallery: [],
+};
 
 export function useStepper() {
   const [currentStep, setCurrentStep] = useState<Step>(() => {
@@ -11,56 +46,13 @@ export function useStepper() {
   const { t } = useTranslation();
 
   // This is the "Big Bucket" that holds everything
-  const [formData, setFormData] = useState(() => {
+  const [formData, setFormData] = useState<FilmSubmissionData>(() => {
     const savedData = localStorage.getItem('marsai_data');
     if (savedData) {
-      return JSON.parse(savedData);
+      return { ...initialFormData, ...JSON.parse(savedData) as Partial<FilmSubmissionData> };
     }
 
-    return {
-      // Step 1
-      civility: 'M.',
-      firstName: '',
-      lastName: '',
-      birthDate: '',
-      email: '',
-      mobile: '',
-      address: '',
-      postCode: '',
-      city: '',
-      country: '',
-      job: '',
-      youtube: '',
-      instagram: '',
-      linkedin: '',
-      facebook: '',
-      twitter: '',
-      source: '',
-      newsletter: false,
-
-      // Step 2
-      title: '',
-      titleEn: '',
-      duration: 0,
-      language: '',
-      semanticTags: '',
-      synopsis: '',
-      synopsisEn: '',
-
-      // Step 3
-      deploymentType: '100',
-      techStack: '',
-      methodology: '',
-
-      // Step 4
-      youtubeUrl: '',
-      hasSubtitles: false,
-      thumbnail: null as File | null,
-      gallery: [] as File[],
-
-      // Step 5
-      collaborators: [] as CollaboratorType[],
-    };
+    return initialFormData;
   });
 
   useEffect(() => {
@@ -86,9 +78,9 @@ export function useStepper() {
   const progress = (currentStep / steps.length) * 100;
 
   // This accepts the local data from the form and merges it into the Big Bucket
-  const nextStep = (stepData?: Partial<typeof formData>) => {
+  const nextStep = (stepData?: SubmissionStepData) => {
     if (stepData) {
-      setFormData((prev: any) => ({ ...prev, ...stepData }));
+      setFormData(prev => ({ ...prev, ...stepData }));
     }
 
     if (currentStep < 5) {

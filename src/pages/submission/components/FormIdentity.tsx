@@ -1,12 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, ChevronRight } from 'lucide-react';
+import { useForm, useWatch } from 'react-hook-form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup';
 import Button from '@/components/ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label } from '@/components/ui/form';
-import useForm from '@/hooks/useForm';
 import { identitySchema } from '@/schemas/identityForm.schema';
 import { FirstStepProps } from '@/types/form';
+import type { z } from 'zod';
 
 export default function FormIdentity({ onNext }: FirstStepProps) {
   const { t } = useTranslation();
@@ -14,8 +16,15 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
 
   const schema = identitySchema(t);
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
       civility: 'M.',
       firstName: '',
       lastName: '',
@@ -35,11 +44,14 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
       source: '',
       newsletter: false,
     },
-    schema
-  );
+  });
 
-  const onSubmit = async (formValues: typeof values) => {
-    onNext(formValues);
+  const civilityValue = useWatch({ control, name: 'civility' });
+
+  type IdentityValues = z.infer<typeof schema>;
+
+  const onSubmit = (values: IdentityValues) => {
+    onNext(values);
   };
 
   const hasErrors = Object.keys(errors).length > 0;
@@ -59,10 +71,8 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
           Civilité <span className="text-primary">*</span>
         </Label>
         <RadioGroup
-          value={values.civility}
-          onValueChange={value =>
-            handleChange({ target: { name: 'civility', value } } as unknown as React.ChangeEvent<HTMLInputElement>)
-          }
+          value={civilityValue}
+          onValueChange={value => setValue('civility', value)}
           className="flex gap-6"
         >
           <div className="flex items-center space-x-2">
@@ -78,59 +88,51 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
             </Label>
           </div>
         </RadioGroup>
-        {errors.civility && <ErrorParagraph>{errors.civility}</ErrorParagraph>}
+        {errors.civility && <ErrorParagraph>{errors.civility.message as string}</ErrorParagraph>}
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FormGroup>
           <Label required>{t('submit.step1.firstname')}</Label>
           <Input
-            name="firstName"
-            value={values.firstName}
-            onChange={handleChange}
             placeholder={t('placeholder.submitform1.firstname')}
+            {...register('firstName')}
           />
-          {errors.firstName && <ErrorParagraph>{errors.firstName}</ErrorParagraph>}
+          {errors.firstName && <ErrorParagraph>{errors.firstName.message as string}</ErrorParagraph>}
         </FormGroup>
         <FormGroup>
           <Label required>{t('submit.step1.lastname')}</Label>
           <Input
-            name="lastName"
-            value={values.lastName}
-            onChange={handleChange}
             placeholder={t('placeholder.submitform1.lastname')}
+            {...register('lastName')}
           />
-          {errors.lastName && <ErrorParagraph>{errors.lastName}</ErrorParagraph>}
+          {errors.lastName && <ErrorParagraph>{errors.lastName.message as string}</ErrorParagraph>}
         </FormGroup>
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <FormGroup>
           <Label required>{t('submit.step1.birthdate')}</Label>
-          <Input type="date" name="birthDate" value={values.birthDate} onChange={handleChange} />
-          {errors.birthDate && <ErrorParagraph>{errors.birthDate}</ErrorParagraph>}
+          <Input type="date" {...register('birthDate')} />
+          {errors.birthDate && <ErrorParagraph>{errors.birthDate.message as string}</ErrorParagraph>}
         </FormGroup>
         <FormGroup>
           <Label required>{t('submit.step1.email')}</Label>
           <Input
             type="email"
-            name="email"
-            value={values.email}
-            onChange={handleChange}
             placeholder={t('placeholder.submitform1.email')}
+            {...register('email')}
           />
-          {errors.email && <ErrorParagraph>{errors.email}</ErrorParagraph>}
+          {errors.email && <ErrorParagraph>{errors.email.message as string}</ErrorParagraph>}
         </FormGroup>
         <FormGroup>
           <Label required>{t('submit.step1.mobile')}</Label>
           <Input
             type="tel"
-            name="mobile"
-            value={values.mobile}
-            onChange={handleChange}
             placeholder={t('placeholder.submitform1.mobile')}
+            {...register('mobile')}
           />
-          {errors.mobile && <ErrorParagraph>{errors.mobile}</ErrorParagraph>}
+          {errors.mobile && <ErrorParagraph>{errors.mobile.message as string}</ErrorParagraph>}
         </FormGroup>
       </div>
 
@@ -138,12 +140,10 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
         <Label required>{t('submit.step1.address')}</Label>
         <Input
           type="text"
-          name="address"
-          value={values.address}
-          onChange={handleChange}
           placeholder={t('placeholder.submitform1.address')}
+          {...register('address')}
         />
-        {errors.address && <ErrorParagraph>{errors.address}</ErrorParagraph>}
+        {errors.address && <ErrorParagraph>{errors.address.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -151,34 +151,28 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
           <Label required>{t('submit.step1.zip')}</Label>
           <Input
             type="text"
-            name="postCode"
-            value={values.postCode}
-            onChange={handleChange}
             placeholder={t('placeholder.submitform1.zip')}
+            {...register('postCode')}
           />
-          {errors.postCode && <ErrorParagraph>{errors.postCode}</ErrorParagraph>}
+          {errors.postCode && <ErrorParagraph>{errors.postCode.message as string}</ErrorParagraph>}
         </FormGroup>
         <FormGroup>
           <Label required>{t('submit.step1.city')}</Label>
           <Input
             type="text"
-            name="city"
-            value={values.city}
-            onChange={handleChange}
             placeholder={t('placeholder.submitform1.city')}
+            {...register('city')}
           />
-          {errors.city && <ErrorParagraph>{errors.city}</ErrorParagraph>}
+          {errors.city && <ErrorParagraph>{errors.city.message as string}</ErrorParagraph>}
         </FormGroup>
         <FormGroup>
           <Label required>{t('submit.step1.country')}</Label>
           <Input
             type="text"
-            name="country"
-            value={values.country}
-            onChange={handleChange}
             placeholder={t('placeholder.submitform1.country')}
+            {...register('country')}
           />
-          {errors.country && <ErrorParagraph>{errors.country}</ErrorParagraph>}
+          {errors.country && <ErrorParagraph>{errors.country.message as string}</ErrorParagraph>}
         </FormGroup>
       </div>
 
@@ -186,12 +180,10 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
         <Label required>{t('submit.step1.role')}</Label>
         <Input
           type="text"
-          name="job"
-          value={values.job}
-          onChange={handleChange}
           placeholder={t('placeholder.submitform1.job')}
+          {...register('job')}
         />
-        {errors.job && <ErrorParagraph>{errors.job}</ErrorParagraph>}
+        {errors.job && <ErrorParagraph>{errors.job.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <div className="border-border mt-4 space-y-4 border-t border-b py-6">
@@ -202,56 +194,46 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
             <Label>{t('youtube.name')}</Label>
             <Input
               type="url"
-              name="youtube"
-              value={values.youtube}
-              onChange={handleChange}
               placeholder={t('placeholder.submitform1.youtubelink')}
+              {...register('youtube')}
             />
-            {errors.youtube && <ErrorParagraph>{errors.youtube}</ErrorParagraph>}
+            {errors.youtube && <ErrorParagraph>{errors.youtube.message as string}</ErrorParagraph>}
           </FormGroup>
           <FormGroup>
             <Label>{t('instagram.name')}</Label>
             <Input
               type="url"
-              name="instagram"
-              value={values.instagram}
-              onChange={handleChange}
               placeholder={t('placeholder.submitform1.instagramlink')}
+              {...register('instagram')}
             />
-            {errors.instagram && <ErrorParagraph>{errors.instagram}</ErrorParagraph>}
+            {errors.instagram && <ErrorParagraph>{errors.instagram.message as string}</ErrorParagraph>}
           </FormGroup>
           <FormGroup>
             <Label>{t('linkedin.name')}</Label>
             <Input
               type="url"
-              name="linkedin"
-              value={values.linkedin}
-              onChange={handleChange}
               placeholder={t('placeholder.submitform1.linkedinlink')}
+              {...register('linkedin')}
             />
-            {errors.linkedin && <ErrorParagraph>{errors.linkedin}</ErrorParagraph>}
+            {errors.linkedin && <ErrorParagraph>{errors.linkedin.message as string}</ErrorParagraph>}
           </FormGroup>
           <FormGroup>
             <Label>{t('facebook.name')}</Label>
             <Input
               type="url"
-              name="facebook"
-              value={values.facebook}
-              onChange={handleChange}
               placeholder={t('placeholder.submitform1.facebooklink')}
+              {...register('facebook')}
             />
-            {errors.facebook && <ErrorParagraph>{errors.facebook}</ErrorParagraph>}
+            {errors.facebook && <ErrorParagraph>{errors.facebook.message as string}</ErrorParagraph>}
           </FormGroup>
           <FormGroup className="md:col-span-2">
             <Label>{t('twitter.name')}</Label>
             <Input
               type="url"
-              name="twitter"
-              value={values.twitter}
-              onChange={handleChange}
               placeholder={t('placeholder.submitform1.twitterlink')}
+              {...register('twitter')}
             />
-            {errors.twitter && <ErrorParagraph>{errors.twitter}</ErrorParagraph>}
+            {errors.twitter && <ErrorParagraph>{errors.twitter.message as string}</ErrorParagraph>}
           </FormGroup>
         </div>
       </div>
@@ -260,9 +242,7 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
         <FormGroup>
           <Label required>{t('submit.step1.question')}</Label>
           <select
-            name="source"
-            value={values.source}
-            onChange={handleChange}
+            {...register('source')}
             className="border-primary/30 bg-muted focus:ring-primary/40 w-full rounded-md border px-3 py-2 transition-all duration-200 focus:ring-2 focus:outline-none disabled:opacity-50"
           >
             <option value="">{t('placeholder.submitform1.select')}</option>
@@ -273,23 +253,20 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
             <option value="partner">{t('submit.step1.source.partner')}</option>
             <option value="other">{t('submit.step1.source.other')}</option>
           </select>
-          {errors.source && <ErrorParagraph>{errors.source}</ErrorParagraph>}
+          {errors.source && <ErrorParagraph>{errors.source.message as string}</ErrorParagraph>}
         </FormGroup>
 
         <FormGroup className="flex flex-row items-center gap-3 space-y-0 rounded-xl border border-slate-800 bg-slate-900/50 p-5">
           <input
             type="checkbox"
-            name="newsletter"
             id="newsletter"
-            checked={values.newsletter}
-            onChange={handleChange}
+            {...register('newsletter')}
             className="accent-primary size-5 shrink-0 cursor-pointer"
           />
           <Label htmlFor="newsletter" className="m-0 cursor-pointer font-normal">
             {t('submit.step1.newsletter')}
           </Label>
         </FormGroup>
-        {errors.newsletter && <ErrorParagraph>{errors.newsletter}</ErrorParagraph>}
       </div>
 
       <div className="border-border pt-4">

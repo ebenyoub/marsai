@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
+import { apiRequest } from '@/lib/api';
 import FilmEvaluator from './components/FilmEvaluator';
 import MobileSidebar from './components/MobileSidebar';
 import SidebarContent from './components/SidebarContent';
+import type { FilmType } from '@/types/home';
+
+interface MoviesResponse {
+  success: boolean;
+  data: FilmType[];
+  message?: string;
+}
 
 export default function JuryDashboard() {
-  const [films, setFilms] = useState<any[]>([]);
+  const [films, setFilms] = useState<FilmType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,8 +22,7 @@ export default function JuryDashboard() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch('http://localhost:3000/movies');
-        const result = await response.json();
+        const result = await apiRequest<MoviesResponse>('/movies');
 
         if (result.success && result.data.length > 0) {
           setFilms(result.data);

@@ -11,12 +11,11 @@
     "noImplicitAny": true, // Renforce l'interdiction du any
     "isolatedModules": true,
     "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "vite.config.js", "eslint.config.js", "**/*.d.ts"]
+  "include": ["src", "tests", "playwright.config.ts", "vite.config.js", "eslint.config.js", "**/*.d.ts"]
 }

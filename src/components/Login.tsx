@@ -1,51 +1,44 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { apiRequest } from '../lib/api';
 import { useAuth } from '@/hooks/useAuth';
-import useForm from '../hooks/useForm';
 import { loginSchema } from '../schemas/login.schema';
 import Button from './ui/button';
-import Form, { FormGroup, Input, Label } from './ui/form';
+import Form, { ErrorParagraph, FormGroup, Input, Label } from './ui/form';
+import type { User } from '@/types/auth';
+import type { z } from 'zod';
 
 const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
   const schema = loginSchema(t);
 
-  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { email: '', password: '' },
+  });
 
-  const { handleChange, handleSubmit, values, errors } = useForm({ email: '', password: '' }, schema);
+  type LoginFormValues = z.infer<typeof schema>;
 
-  const { login: authLogin } = useAuth();
-
-  const onSubmit = async (formValues: typeof values) => {
-    const API_URL = import.meta.env.VITE_API_URL;
-
+  const onSubmit = async (data: LoginFormValues) => {
     try {
-      setLoading(true);
-      const response = await fetch(`${API_URL}/auth/login`, {
+      const result = await apiRequest<{ token: string; user: User }>('/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formValues),
+        body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        alert(result.message || 'Erreur de connexion');
-        return;
-      }
-
-      // 2. ON UTILISE LE PROVIDER (C'est l'étape magique)
-      // On passe le token et l'objet 'user' que l'on voit sur ta capture Postman
       authLogin(result.token, result.user);
-
-      // 3. Redirection (si pas déjà gérée dans le provider)
       navigate('/');
     } catch (err) {
-      console.error('Erreur réseau :', err);
-    } finally {
-      setLoading(false);
+      console.error('Erreur de connexion :', err);
+      alert(err instanceof Error ? err.message : t('form.connection.error'));
     }
   };
 
@@ -61,28 +54,24 @@ const Login = () => {
           <Label required>Email</Label>
           <Input
             id="email"
-            name="email"
             type="email"
             placeholder="contact@example.com"
-            value={values.email}
-            onChange={handleChange}
+            {...register('email')}
             className={errors.email ? 'border-red-500 focus:ring-red-500' : ''}
           />
-          {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+          {errors.email && <ErrorParagraph>{errors.email.message as string}</ErrorParagraph>}
         </FormGroup>
 
         <FormGroup>
           <Label required>{t('form.pass')}</Label>
           <Input
             id="password"
-            name="password"
             type="password"
             placeholder="**********"
-            value={values.password}
-            onChange={handleChange}
+            {...register('password')}
             className={errors.password ? 'border-red-500 focus:ring-red-500' : ''}
           />
-          {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password}</p>}
+          {errors.password && <ErrorParagraph>{errors.password.message as string}</ErrorParagraph>}
         </FormGroup>
       </div>
 
@@ -90,8 +79,8 @@ const Login = () => {
         {t('form.forgot_pass')}
       </Link>
 
-      <Button type="submit" variant="purple" disabled={loading}>
-        {loading ? 'Connexion...' : t('button.signin')}
+      <Button type="submit" variant="purple" disabled={isSubmitting}>
+        {isSubmitting ? t('common.loading') : t('button.signin')}
       </Button>
     </Form>
   );

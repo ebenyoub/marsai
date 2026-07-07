@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useRef, useState } from 'react';
-import Button from './Button';
+import Button from './button';
 import { cn } from './utils';
 
 const DropdownContext = createContext<{

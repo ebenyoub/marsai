@@ -3,8 +3,16 @@ import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import Button from '@/components/ui/button';
 import SidebarContent from './SidebarContent';
+import type { FilmType } from '@/types/home';
 
-export default function MobileSidebar(props: any) {
+interface MobileSidebarProps {
+  films: FilmType[];
+  activeFilmId: string | null;
+  onSelectFilm: (id: string | number) => void;
+  setQuery: (query: string) => void;
+}
+
+export default function MobileSidebar(props: MobileSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

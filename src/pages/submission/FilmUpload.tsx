@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import FormAi from './components/FormAi';
 import FormData from './components/FormData';
 import FormIdentity from './components/FormIdentity';
@@ -8,6 +9,10 @@ import { useStepper } from './components/StepRule';
 
 export function FilmUpload() {
   const { currentStep, steps, progress, formData, nextStep, prevStep } = useStepper();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentStep]);
 
   const renderStep = () => {
     switch (currentStep) {

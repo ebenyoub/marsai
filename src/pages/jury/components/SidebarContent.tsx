@@ -1,9 +1,10 @@
 import SearchBar from '@/components/ui/SearchBar';
+import type { FilmType } from '@/types/home';
 
 interface SidebarContentProps {
-  films: any[];
+  films: FilmType[];
   activeFilmId: string | null;
-  onSelectFilm: (id: string) => void;
+  onSelectFilm: (id: string | number) => void;
   setQuery: (query: string) => void;
 }
 

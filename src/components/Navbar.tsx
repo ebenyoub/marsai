@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { LogIn, LogOut, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../hooks/useAuth';
 import { MarsAILogo } from './MarsAILogo';
-import Button from './ui/Button';
+import Button from './ui/button';
 import { LanguageSwitcher } from './ui/LanguageSwitcher';
 
 const navLinks = [
   { path: '/', label: 'nav.gallery', protected: false },
   { path: '/submit', label: 'nav.submit', protected: true },
-  { path: '/jury', label: 'nav.jury', protected: true },
-  { path: '/admin', label: 'nav.admin', protected: true, adminOnly: true },
+  { path: '/jury', label: 'nav.jury', protected: true, roles: ['jury', 'admin', 'super-admin'] },
+  { path: '/admin', label: 'nav.admin', protected: true, roles: ['admin', 'super-admin'] },
+  { path: '/superadmin', label: 'nav.super-admin', protected: true, roles: ['super-admin'] },
 ];
 
 const mobileAnimation = {
@@ -31,7 +32,7 @@ export function Navbar() {
 
   const visibleLinks = navLinks.filter(link => {
     if (link.protected && !isAuthenticated) return false;
-    if (link.adminOnly && user?.role !== 'admin') return false;
+    if (link.roles && user && !link.roles.includes(user.role)) return false;
     return true;
   });
 

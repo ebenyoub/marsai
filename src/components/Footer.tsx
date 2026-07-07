@@ -71,7 +71,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+                <Link to="/" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                   {t('footer.about')}
                 </Link>
               </li>

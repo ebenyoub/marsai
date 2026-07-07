@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Brain, Send, Star } from 'lucide-react';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/button';
 import { Card } from '@/components/ui/Card';
-import { FormGroup, Label, TextArea } from '@/components/ui/Form';
+import { FormGroup, Label, TextArea } from '@/components/ui/form';
+import { apiRequest } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
+import type { FilmType } from '@/types/home';
 
 // Helper to safely extract the YouTube ID from various URL formats
 const getYouTubeId = (url: string) => {
@@ -12,15 +16,87 @@ const getYouTubeId = (url: string) => {
   return match && match[2].length === 11 ? match[2] : url;
 };
 
-export default function FilmEvaluator({ film }: { film: any }) {
+interface RatingResponse {
+  success: boolean;
+  data?: {
+    score_creativity?: number;
+    score_technical?: number;
+    score_message?: number;
+    comment?: string;
+  };
+}
+
+export default function FilmEvaluator({ film }: { film?: FilmType }) {
+  useTranslation();
+  const { user, token } = useAuth();
   const [scores, setScores] = useState({ creativity: 1, technical: 1, narrative: 1 });
   const [comment, setComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!film?.id) return;
+    
+    // Reset first
+    setScores({ creativity: 1, technical: 1, narrative: 1 });
+    setComment('');
+    
+    const fetchExistingRating = async () => {
+      try {
+        const res = await apiRequest<RatingResponse>(`/rating/movie/${film.id}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.success && res.data) {
+          const r = res.data;
+          setScores({
+            creativity: r.score_creativity || 1,
+            technical: r.score_technical || 1,
+            narrative: r.score_message || 1
+          });
+          setComment(r.comment || '');
+        }
+      } catch (err) {
+        console.error("Erreur de récupération de la note existante :", err);
+      }
+    };
+    
+    fetchExistingRating();
+  }, [film?.id, token]);
 
   const averageScore = Math.round((scores.creativity + scores.technical + scores.narrative) / 3);
 
   if (!film) return <div className="flex h-full items-center justify-center text-slate-500">Sélectionnez un film</div>;
 
   const videoId = getYouTubeId(film.yt_url);
+
+  const handleSubmit = async () => {
+    if (!user) {
+      alert("Vous devez être connecté pour voter.");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      await apiRequest('/rating', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          user_id: user.id,
+          movie_id: film.id,
+          score_creativity: scores.creativity,
+          score_technical: scores.technical,
+          score_message: scores.narrative,
+          comment,
+          score_total: averageScore,
+        }),
+      });
+      alert('Évaluation envoyée avec succès !');
+    } catch (err) {
+      console.error(err);
+      alert(err instanceof Error ? err.message : 'Erreur lors de l\'envoi de l\'évaluation');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 pb-20">
@@ -42,7 +118,7 @@ export default function FilmEvaluator({ film }: { film: any }) {
         </div>
         <div className="mt-4">
           <h3 className="font-semibold text-white">Synopsis</h3>
-          <p className="text-sm text-slate-400">{film.synopsis_fr}</p>
+          <p className="text-sm text-slate-400">{film.synopsis_fr || film.synopsis_en}</p>
         </div>
       </Card>
 
@@ -169,17 +245,22 @@ export default function FilmEvaluator({ film }: { film: any }) {
 
         <div className="mt-10 border-t border-slate-800 pt-6">
           <FormGroup>
-            <Label className="text-sm text-white">Private Internal Comments</Label>
+            <Label className="text-sm text-white">Commentaires Internes (Privés)</Label>
             <TextArea
               value={comment}
               onChange={e => setComment(e.target.value)}
-              placeholder="Share your thoughts for deliberation..."
+              placeholder="Partagez vos impressions pour les délibérations..."
               className="mt-2 min-h-25 bg-slate-950 text-white"
             />
-            <p className="mt-2 text-xs text-slate-500">These comments are confidential</p>
+            <p className="mt-2 text-xs text-slate-500">Ces commentaires sont confidentiels</p>
           </FormGroup>
-          <Button variant="purple" className="mt-6 flex w-full items-center justify-center gap-2 py-3">
-            <Send className="size-4" /> Submit Rating
+          <Button 
+            variant="purple" 
+            className="mt-6 flex w-full items-center justify-center gap-2 py-3"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            <Send className="size-4" /> {isSubmitting ? 'Envoi...' : 'Soumettre l\'évaluation'}
           </Button>
         </div>
       </Card>

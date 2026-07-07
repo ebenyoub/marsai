@@ -1,26 +1,38 @@
 import { useTranslation } from 'react-i18next';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-import Form, { ErrorParagraph, FormGroup, Label, TextArea } from '@/components/ui/Form';
+import { useForm, useWatch } from 'react-hook-form';
+import Form, { ErrorParagraph, FormGroup, Label, TextArea } from '@/components/ui/form';
 import RadioGroup, { RadioGroupItem } from '@/components/ui/RadioGroup';
 import Button from '@/components/ui/button';
-import useForm from '@/hooks/useForm';
 import { aiDeclarationSchema } from '@/schemas/aiDeclaration.schema';
 import { WizardStepProps } from '@/types/form';
+import type { z } from 'zod';
 
 export default function FormAi({ onNext, onBack }: WizardStepProps) {
   const { t } = useTranslation();
   const schema = aiDeclarationSchema(t);
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
       aiClassification: '100',
       techStack: '',
       methodology: '',
     },
-    schema
-  );
+  });
 
-  const onSubmit = (formValues: typeof values) => {
+  const aiClassification = useWatch({ control, name: 'aiClassification' });
+
+  type AiDeclarationValues = z.infer<typeof schema>;
+
+  const onSubmit = (formValues: AiDeclarationValues) => {
     onNext(formValues);
   };
 
@@ -41,12 +53,12 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
           {t('submit.step3.type')}
         </Label>
         <RadioGroup
-          value={values.aiClassification}
-          onValueChange={value => handleChange({ target: { name: 'aiClassification', value } } as any)}
+          value={aiClassification}
+          onValueChange={value => setValue('aiClassification', value)}
           className="grid grid-cols-1 gap-4"
         >
           <div
-            className={`flex items-start gap-3 rounded-xl border p-4 transition-all md:p-5 ${values.aiClassification === '100' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}
+            className={`flex items-start gap-3 rounded-xl border p-4 transition-all md:p-5 ${aiClassification === '100' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}
           >
             <RadioGroupItem value="100" id="type-100" className="mt-1 shrink-0" />
             <Label htmlFor="type-100" className="cursor-pointer font-medium text-slate-200">
@@ -56,7 +68,7 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
           </div>
 
           <div
-            className={`flex items-start gap-3 rounded-xl border p-4 transition-all md:p-5 ${values.aiClassification === 'hybrid' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}
+            className={`flex items-start gap-3 rounded-xl border p-4 transition-all md:p-5 ${aiClassification === 'hybrid' ? 'border-primary bg-primary/5' : 'border-slate-800 bg-slate-900/50'}`}
           >
             <RadioGroupItem value="hybrid" id="type-hybrid" className="mt-1 shrink-0" />
             <Label htmlFor="type-hybrid" className="cursor-pointer font-medium text-slate-200">
@@ -67,31 +79,27 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
             </Label>
           </div>
         </RadioGroup>
-        {errors.aiClassification && <ErrorParagraph>{errors.aiClassification}</ErrorParagraph>}
+        {errors.aiClassification && <ErrorParagraph>{errors.aiClassification.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <FormGroup>
         <Label required>{t('submit.step3.techstack')}</Label>
         <TextArea
-          name="techStack"
-          value={values.techStack}
-          onChange={handleChange}
           placeholder={t('submit.step3.techstack.placeholder')}
           className="min-h-30"
+          {...register('techStack')}
         />
-        {errors.techStack && <ErrorParagraph>{errors.techStack}</ErrorParagraph>}
+        {errors.techStack && <ErrorParagraph>{errors.techStack.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <FormGroup>
         <Label required>{t('submit.step3.methodology')}</Label>
         <TextArea
-          name="methodology"
-          value={values.methodology}
-          onChange={handleChange}
           placeholder={t('submit.step3.methodology.placeholder')}
           className="min-h-30"
+          {...register('methodology')}
         />
-        {errors.methodology && <ErrorParagraph>{errors.methodology}</ErrorParagraph>}
+        {errors.methodology && <ErrorParagraph>{errors.methodology.message as string}</ErrorParagraph>}
       </FormGroup>
 
       <div className="border-border mt-8 space-y-4 border-t pt-6">

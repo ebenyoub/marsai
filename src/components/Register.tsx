@@ -1,54 +1,57 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { apiRequest } from '../lib/api';
 import { useAuth } from '@/hooks/useAuth';
 import { registerSchema } from '@/schemas/register.schema';
-import useForm from '../hooks/useForm';
 import Button from './ui/button';
 import Form, { ErrorParagraph, FormGroup, Input, Label } from './ui/form';
+import { User } from '@/types/auth';
 
 const Register = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
   const schema = registerSchema(t);
 
-  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    { firstname: '', lastname: '', email: '', password: '', festival_id: 1 },
-    schema
-  );
-
-  const { login: authLogin } = useAuth();
-
-  const onSubmit = async (formValues: typeof values) => {
-    const API_URL = import.meta.env.VITE_API_URL;
-
+  const onSubmit = async (data: { firstName: string; lastName: string; email: string; password: string }) => {
     try {
-      setLoading(true);
-      const response = await fetch(`${API_URL}/auth/register`, {
+      const payload = {
+        firstname: data.firstName,
+        lastname: data.lastName,
+        email: data.email,
+        password: data.password,
+        festival_id: 1,
+      };
+
+      const result = await apiRequest<{ token: string; user: User }>('/auth/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formValues),
+        body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        alert(result.message || 'Erreur de connexion');
-        return;
-      }
-
-      // 2. ON UTILISE LE PROVIDER (C'est l'étape magique)
-      // On passe le token et l'objet 'user' que l'on voit sur ta capture Postman
       authLogin(result.token, result.user);
-
-      // 3. Redirection (si pas déjà gérée dans le provider)
       navigate('/');
     } catch (err) {
-      console.error('Erreur réseau :', err);
-    } finally {
-      setLoading(false);
+      if (err instanceof Error) {
+        // console.error('Erreur d\'inscription :', err);
+        alert(err.message || t('form.connection.error'));
+      }
     }
   };
 
@@ -61,26 +64,22 @@ const Register = () => {
 
       <div className="grid grid-cols-2 gap-4">
         <FormGroup>
-          <Label required>Prénom</Label>
+          <Label required>{t('submit.step1.firstname')}</Label>
           <Input
-            name="firstname"
             type="text"
             placeholder={t('placeholder.submitform1.firstname')}
-            value={values.firstname}
-            onChange={handleChange}
+            {...register('firstName')}
           />
-          {errors.firstname && <ErrorParagraph>{errors.firstname}</ErrorParagraph>}
+          {errors.firstName && <ErrorParagraph>{errors.firstName.message as string}</ErrorParagraph>}
         </FormGroup>
         <FormGroup>
-          <Label required>Nom</Label>
+          <Label required>{t('submit.step1.lastname')}</Label>
           <Input
-            name="lastname"
             type="text"
             placeholder={t('placeholder.submitform1.lastname')}
-            value={values.lastname}
-            onChange={handleChange}
+            {...register('lastName')}
           />
-          {errors.lastname && <ErrorParagraph>{errors.lastname}</ErrorParagraph>}
+          {errors.lastName && <ErrorParagraph>{errors.lastName.message as string}</ErrorParagraph>}
         </FormGroup>
       </div>
 
@@ -88,34 +87,39 @@ const Register = () => {
         <FormGroup>
           <Label required>Email</Label>
           <Input
-            id="email"
-            name="email"
             type="email"
             placeholder="contact@example.com"
-            value={values.email}
-            onChange={handleChange}
+            {...register('email')}
             className={errors.email ? 'border-red-500 focus:ring-red-500' : ''}
           />
-          {errors.email && <ErrorParagraph>{errors.email}</ErrorParagraph>}
+          {errors.email && <ErrorParagraph>{errors.email.message as string}</ErrorParagraph>}
         </FormGroup>
 
         <FormGroup>
           <Label required>{t('form.pass')}</Label>
           <Input
-            id="password"
-            name="password"
             type="password"
             placeholder="**********"
-            value={values.password}
-            onChange={handleChange}
+            {...register('password')}
             className={errors.password ? 'border-red-500 focus:ring-red-500' : ''}
           />
-          {errors.password && <ErrorParagraph>{errors.password}</ErrorParagraph>}
+          {errors.password && <ErrorParagraph>{errors.password.message as string}</ErrorParagraph>}
+        </FormGroup>
+
+        <FormGroup>
+          <Label required>{t('common.save')}</Label>
+          <Input
+            type="password"
+            placeholder="**********"
+            {...register('confirmPassword')}
+            className={errors.confirmPassword ? 'border-red-500 focus:ring-red-500' : ''}
+          />
+          {errors.confirmPassword && <ErrorParagraph>{errors.confirmPassword.message as string}</ErrorParagraph>}
         </FormGroup>
       </div>
 
-      <Button type="submit" variant="purple" disabled={loading}>
-        {loading ? 'Connexion...' : t('button.signin')}
+      <Button type="submit" variant="purple" disabled={isSubmitting}>
+        {isSubmitting ? t('common.loading') : t('button.signin')}
       </Button>
     </Form>
   );
