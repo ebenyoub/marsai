@@ -206,8 +206,6 @@ export interface LoginCredentials {
 export interface AuthenticatedRequest extends Request {
   user?: {
     userId: number;
-    email?: string;
-    role?: string;
-    // Ajoute ici les propriétés que tu as mises dans ton JWT lors du login
+    role: UserRole;
   };
 }

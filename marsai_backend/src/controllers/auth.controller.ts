@@ -20,7 +20,7 @@ export const login = async (req: RequestBody<LoginCredentials>, res: Response) =
     return sendError('Identifiants invalides', 401);
   }
 
-  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: '2h' });
+  const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET as string, { expiresIn: '2h' });
 
   res.status(200).json({
     success: true,
@@ -48,7 +48,7 @@ const register = async (req: RequestBody<UserType>, res: Response) => {
   logger.info(`Nouvel utilisateur créé avec l'id ${userId}.`);
 
   // Connexion automatique après inscription : même contrat de réponse que /auth/login
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET as string, { expiresIn: '2h' });
+  const token = jwt.sign({ userId, role: 'user' }, process.env.JWT_SECRET as string, { expiresIn: '2h' });
 
   return res.status(201).json({
     success: true,

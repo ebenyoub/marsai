@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Response, NextFunction } from 'express';
-import { AuthenticatedRequest } from '../types/type.js';
+import { AuthenticatedRequest, UserRole } from '../types/type.js';
 import { sendError } from '../utils.js';
 import logger from '../config/logger.js';
 
@@ -16,7 +16,7 @@ export const verifyToken = (req: AuthenticatedRequest, _res: Response, next: Nex
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error('JWT_SECRET is not defined');
 
-    const decoded = jwt.verify(token, secret) as { userId: number };
+    const decoded = jwt.verify(token, secret) as { userId: number; role: UserRole };
     req.user = decoded;
 
     next();
