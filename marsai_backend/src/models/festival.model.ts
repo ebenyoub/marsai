@@ -3,7 +3,15 @@ import { ResultSetHeader } from 'mysql2';
 import { FestivalRow, FestivalType } from '../types/type.js';
 
 const findAll = async (): Promise<FestivalRow[]> => {
-  const [result] = await db.execute<FestivalRow[]>('SELECT * FROM festival');
+  const query = `
+    SELECT f.*, COALESCE(COUNT(m.id), 0) as submissionsCount
+    FROM festival f
+    LEFT JOIN user u ON u.festival_id = f.id
+    LEFT JOIN director d ON d.email = u.email
+    LEFT JOIN movie m ON m.director_id = d.id
+    GROUP BY f.id
+  `;
+  const [result] = await db.execute<FestivalRow[]>(query);
   return result;
 };
 

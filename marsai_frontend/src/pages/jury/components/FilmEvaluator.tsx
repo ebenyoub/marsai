@@ -26,8 +26,15 @@ interface RatingResponse {
   };
 }
 
-export default function FilmEvaluator({ film }: { film?: FilmType }) {
-  useTranslation();
+type FilmEvaluatorProps = {
+  film?: FilmType & {
+    director_firstname?: string;
+    director_lastname?: string;
+  };
+};
+
+export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
+  const { t } = useTranslation();
   const { user, token } = useAuth();
   const [scores, setScores] = useState({ creativity: 1, technical: 1, narrative: 1 });
   const [comment, setComment] = useState('');
@@ -104,8 +111,12 @@ export default function FilmEvaluator({ film }: { film?: FilmType }) {
         <div className="mb-6 flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold text-white md:text-3xl">{film.title}</h1>
-            {/* Note: Director name is not in movie table, only director_id. need to join the users table later if you want the name! */}
-            <p className="text-sm text-slate-400">
+            {film.director_firstname && film.director_lastname && (
+              <p className="text-sm font-medium text-primary mt-1">
+                {t('jury.video.director')} : {film.director_firstname} {film.director_lastname}
+              </p>
+            )}
+            <p className="text-sm text-slate-400 mt-2">
               Language: {film.main_language} • Duration: {film.duration}s
             </p>
           </div>

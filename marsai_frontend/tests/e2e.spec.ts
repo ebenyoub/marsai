@@ -110,6 +110,10 @@ test.describe('MarsAI E2E Test Suite', () => {
     await page.waitForSelector('textarea', { state: 'visible', timeout: 15000 });
     
     // 3. Select first film in list (which is active by default)
+    const directorLabel = page.locator('p.text-primary', { hasText: /Réalisateur|Director/ });
+    await expect(directorLabel).toBeVisible();
+    await expect(directorLabel).toContainText('Alessandro');
+
     const commentInput = page.locator('textarea');
     const uniqueComment = `Formidable court-métrage E2E ${Date.now()}`;
     await commentInput.fill(uniqueComment);
@@ -566,6 +570,20 @@ test.describe('MarsAI E2E Test Suite', () => {
 
     // 8. Verify the email is removed from the list
     await expect(juryList).not.toContainText(testJuryEmail);
+  });
+
+  test('Super Admin Flow: Submissions Count', async ({ page }) => {
+    // 1. Login as Super Admin
+    await authenticateAs(page, 'ada.lovelace@email.com', 'password123');
+    await page.goto('/superadmin');
+    await expect(page).toHaveURL('/superadmin');
+
+    // 2. Check that the submissions count is displayed
+    const countBadge = page.locator('span:has-text("soumissions")').first();
+    await expect(countBadge).toBeVisible();
+    
+    const textContent = await countBadge.textContent();
+    expect(textContent).toMatch(/\d+ soumissions/);
   });
 
 });

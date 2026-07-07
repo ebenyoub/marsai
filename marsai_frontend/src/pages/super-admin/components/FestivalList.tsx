@@ -10,16 +10,23 @@ export function FestivalListItem({ festival, index, onClick }: { festival: Festi
       transition={{ delay: index * 0.05 }}
     >
       <Card className="cursor-pointer hover:border-primary/50 transition-colors" onClick={onClick}>
-        <CardContent className="flex items-center gap-4">
-          <div
-            className="w-10 h-10 rounded-lg"
-            style={{ backgroundColor: festival.primaryColor }}
-          />
-          <div className="flex-1 min-w-0">
-            <h3 className="font-medium truncate">{festival.name}</h3>
-            <p className="text-xs text-muted-foreground truncate">
-              marsai.com/{festival.slug}
-            </p>
+        <CardContent className="flex items-center justify-between p-4">
+          <div className="flex items-center gap-4 flex-1 min-w-0">
+            <div
+              className="w-10 h-10 rounded-lg"
+              style={{ backgroundColor: festival.primaryColor }}
+            />
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium truncate">{festival.name}</h3>
+              <p className="text-xs text-muted-foreground truncate">
+                marsai.com/{festival.slug}
+              </p>
+            </div>
+          </div>
+          <div className="text-right flex-shrink-0">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+              {festival.submissionsCount ?? 0} soumissions
+            </span>
           </div>
         </CardContent>
       </Card>

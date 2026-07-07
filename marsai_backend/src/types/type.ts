@@ -51,6 +51,7 @@ export interface FestivalType {
   logo_url?: string | null;
   primary_color?: string | null;
   youtube_api_key?: string | null;
+  submissionsCount?: number;
 }
 
 /**
