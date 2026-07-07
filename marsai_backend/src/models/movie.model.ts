@@ -1,7 +1,11 @@
-import { ResultSetHeader } from 'mysql2/promise';
+import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import db from '../config/database.js';
 import { MovieRow, MovieType } from '../types/type.js';
 import { insertEntity, updateEntity } from '../utils.js';
+
+interface CountRow extends RowDataPacket {
+  count: number;
+}
 
 const findAll = async (status?: string): Promise<MovieRow[]> => {
   let query = `
@@ -53,9 +57,29 @@ const update = async (id: number, data: Partial<MovieType>): Promise<ResultSetHe
   return updateEntity('movie', id, data, columns, db, { hasTimestamp: false });
 };
 
+const getStats = async (): Promise<{
+  moviesCount: number;
+  juryCount: number;
+  directorsCount: number;
+  selectionsCount: number;
+}> => {
+  const [[moviesRes]] = await db.execute<CountRow[]>('SELECT COUNT(*) as count FROM movie');
+  const [[juryRes]] = await db.execute<CountRow[]>('SELECT COUNT(*) as count FROM user WHERE role = "jury"');
+  const [[directorsRes]] = await db.execute<CountRow[]>('SELECT COUNT(*) as count FROM director');
+  const [[selectionsRes]] = await db.execute<CountRow[]>('SELECT COUNT(*) as count FROM movie WHERE status = "approved"');
+
+  return {
+    moviesCount: moviesRes?.count || 0,
+    juryCount: juryRes?.count || 0,
+    directorsCount: directorsRes?.count || 0,
+    selectionsCount: selectionsRes?.count || 0,
+  };
+};
+
 export default {
   findAll,
   findById,
   create,
   update,
+  getStats,
 };

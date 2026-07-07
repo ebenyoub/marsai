@@ -4,46 +4,80 @@ import { Input } from '@/components/ui/form'
 import { Label } from '@/components/ui/form'
 import { Upload } from 'lucide-react'
 import { useState } from 'react'
+import { apiRequest } from '@/lib/api'
 
-
-
-const festivalInstances = [
-  { id: '2026', name: 'Marseille 2026', year: 2026, status: 'active' },
-  { id: '2027', name: 'Marseille 2027', year: 2027, status: 'à venir' },
-  { id: '2025', name: 'Marseille 2025', year: 2025, status: 'archivé' },
-];
-
-type BrandingSettings = {
-  logo: string
-  primaryColor: string
-  youtubeApiKey: string
-  value?: string
+interface FestivalInfo {
+  id: number;
+  name: string;
+  description: string;
+  start_at: string;
+  end_at: string;
+  status: 'Actif' | 'Inactif';
+  booking_total: number;
+  slug: string;
+  city: string;
+  logo_url?: string | null;
+  primary_color?: string | null;
+  youtube_api_key?: string | null;
 }
 
 type Props = {
-  brandingSettings: BrandingSettings
-  onChange: (settings: BrandingSettings) => void
+  activeFestival: FestivalInfo
   onSave: () => void
-  onCancel: () => void
   t: (key: string) => string
-  value?: string
 }
 
 function BrandingForm({
-  brandingSettings,
-  onChange,
+  activeFestival,
+  onSave,
   t,
 }: Props) {
-  const [selectedFestival] = useState(festivalInstances[0]?.id || '');
+  const [brandingSettings, setBrandingSettings] = useState(() => ({
+    logo: activeFestival.logo_url || '',
+    primaryColor: activeFestival.primary_color || '#00F2FF',
+    youtubeApiKey: activeFestival.youtube_api_key || '',
+  }));
 
-  const currentFestival = festivalInstances.find(f => f.id === selectedFestival);
+  const handleSave = async () => {
+    try {
+      await apiRequest(`/festivals/${activeFestival.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          name: activeFestival.name,
+          description: activeFestival.description,
+          start_at: activeFestival.start_at,
+          end_at: activeFestival.end_at,
+          status: activeFestival.status,
+          booking_total: activeFestival.booking_total,
+          slug: activeFestival.slug,
+          city: activeFestival.city,
+          logo_url: brandingSettings.logo,
+          primary_color: brandingSettings.primaryColor,
+          youtube_api_key: brandingSettings.youtubeApiKey,
+        }),
+      });
+      onSave();
+      alert('Configuration enregistrée avec succès !');
+    } catch (err) {
+      console.error('Error saving branding:', err);
+      alert('Erreur lors de la sauvegarde du branding.');
+    }
+  };
+
+  const handleCancel = () => {
+    setBrandingSettings({
+      logo: activeFestival.logo_url || '',
+      primaryColor: activeFestival.primary_color || '#00F2FF',
+      youtubeApiKey: activeFestival.youtube_api_key || '',
+    });
+  };
 
   return (
     <Card className="border-border/50 bg-card/50">
       <CardHeader className="p-4 md:p-6">
         <CardTitle className="text-lg md:text-xl">{t('admin.branding.title')}</CardTitle>
         <CardDescription className="text-sm">
-          {t('admin.branding.description')} {currentFestival?.name}
+          {t('admin.branding.description')} {activeFestival.name}
         </CardDescription>
       </CardHeader>
       <CardContent className="p-4 md:p-6 space-y-6">
@@ -73,13 +107,13 @@ function BrandingForm({
               id="primaryColor"
               type="color"
               value={brandingSettings.primaryColor}
-              onChange={(e) => onChange({ ...brandingSettings, primaryColor: e.target.value })}
+              onChange={(e) => setBrandingSettings({ ...brandingSettings, primaryColor: e.target.value })}
               className="w-20 h-12 cursor-pointer"
             />
             <Input
               type="text"
               value={brandingSettings.primaryColor}
-              onChange={(e) => onChange({ ...brandingSettings, primaryColor: e.target.value })}
+              onChange={(e) => setBrandingSettings({ ...brandingSettings, primaryColor: e.target.value })}
               className="flex-1 border-border/50"
               placeholder="#00F2FF"
             />
@@ -92,7 +126,7 @@ function BrandingForm({
             id="youtubeKey"
             type="password"
             value={brandingSettings.youtubeApiKey}
-            onChange={(e) => onChange({ ...brandingSettings, youtubeApiKey: e.target.value })}
+            onChange={(e) => setBrandingSettings({ ...brandingSettings, youtubeApiKey: e.target.value })}
             placeholder="••••••••"
             className="border-border/50"
           />
@@ -102,10 +136,10 @@ function BrandingForm({
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto">
+          <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto">
             {t('common.save')}
           </Button>
-          <Button variant="outline" className="border-border/50 w-full sm:w-auto">
+          <Button onClick={handleCancel} variant="outline" className="border-border/50 w-full sm:w-auto">
             {t('common.cancel')}
           </Button>
         </div>

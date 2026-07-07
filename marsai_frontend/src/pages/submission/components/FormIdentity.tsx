@@ -10,7 +10,7 @@ import { identitySchema } from '@/schemas/identityForm.schema';
 import { FirstStepProps } from '@/types/form';
 import type { z } from 'zod';
 
-export default function FormIdentity({ onNext }: FirstStepProps) {
+export default function FormIdentity({ onNext, initialData }: FirstStepProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -25,24 +25,24 @@ export default function FormIdentity({ onNext }: FirstStepProps) {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      civility: 'M.',
-      firstName: '',
-      lastName: '',
-      birthDate: '',
-      email: '',
-      mobile: '',
-      postCode: '',
-      address: '',
-      city: '',
-      country: '',
-      job: '',
-      youtube: '',
-      instagram: '',
-      linkedin: '',
-      facebook: '',
-      twitter: '',
-      source: '',
-      newsletter: false,
+      civility: initialData.civility,
+      firstName: initialData.firstName,
+      lastName: initialData.lastName,
+      birthDate: initialData.birthDate,
+      email: initialData.email,
+      mobile: initialData.mobile,
+      postCode: initialData.postCode,
+      address: initialData.address,
+      city: initialData.city,
+      country: initialData.country,
+      job: initialData.job,
+      youtube: initialData.youtube,
+      instagram: initialData.instagram,
+      linkedin: initialData.linkedin,
+      facebook: initialData.facebook,
+      twitter: initialData.twitter,
+      source: initialData.source,
+      newsletter: initialData.newsletter,
     },
   });
 

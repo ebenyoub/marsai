@@ -18,7 +18,7 @@ type Props = {
 }
 
 
-function JuryPanel({ jury, onAdd, onRemove, message }: Props) {
+function JuryPanel({ jury, onAdd, onRemove, message, t }: Props) {
   const [email, setEmail] = useState('')
 
   return (
@@ -32,7 +32,7 @@ function JuryPanel({ jury, onAdd, onRemove, message }: Props) {
 
         {/* Ajouter un juré */}
         <div className="space-y-2">
-          <Label>Email du juré</Label>
+          <Label>{t('admin.jury.email_label')}</Label>
           <div className="flex gap-2">
             <Input
               placeholder="jury@email.com"
@@ -46,18 +46,18 @@ function JuryPanel({ jury, onAdd, onRemove, message }: Props) {
                 setEmail('')
               }}
             >
-              Ajouter
+              {t('common.add')}
             </Button>
           </div>
         </div>
 
         {/* Liste des jurés */}
         <div className="space-y-2">
-          <Label>Jurés existants</Label>
+          <Label>{t('admin.jury.existing')}</Label>
 
           {jury.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              Aucun juré pour le moment
+              {t('admin.jury.none')}
             </p>
           )}
 
@@ -73,7 +73,7 @@ function JuryPanel({ jury, onAdd, onRemove, message }: Props) {
                   size="sm"
                   onClick={() => onRemove(member.id)}
                 >
-                  Supprimer
+                  {t('common.delete')}
                 </Button>
               </li>
             ))}

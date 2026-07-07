@@ -38,6 +38,9 @@ CREATE TABLE `festival` (
   `booking_total` INT NOT NULL,
   `slug` VARCHAR(255) NOT NULL,
   `city` VARCHAR(255) NOT NULL,
+  `logo_url` VARCHAR(255) DEFAULT NULL,
+  `primary_color` VARCHAR(50) DEFAULT NULL,
+  `youtube_api_key` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -241,8 +244,8 @@ CREATE TABLE `rating` (
 --
 -- Data for table `festival`
 --
-INSERT INTO `festival` (`id`, `name`, `description`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`, `slug`, `city`) VALUES
-(1, 'Mars AI Film Festival 2024', 'Le premier festival de films générés ou assistés par intelligence artificielle. Un événement dédié à l''innovation cinématographique.', NOW(), '2024-10-15 09:00:00', '2024-10-18 23:00:00', 'Actif', 500, 'festival-2024', 'Marseille');
+INSERT INTO `festival` (`id`, `name`, `description`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`, `slug`, `city`, `logo_url`, `primary_color`, `youtube_api_key`) VALUES
+(1, 'Mars AI Film Festival 2024', 'Le premier festival de films générés ou assistés par intelligence artificielle. Un événement dédié à l''innovation cinématographique.', NOW(), '2024-10-15 09:00:00', '2024-10-18 23:00:00', 'Actif', 500, 'festival-2024', 'Marseille', NULL, NULL, NULL);
 
 --
 -- Data for table `role`

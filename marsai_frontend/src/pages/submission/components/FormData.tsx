@@ -8,7 +8,7 @@ import { filmSchema } from '@/schemas/filmData.schema';
 import { WizardStepProps } from '@/types/form';
 import type { z } from 'zod';
 
-export default function FormData({ onNext, onBack }: WizardStepProps) {
+export default function FormData({ onNext, onBack, initialData }: WizardStepProps) {
   const { t } = useTranslation();
   const schema = filmSchema(t);
 
@@ -19,13 +19,13 @@ export default function FormData({ onNext, onBack }: WizardStepProps) {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: '',
-      titleEn: '',
-      duration: 60,
-      language: '',
-      semanticTags: '',
-      synopsis: '',
-      synopsisEn: '',
+      title: initialData.title,
+      titleEn: initialData.titleEn,
+      duration: Number(initialData.duration) || 60,
+      language: initialData.language,
+      semanticTags: initialData.semanticTags.join(', '),
+      synopsis: initialData.synopsis,
+      synopsisEn: initialData.synopsisEn,
     },
   });
 

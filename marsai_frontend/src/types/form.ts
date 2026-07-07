@@ -50,11 +50,13 @@ export interface StepperHeaderProps {
 
 export interface FirstStepProps {
   onNext: (stepData?: SubmissionStepData) => void;
+  initialData: FilmSubmissionData;
 }
 
 export interface WizardStepProps {
   onNext: (stepData?: SubmissionStepData) => void;
   onBack: () => void;
+  initialData: FilmSubmissionData;
 }
 
 export interface LastStepProps {

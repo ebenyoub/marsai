@@ -1,6 +1,7 @@
 import { ResultSetHeader } from 'mysql2';
 import db from '../config/database.js';
 import { UserRow, UserType } from '../types/type.js';
+import { updateEntity } from '../utils.js';
 
 const findAll = async (): Promise<UserRow[]> => {
   const query = 'SELECT * FROM user';
@@ -20,20 +21,10 @@ const findByEmail = async (email: string): Promise<UserType | null> => {
   return result.length > 0 ? result[0] : null;
 };
 
+const columns: (keyof UserType)[] = ['firstname', 'lastname', 'email', 'password', 'role', 'festival_id'];
+
 const update = async (id: number, data: Partial<UserType>): Promise<ResultSetHeader> => {
-  const query =
-    'UPDATE user SET firstname = ?, lastname = ?, email = ?, password = ?, updated_at = NOW(), festival_id = ? WHERE id = ?';
-
-  const [result] = await db.execute<ResultSetHeader>(query, [
-    data.firstname || null,
-    data.lastname || null,
-    data.email || null,
-    data.password || null,
-    data.festival_id || null,
-    id,
-  ]);
-
-  return result;
+  return updateEntity('user', id, data, columns, db, { hasTimestamp: true });
 };
 
 const deleted = async (id: number): Promise<ResultSetHeader> => {

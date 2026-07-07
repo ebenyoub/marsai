@@ -1,48 +1,102 @@
-import { useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, Plus, Users } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import Button from '@/components/ui/button';
 import Form from '@/components/ui/form';
 import { useFilmSubmission } from '@/hooks/useFilmSubmission';
+import { collaboratorSchema } from '@/schemas/collaborator.schema';
 import { CollaboratorType, FilmSubmissionData, LastStepProps } from '@/types/form';
 import TeamMember from './TeamMember';
 
 interface FormMemberProps extends LastStepProps {
   masterData: FilmSubmissionData;
+  members: CollaboratorType[];
+  onMembersChange: (members: CollaboratorType[]) => void;
 }
 
-export default function FormMember({ onBack, masterData }: FormMemberProps) {
+type CollaboratorErrors = Record<string, Partial<Record<keyof CollaboratorType, string>>>;
+
+export default function FormMember({ onBack, masterData, members, onMembersChange }: FormMemberProps) {
   const { t } = useTranslation();
-  const [members, setMembers] = useState<CollaboratorType[]>([]);
+  const [memberErrors, setMemberErrors] = useState<CollaboratorErrors>({});
 
   const { handleSubmitFinal, isSubmitting } = useFilmSubmission(masterData, members);
 
-  const nextId = useRef(1);
+  const nextId = useMemo(() => {
+    const maxNumericId = members.reduce((maxId, member) => {
+      const numericId = Number(member.id);
+      return Number.isFinite(numericId) ? Math.max(maxId, numericId) : maxId;
+    }, 0);
+
+    return (maxNumericId + 1).toString();
+  }, [members]);
 
   const handleAddMember = () => {
     const newMember: CollaboratorType = {
-      id: nextId.current.toString(),
+      id: nextId,
       firstname: '',
       lastname: '',
       job: '',
       email: '',
     };
-    nextId.current += 1;
-    setMembers([...members, newMember]);
+    onMembersChange([...members, newMember]);
   };
 
   const handleUpdateMember = (id: string, field: keyof CollaboratorType, value: string) => {
-    setMembers(prev => prev.map(m => (m.id === id ? { ...m, [field]: value } : m)));
+    setMemberErrors(prev => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        [field]: undefined,
+      },
+    }));
+    onMembersChange(members.map(m => (m.id === id ? { ...m, [field]: value } : m)));
   };
 
   const handleDeleteMember = (id: string) => {
-    setMembers(prev => prev.filter(m => m.id !== id));
+    setMemberErrors(prev => {
+      const remaining = { ...prev };
+      delete remaining[id];
+      return remaining;
+    });
+    onMembersChange(members.filter(m => m.id !== id));
+  };
+
+  const validateMembers = () => {
+    const schema = collaboratorSchema(t);
+    const nextErrors: CollaboratorErrors = {};
+
+    members.forEach(member => {
+      const result = schema.safeParse(member);
+      if (result.success) return;
+
+      nextErrors[member.id] = {};
+      result.error.issues.forEach(issue => {
+        const field = issue.path[0];
+        if (typeof field === 'string') {
+          nextErrors[member.id][field as keyof CollaboratorType] = issue.message;
+        }
+      });
+    });
+
+    setMemberErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    if (!validateMembers()) {
+      event.preventDefault();
+      return;
+    }
+
+    void handleSubmitFinal(event);
   };
 
   return (
     <Form
-      onSubmit={handleSubmitFinal}
+      noValidate
+      onSubmit={handleSubmit}
       className="m-auto w-full max-w-4xl space-y-8 border-none bg-transparent p-4 ring-0 md:p-10"
     >
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
@@ -76,6 +130,7 @@ export default function FormMember({ onBack, masterData }: FormMemberProps) {
               key={member.id}
               index={index}
               data={member}
+              errors={memberErrors[member.id]}
               onUpdate={(field, value) => handleUpdateMember(member.id, field, value)}
               onDelete={() => handleDeleteMember(member.id)}
             />

@@ -8,7 +8,7 @@ import { mediaSchema } from '@/schemas/mediaSchema.schema';
 import { WizardStepProps } from '@/types/form';
 import type { z } from 'zod';
 
-export default function FormMedia({ onNext, onBack }: WizardStepProps) {
+export default function FormMedia({ onNext, onBack, initialData }: WizardStepProps) {
   const { t } = useTranslation();
   const schema = mediaSchema(t);
 
@@ -21,8 +21,8 @@ export default function FormMedia({ onNext, onBack }: WizardStepProps) {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      youtubeUrl: '',
-      hasSubtitles: false,
+      youtubeUrl: initialData.youtubeUrl,
+      hasSubtitles: initialData.hasSubtitles,
       thumbnail: null as File | null,
       gallery: [] as File[],
     },
@@ -42,11 +42,11 @@ export default function FormMedia({ onNext, onBack }: WizardStepProps) {
     if (!files) return;
 
     if (fieldName === 'gallery') {
-      setValue('gallery', Array.from(files));
+      setValue('gallery', Array.from(files), { shouldValidate: true });
       return;
     }
 
-    setValue('thumbnail', files[0]);
+    setValue('thumbnail', files[0], { shouldValidate: true });
   };
 
   const hasErrors = Object.keys(errors).length > 0;

@@ -9,7 +9,7 @@ import { aiDeclarationSchema } from '@/schemas/aiDeclaration.schema';
 import { WizardStepProps } from '@/types/form';
 import type { z } from 'zod';
 
-export default function FormAi({ onNext, onBack }: WizardStepProps) {
+export default function FormAi({ onNext, onBack, initialData }: WizardStepProps) {
   const { t } = useTranslation();
   const schema = aiDeclarationSchema(t);
 
@@ -22,9 +22,9 @@ export default function FormAi({ onNext, onBack }: WizardStepProps) {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      aiClassification: '100',
-      techStack: '',
-      methodology: '',
+      aiClassification: initialData.aiClassification ?? initialData.deploymentType,
+      techStack: initialData.techStack,
+      methodology: initialData.methodology,
     },
   });
 

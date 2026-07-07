@@ -106,7 +106,7 @@ CREATE TABLE `event` (
 CREATE TABLE `festival` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
-  `decription` text NOT NULL,
+  `description` text NOT NULL,
   `created_at` datetime NOT NULL,
   `start_at` datetime NOT NULL,
   `end_at` datetime NOT NULL,
@@ -114,6 +114,9 @@ CREATE TABLE `festival` (
   `booking_total` int NOT NULL,
   `slug` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
+  `logo_url` varchar(255) DEFAULT NULL,
+  `primary_color` varchar(50) DEFAULT NULL,
+  `youtube_api_key` varchar(255) DEFAULT NULL,
   UNIQUE KEY `slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -121,8 +124,8 @@ CREATE TABLE `festival` (
 -- Déchargement des données de la table `festival`
 --
 
-INSERT INTO `festival` (`id`, `name`, `decription`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`, `slug`, `city`) VALUES
-(1, 'MarsAI Festival 2026', 'Festival international de courts-métrages générés par IA sur le thème des futurs souhaitables.', '2026-02-01 01:10:27', '2026-03-01 09:00:00', '2026-03-15 23:59:59', 'Actif', 3000, 'festival-2026', 'Marseille');
+INSERT INTO `festival` (`id`, `name`, `description`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`, `slug`, `city`, `logo_url`, `primary_color`, `youtube_api_key`) VALUES
+(1, 'MarsAI Festival 2026', 'Festival international de courts-métrages générés par IA sur le thème des futurs souhaitables.', '2026-02-01 01:10:27', '2026-03-01 09:00:00', '2026-03-15 23:59:59', 'Actif', 3000, 'festival-2026', 'Marseille', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

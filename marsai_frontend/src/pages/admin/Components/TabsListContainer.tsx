@@ -23,11 +23,6 @@ interface AddJuryResponse {
     message?: string
 }
 
-const initialBrandingSettings = {
-    logo: '',
-    primaryColor: '#00F2FF',
-    youtubeApiKey: '',
-}
 const getStatusBadge = (status: string) => {
     switch (status) {
         case 'approved':
@@ -41,13 +36,30 @@ const getStatusBadge = (status: string) => {
 
 import { apiRequest } from '@/lib/api'
 import FilmPopup from '@/components/FilmPopup'
+interface FestivalInfo {
+    id: number;
+    name: string;
+    description: string;
+    start_at: string;
+    end_at: string;
+    status: 'Actif' | 'Inactif';
+    booking_total: number;
+    slug: string;
+    city: string;
+    logo_url?: string | null;
+    primary_color?: string | null;
+    youtube_api_key?: string | null;
+}
 
 function TabsListContainer() {
-    const [brandingSettings, setBrandingSettings] = useState(initialBrandingSettings)
     const { data: allUsers, refetch: refetchUsers } = useFetch<JuryMember[]>("/users")
     const [juryMessage, setJuryMessage] = useState<string | null>(null)
     const { data: films, isLoading, error, refetch } = useFetch<FilmType[]>("/movies?status=all")
     const [previewFilm, setPreviewFilm] = useState<FilmType | null>(null)
+
+    // Fetch festivals to get the active one
+    const { data: festivals, refetch: refetchFestivals } = useFetch<FestivalInfo[]>('/festivals')
+    const activeFestival = festivals?.find(f => f.status === 'Actif')
 
     const jury = useMemo(() => {
         if (!allUsers || !Array.isArray(allUsers)) return [];
@@ -103,15 +115,17 @@ function TabsListContainer() {
             });
             if (res.success) {
                 if (res.isNewAccount) {
-                    setJuryMessage("Nouveau compte juré créé avec le mot de passe temporaire : password123");
+                    setJuryMessage(t('admin.jury.created', { email }));
                 } else {
-                    setJuryMessage(res.message);
+                    setJuryMessage(t('admin.jury.promoted', { email }));
                 }
                 refetchUsers();
+            } else {
+                setJuryMessage(t('admin.jury.error'));
             }
         } catch (err) {
             console.error("Erreur lors de l'ajout du juré", err);
-            setJuryMessage("Erreur : " + (err instanceof Error ? err.message : "Impossible d'ajouter le juré."));
+            setJuryMessage(t('admin.jury.conn_error'));
         }
     }
 
@@ -136,7 +150,7 @@ function TabsListContainer() {
     const [activeTab, setActiveTab] = useState('submissions')
 
     const triggers = [
-        { value: 'submissions', icon: <Film className="w-3 h-3 md:w-5 md:h-5" />, label: 'Soumissions' },
+        { value: 'submissions', icon: <Film className="w-3 h-3 md:w-5 md:h-5" />, label: t('admin.tabs.submissions') },
         { value: 'branding', icon: <Palette className="w-3 h-3 md:w-5 md:h-5" />, label: t('admin.tabs.branding') },
         { value: 'users', icon: <Users className="w-3 h-3 md:w-5 md:h-5" />, label: t('admin.tabs.users') },
     ]
@@ -181,13 +195,15 @@ function TabsListContainer() {
                 <span className="sm:hidden">Jury</span>
             </TabsContent>
             <TabsContent value="branding">
-                <BrandingForm
-                    brandingSettings={brandingSettings}
-                    onChange={setBrandingSettings}
-                    onSave={() => console.error('Saved branding')}
-                    onCancel={() => console.error('Cancelled')}
-                    t={t}
-                />
+                {activeFestival ? (
+                    <BrandingForm
+                        activeFestival={activeFestival}
+                        onSave={refetchFestivals}
+                        t={t}
+                    />
+                ) : (
+                    <p className="text-muted-foreground p-4">Chargement de la configuration...</p>
+                )}
             </TabsContent>
             <TabsContent value="users">
                 <JuryPanel

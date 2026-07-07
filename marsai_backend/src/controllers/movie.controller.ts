@@ -83,9 +83,19 @@ const update = async (req: RequestParamsBody<Params, Partial<MovieType>>, res: R
   });
 };
 
+const getStats = async (_req: Request, res: Response) => {
+  const stats = await Movie.getStats();
+  logger.info(`Statistiques récupérées.`);
+  res.status(200).json({
+    success: true,
+    data: stats,
+  });
+};
+
 export default {
   getAllMovies,
   getMovieById,
   create,
   update,
+  getStats,
 };

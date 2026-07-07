@@ -48,6 +48,9 @@ export interface FestivalType {
   booking_total: number;
   slug: string;
   city: string;
+  logo_url?: string | null;
+  primary_color?: string | null;
+  youtube_api_key?: string | null;
 }
 
 /**

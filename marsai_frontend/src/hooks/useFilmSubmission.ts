@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { finalSubmissionSchema } from '@/schemas/submission.schema';
 import { CollaboratorType, FilmSubmissionData } from '@/types/form';
 
 export const useFilmSubmission = (masterData: FilmSubmissionData, members: CollaboratorType[]) => {
@@ -12,10 +13,14 @@ export const useFilmSubmission = (masterData: FilmSubmissionData, members: Colla
     e.preventDefault();
     setIsSubmitting(true);
 
-    // --- 1. VALIDATION LOCALE ---
-    const isValid = members.every(m => m.firstname && m.lastname && m.job && m.email);
-    if (!isValid && members.length > 0) {
-      alert(t('submit.step5.incomplete', 'Veuillez remplir tous les champs de chaque membre de l\'équipe (ou supprimer les membres vides).'));
+    const validation = finalSubmissionSchema(t).safeParse({
+      ...masterData,
+      collaborators: members,
+    });
+
+    if (!validation.success) {
+      const message = validation.error.issues[0]?.message ?? t('submit.validation.error');
+      alert(message);
       setIsSubmitting(false);
       return;
     }
@@ -98,6 +103,7 @@ export const useFilmSubmission = (masterData: FilmSubmissionData, members: Colla
       // Clear localStorage so the next visit starts at Step 1
       localStorage.removeItem('marsai_step');
       localStorage.removeItem('marsai_data');
+      localStorage.removeItem('marsai_collaborators');
 
       console.warn('✅ Final Payload Prepared and Storage Cleared');
 

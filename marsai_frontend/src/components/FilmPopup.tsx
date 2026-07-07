@@ -10,9 +10,13 @@ interface FilmPopupProps {
 }
 
 export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (!film) return null;
+
+  const currentLanguage = i18n.language;
+  const title = currentLanguage === 'fr' ? film.title : (film.title_en || film.title);
+  const synopsis = currentLanguage === 'fr' ? (film.synopsis_fr || film.synopsis_en) : (film.synopsis_en || film.synopsis_fr);
 
   const getEmbedUrl = (url: string): string => {
     if (!url) return '';
@@ -30,7 +34,7 @@ export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
     <Popup open={open} onClose={onClose} className="md:max-w-4xl">
       <div className="mb-6 pr-8">
         <div className="flex items-center gap-3 flex-wrap mb-2">
-          <h2 className="text-primary text-3xl">{film.title}</h2>
+          <h2 className="text-primary text-3xl">{title}</h2>
           <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase ${
             film.status === 'approved' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
             film.status === 'rejected' ? 'bg-red-500/10 text-red-400 border border-red-500/20' :
@@ -52,7 +56,7 @@ export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
           <iframe
             className="absolute inset-0 h-full w-full"
             src={embedUrl}
-            title={film.title}
+            title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
@@ -71,10 +75,10 @@ export default function FilmPopup({ open, onClose, film }: FilmPopupProps) {
         </div>
       )}
 
-      {(film.synopsis_fr || film.synopsis_en) && (
+      {synopsis && (
         <div className="mb-6 bg-slate-950/40 p-4 border border-slate-800 rounded-xl">
           <h3 className="text-sm font-semibold text-slate-300 mb-1">Synopsis</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">{film.synopsis_fr || film.synopsis_en}</p>
+          <p className="text-sm text-slate-400 leading-relaxed">{synopsis}</p>
         </div>
       )}
 
