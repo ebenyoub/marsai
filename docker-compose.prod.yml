@@ -1,0 +1,66 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-marsai}
+      MYSQL_USER: ${DB_USER:-marsai_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - marsai_db_data:/var/lib/mysql
+      - ./marsai_backend/src/config/sql/donnees_fictives.sql:/docker-entrypoint-initdb.d/01_donnees_fictives.sql:ro
+      - ./marsai_backend/src/config/sql/100_ai_short_films_seed.sql:/docker-entrypoint-initdb.d/02_100_ai_short_films_seed.sql:ro
+      - ./marsai_backend/festival_add_personnel.sql:/docker-entrypoint-initdb.d/03_festival_add_personnel.sql:ro
+      - ./marsai_backend/festival_full_data.sql:/docker-entrypoint-initdb.d/04_festival_full_data.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      web:
+        aliases:
+          - marsai_db
+
+  backend:
+    build:
+      context: ./marsai_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: marsai_db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-marsai_user}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME:-marsai}
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+    volumes:
+      - marsai_uploads:/app/uploads
+    networks:
+      - web
+
+  frontend:
+    build:
+      context: ./marsai_frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - web
+
+volumes:
+  marsai_db_data:
+    external: true
+  marsai_uploads:
+
+networks:
+  web:
+    external: true

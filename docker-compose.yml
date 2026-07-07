@@ -1,0 +1,44 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: marsai_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: marsai
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./marsai_backend/src/config/sql/donnees_fictives.sql:/docker-entrypoint-initdb.d/01_donnees_fictives.sql
+      - ./marsai_backend/src/config/sql/100_ai_short_films_seed.sql:/docker-entrypoint-initdb.d/02_100_ai_short_films_seed.sql
+      - ./marsai_backend/festival_add_personnel.sql:/docker-entrypoint-initdb.d/03_festival_add_personnel.sql
+      - ./marsai_backend/festival_full_data.sql:/docker-entrypoint-initdb.d/04_festival_full_data.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uuser", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./marsai_backend
+      dockerfile: Dockerfile
+    container_name: marsai_backend
+    restart: always
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./marsai_backend:/app
+      - /app/node_modules
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=marsai
+      - JWT_SECRET=marsai_secret_key_12345
+    depends_on:
+      db:
+        condition: service_healthy
