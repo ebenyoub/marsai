@@ -1,0 +1,71 @@
+"participant_id","event_id"
+"1","1"
+"2","1"
+"2","2"
+"3","3"
+"id","firstname","lastname","gender","email","job","movie_id"
+"1","Alex","Rider","Mr","alex.r@actor.com","Acteur Principal",NULL
+"2","Sarah","Connor","Mme","sarah.c@actor.com","Actrice Secondaire",NULL
+"3","John","Doe","Mr","j.doe@sound.com","Compositeur de musique originale",NULL
+"4","Greenwood","Jones","Mr","g.jones@actor.com","Acteur principal",NULL
+"5","Elena","Varela","Mme","e.varela@actor.com","Actrice principale",NULL
+"6","Alan","Turing","Mr","alan.t@animator.com","Animateur 3D",NULL
+"7","Grace","Hopper","Mme","grace.h@vfx.com","Artiste VFX",NULL
+"id","firstname","lastname","gender","birthday","email","mobile","address","zip_code","town","country","job","youtube_url","instagram_url","linkedin_url","facebook_url","twitter_url","question_about","newsletter","created_at","updated_at"
+"1","Isaac","Bell","M.","1990-05-15 00:00:00","isaac.bell@director.ai","0601020304","10 Rue de la Paix","75002","Paris","France","Réalisateur IA","https://www.youtube.com/@DUST",NULL,NULL,NULL,NULL,"Presse / Média","1","2026-02-23 10:22:13","2026-02-23 10:22:13"
+"2","Martin","McDonagh","M.","1970-03-26 00:00:00","martin.m@director.ai","0605060708","25 Abbey Road","NW8","London","UK","Réalisateur / Scénariste",NULL,NULL,NULL,NULL,NULL,"Autre","0","2026-02-23 10:22:13","2026-02-23 10:22:13"
+"3","Helena","Almeida","Mme","1985-11-20 00:00:00","helena.a@director.ai","0609101112","Av. da Liberdade 100","1250-145","Lisbonne","Portugal","Animatrice / Réalisatrice",NULL,NULL,NULL,NULL,NULL,"Partenaire","1","2026-02-23 10:22:13","2026-02-23 10:22:13"
+"5","Isaac","Bell","M.","1990-05-14 22:00:00","iskkkaac.bell@director.ai","0601020304","10 Rue de la Paix","75002","Paris","France","Réalisateur IA","https://www.youtube.com/@DUST",NULL,NULL,NULL,NULL,"Presse / Média","1","2026-02-25 00:03:58","2026-02-25 00:03:58"
+"6","Isagggac","Begggll","M.","1990-05-14 22:00:00","iskkkggaac.bell@director.ai","0601020304","10 Rue de la Paix","75002","Paris","France","Réalisateur IA","https://www.youtube.com/@DUST",NULL,NULL,NULL,NULL,"Presse / Média","1","2026-02-25 11:25:52","2026-02-25 11:25:52"
+"8","Isagggac",,"M.","1990-05-14 22:00:00","iskkkggajjjjjjac.bell@director.ai","0601020304","10 Rue de la Paix","75002","P","France","Réalisateur IA","https://www.youtube.com/@DUST",NULL,NULL,NULL,NULL,"Presse / Média","1","2026-02-25 11:28:11","2026-02-25 11:28:11"
+"9","Christopher","Nolan","M.","1970-07-30 00:00:00","c.nolan@syncopy.com","0601020304","5570 Wilshire Blvd","75008","Paris","France","Réalisateur","https://www.youtube.com/@warnerbrosfrance",,,,,"Bouche-à-oreille","1","2026-02-25 12:03:10","2026-02-25 12:03:10"
+"10","Céline","Sciamma","Mme","1978-11-07 00:00:00","c.sciamma@production.fr","0142434445","12 rue de la République","75011","Paris","France","Réalisatrice","https://www.youtube.com/watch?v=6mI-vH-X5G0","https://www.instagram.com/celine_sciamma",,,,"Presse / Média","0","2026-02-25 14:17:15","2026-02-25 14:17:15"
+"id","title","start_at","end_at","capacity","remaining_seats","location","description","status","festival_id"
+"1","Projection des films Sci-Fi","2024-10-16 14:00:00","2024-10-16 16:00:00","150","150","Salle 1","Séance dédiée aux films de science-fiction en compétition.","Ouvert","1"
+"2","Masterclass Animation & IA","2024-10-17 10:00:00","2024-10-17 12:00:00","50","50","Salle 2","Rencontre avec des réalisateurs sur les nouvelles techniques d'animation assistées par IA.","Ouvert","1"
+"3","Table Ronde: Futur du Cinéma","2024-10-17 15:00:00","2024-10-17 17:00:00","100","100","Amphithéâtre","Discussion avec des experts sur l'impact de l'IA sur l'industrie cinématographique.","Ouvert","1"
+"id","name","description","created_at","start_at","end_at","status","booking_total"
+"1","Mars AI Film Festival 2024","Le premier festival de films générés ou assistés par intelligence artificielle. Un événement dédié à l'innovation cinématographique.","2026-02-23 10:22:13","2024-10-15 09:00:00","2024-10-18 23:00:00","Actif","500"
+"role_id","user_id"
+"1","1"
+"2","2"
+"3","3"
+"4","4"
+"id","url","created_at","movie_id"
+"1","https://via.placeholder.com/1920x1080.png?text=La+Machine+Scene+1","2026-02-23 10:22:13",NULL
+"2","https://via.placeholder.com/1920x1080.png?text=La+Machine+Scene+2","2026-02-23 10:22:13",NULL
+"3","https://via.placeholder.com/1920x1080.png?text=Le+Begue+Scene+1","2026-02-23 10:22:13",NULL
+"4","https://via.placeholder.com/1920x1080.png?text=Parapluie+Scene+1","2026-02-23 10:22:13",NULL
+"5","https://via.placeholder.com/1920x1080.png?text=ForgottenStar+Poster","2026-02-23 10:22:13",NULL
+"6","https://via.placeholder.com/1920x1080.png?text=ForgottenStar+Scene","2026-02-23 10:22:13",NULL
+"id","title","title_en","synopsis_fr","synopsis_en","duration","main_language","yt_url","thumbnail","subtitles","stack","methodology","ia_type","status","created_at","director_id","updated_at","ai_tools"
+"movie_id","tag_id"
+"id","firstname","lastname","email","mobile","job","created_at"
+"1","Chris","Nolan","chris.nolan@participant.com","0712345678","Cinéphile","2026-02-23 10:22:13"
+"2","Denis","Villeneuve","denis.v@participant.com","0787654321","Etudiant en cinéma","2026-02-23 10:22:13"
+"3","Kathryn","Bigelow","kathryn.b@participant.com","0798765432","Journaliste cinéma","2026-02-23 10:22:13"
+"user_id","movie_id","score_creativity","score_technical","score_message","comment","score_total","created_at","updated_at"
+"id","name"
+"1","Administrateur"
+"2","Jury"
+"4","Organisateur"
+"3","Spectateur"
+"id","name"
+"3","Animation"
+"6","Comédie"
+"2","Drame"
+"5","Expérimental"
+"1","Science-Fiction"
+"4","Thriller"
+"id","firstname","lastname","email","role","password","created_at","updated_at","festival_id"
+"1","Jean","Dupont","jean.dupont@email.com","user","$2b$10$fakePasswordHash123456","2026-02-23 10:22:13","2026-02-23 10:22:13","1"
+"2","Marie","Curie","marie.curie@email.com","admin","$2b$10$anotherFakeHash789012","2026-02-23 10:22:13","2026-02-23 10:22:13","1"
+"3","Albert","Einstein","albert.einstein@email.com","jury","$2b$10$superFakeHash555666","2026-02-23 10:22:13","2026-02-23 10:22:13","1"
+"4","Ada","Lovelace","ada.lovelace@email.com","super-admin","$2b$10$moreFakeHash777888","2026-02-23 10:22:13","2026-02-23 10:22:13","1"
+"5","Alice","Varda","alice.varda@jury.com","jury","$2b$10$fakePasswordHash123456","2026-02-27 21:20:44","2026-02-27 21:20:44","1"
+"6","Benoit","Magimel","benoit.m@jury.com","jury","$2b$10$fakePasswordHash123456","2026-02-27 21:20:44","2026-02-27 21:20:44","1"
+"7","Catherine","Deneuve","catherine.d@jury.com","jury","$2b$10$fakePasswordHash123456","2026-02-27 21:20:44","2026-02-27 21:20:44","1"
+"8","David","Lynch","david.lynch@jury.com","jury","$2b$10$fakePasswordHash123456","2026-02-27 21:20:44","2026-02-27 21:20:44","1"
+"9","Eva","Green","eva.green@jury.com","jury","$2b$10$fakePasswordHash123456","2026-02-27 21:20:44","2026-02-27 21:20:44","1"
+"10","Francis","Ford","francis.f@jury.com","jury","$2b$10$fakePasswordHash123456","2026-02-27 21:20:44","2026-02-27 21:20:44","1"
+"11","Elyas","Benyoub","ebenyoub@me.com","user","$2b$10$EksnKoy2icKSH9d0wiORs./B7WpWXjYj5VgwUHP0hzPOWjmjyRvXq","2026-02-28 09:03:55","2026-02-28 09:03:55","1"
