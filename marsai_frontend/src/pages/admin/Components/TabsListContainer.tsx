@@ -7,7 +7,7 @@ import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SubmissionsTable } from './SubmissionsTable'
 import Badge from '@/components/ui/Badge'
-import { FilmType } from '@/types/home'
+import { FilmWithDirector } from '@/types/home'
 import { useFetch } from '@/hooks/useFetch'
 
 
@@ -54,8 +54,8 @@ interface FestivalInfo {
 function TabsListContainer() {
     const { data: allUsers, refetch: refetchUsers } = useFetch<JuryMember[]>("/users")
     const [juryMessage, setJuryMessage] = useState<string | null>(null)
-    const { data: films, isLoading, error, refetch } = useFetch<FilmType[]>("/movies?status=all")
-    const [previewFilm, setPreviewFilm] = useState<FilmType | null>(null)
+    const { data: films, isLoading, error, refetch } = useFetch<FilmWithDirector[]>("/movies?status=all")
+    const [previewFilm, setPreviewFilm] = useState<FilmWithDirector | null>(null)
 
     // Fetch festivals to get the active one
     const { data: festivals, refetch: refetchFestivals } = useFetch<FestivalInfo[]>('/festivals')

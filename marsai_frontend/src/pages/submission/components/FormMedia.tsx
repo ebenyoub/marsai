@@ -23,7 +23,7 @@ export default function FormMedia({ onNext, onBack, initialData }: WizardStepPro
     defaultValues: {
       youtubeUrl: initialData.youtubeUrl,
       hasSubtitles: initialData.hasSubtitles,
-      thumbnail: null as File | null,
+      thumbnail: undefined as File | undefined,
       gallery: [] as File[],
     },
   });

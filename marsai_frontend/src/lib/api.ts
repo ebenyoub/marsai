@@ -75,7 +75,7 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
     headers,
   });
 
-  const result = await response.json() as { message?: string };
+  const result = (await response.json()) as T & { message?: string };
 
   if (!response.ok) {
     throw new Error(result.message || 'API Error');

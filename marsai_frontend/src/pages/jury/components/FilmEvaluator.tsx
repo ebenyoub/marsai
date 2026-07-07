@@ -144,8 +144,7 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
           {[
             {
               label: 'Type de Classification IA',
-              value:
-                film.ia_type === '100' ? '100% IA' : film.ia_type === 'hybrid' ? 'Production Hybride' : film.ia_type,
+              value: film.ia_type,
               active: !!film.ia_type,
             },
             {

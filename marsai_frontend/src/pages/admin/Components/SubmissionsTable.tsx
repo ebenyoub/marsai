@@ -1,6 +1,6 @@
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/button'
-import { FilmType } from '@/types/home'
+import { FilmWithDirector } from '@/types/home'
 import { Eye, Check, X } from 'lucide-react'
 import { JSX } from 'react'
 
@@ -12,11 +12,11 @@ export interface submission {
   status: 'pending' | 'approved' | 'rejected'
 }
 export interface SubmissionsTableProps {
-  submissions: FilmType[]
+  submissions: FilmWithDirector[]
   getStatusBadge: (status: string) => JSX.Element
   onApprove: (id: number) => void
   onReject: (id: number) => void
-  onPreview: (film: FilmType) => void
+  onPreview: (film: FilmWithDirector) => void
   t: (key: string) => string
   className: string
 }
@@ -50,7 +50,7 @@ export function SubmissionsTable({ submissions, getStatusBadge, onApprove, onRej
         </tr>
       </thead>
       <tbody className='items-center'>
-        {submissions.map((s: FilmType) => (
+        {submissions.map((s: FilmWithDirector) => (
           <tr key={s.id} className="border-t text-center">
             <td className='hidden md:block'>
               {s.thumbnail && (

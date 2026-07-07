@@ -4,9 +4,9 @@ import Button from '@/components/ui/button'
 import { Eye, Check, X } from 'lucide-react'
 import { JSX } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FilmType } from '@/types/home'
+import { FilmWithDirector } from '@/types/home'
 
-export function SubmissionCard({ submission, getStatusBadge }: { submission: FilmType, getStatusBadge: (status: string) => JSX.Element, t: (key: string) => string }) {
+export function SubmissionCard({ submission, getStatusBadge }: { submission: FilmWithDirector, getStatusBadge: (status: string) => JSX.Element, t: (key: string) => string }) {
   const { t } = useTranslation()
   return (
     <Card>
@@ -22,7 +22,7 @@ export function SubmissionCard({ submission, getStatusBadge }: { submission: Fil
         </div>
 
         <div className="flex gap-1 flex-wrap">
-          {submission.ai_tools.map((tool: string) => (
+          {(submission.ai_tools ?? []).map((tool: string) => (
             <Badge key={tool} variant="dark">
               {t(`ai.${tool.toLowerCase()}`)}
             </Badge>

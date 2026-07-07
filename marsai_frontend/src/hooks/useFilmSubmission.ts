@@ -9,7 +9,7 @@ export const useFilmSubmission = (masterData: FilmSubmissionData, members: Colla
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handleSubmitFinal = async (e: React.SubmitEvent) => {
+  const handleSubmitFinal = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 

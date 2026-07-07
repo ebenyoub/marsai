@@ -13,6 +13,9 @@ const badgeVariants = {
   dark: 'bg-background border border-primary/60',
   country: 'bg-background/80 text-secondary-foreground font-medium',
   text: '',
+  // Non stylées intentionnellement : comportement visuel actuel inchangé (résolvaient déjà à `undefined`).
+  destructive: '',
+  warning: '',
 };
 
 function Badge({ children, className, variant = 'dark', icon }: badgeProps) {

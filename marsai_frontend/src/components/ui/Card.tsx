@@ -4,11 +4,11 @@ import { cartVariants } from '../../utils/variants';
 import { CardTitleVariants } from '../../utils/variants';
 import { cn } from './utils';
 
-const CardHeader = ({ className, children }: { children: React.ReactNode; className: string }) => {
+const CardHeader = ({ className, children }: { children: React.ReactNode; className?: string }) => {
   return <div className={cn('flex flex-col p-3', className)}>{children}</div>;
 };
 
-const CardContent = ({ className, children }: { children: React.ReactNode; className: string }) => {
+const CardContent = ({ className, children }: { children: React.ReactNode; className?: string }) => {
   return <div className={cn('flex flex-col p-3', className)}>{children}</div>;
 };
 

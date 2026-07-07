@@ -530,8 +530,8 @@ test.describe('MarsAI E2E Test Suite', () => {
 
     // Verify payload sent in PUT request
     expect(putPayload).not.toBeNull();
-    expect(putPayload.primary_color).toBe('#ff0055');
-    expect(putPayload.youtube_api_key).toBe('new-api-key');
+    expect(putPayload!.primary_color).toBe('#ff0055');
+    expect(putPayload!.youtube_api_key).toBe('new-api-key');
   });
 
   test('Admin Flow: Jury Management (Add and Remove)', async ({ page }) => {

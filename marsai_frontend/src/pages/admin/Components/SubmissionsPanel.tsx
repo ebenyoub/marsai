@@ -22,6 +22,9 @@ export function SubmissionsPanel({ submissions, getStatusBadge }: SubmissionsTab
         <SubmissionsTable
           submissions={submissions}
           getStatusBadge={getStatusBadge}
+          onApprove={() => {}}
+          onReject={() => {}}
+          onPreview={() => {}}
           t={t}
           className=''
         />
