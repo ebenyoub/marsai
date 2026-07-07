@@ -1,17 +1,31 @@
-FROM node:22-alpine
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-# Build step if needed, but we'll use tsx for simplicity in this demo environment
-# If you prefer a production build, uncomment the next line and change CMD
-# RUN npm run build
+RUN npx tsc --noEmit false
+
+FROM node:22-alpine AS production
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY package*.json ./
+
+RUN npm ci --omit=dev
+
+COPY --from=build /app/dist ./dist
+COPY src/config/sql ./src/config/sql
+COPY festival_add_personnel.sql festival_full_data.sql ./
+
+RUN mkdir -p uploads
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]

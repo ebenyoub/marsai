@@ -18,7 +18,18 @@ import { RequestEmpty } from './types/type.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
+const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173,http://localhost:5174,http://localhost:5175')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+
 app.use(express.json());
+app.use(
+  cors({
+    origin: corsOrigins,
+    credentials: true,
+  }),
+);
 
 const startServer = async () => {
   try {
@@ -39,13 +50,6 @@ const startServer = async () => {
 };
 
 await startServer();
-
-app.use(
-  cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
-    credentials: true,
-  }),
-);
 
 app.get('/', (_req: RequestEmpty, res: Response) => {
   res.send('Bienvenue sur MarsAI, le festival des futurs souhaitables !');
