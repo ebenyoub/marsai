@@ -15,7 +15,13 @@ const findById = async (id: number): Promise<DirectorType | null> => {
   return result.length > 0 ? result[0] : null;
 };
 
-const create = async (director: DirectorType): Promise<ResultSetHeader> => {
+const findByEmail = async (email: string): Promise<DirectorType | null> => {
+  const query = 'SELECT * FROM director WHERE email = ?';
+  const [result] = await db.execute<DirectorRow[]>(query, [email]);
+  return result.length > 0 ? result[0] : null;
+};
+
+const create = async (director: Partial<DirectorType>): Promise<ResultSetHeader> => {
   const columns: (keyof DirectorType)[] = [
     'firstname',
     'lastname',
@@ -43,5 +49,6 @@ const create = async (director: DirectorType): Promise<ResultSetHeader> => {
 export default {
   findAll,
   findById,
+  findByEmail,
   create,
 };

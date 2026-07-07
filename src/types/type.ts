@@ -46,6 +46,8 @@ export interface FestivalType {
   end_at: Date;
   status: 'Actif' | 'Inactif';
   booking_total: number;
+  slug: string;
+  city: string;
 }
 
 /**
@@ -84,7 +86,7 @@ export interface DirectorType {
   linkedin_url: string;
   facebook_url: string;
   twitter_url: string;
-  question_about:
+  question_about?:
     | 'Réseaux sociaux'
     | 'Moteur de recherche'
     | 'Bouche-à-oreille'

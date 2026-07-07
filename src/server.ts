@@ -11,6 +11,7 @@ import UserRoutes from './routes/user.routes.js';
 import RatingRoutes from './routes/rating.route.js';
 import AuthRoutes from './routes/auth.route.js';
 import MovieRoutes from './routes/movie.router.js';
+import SubmissionRoutes from './routes/submission.route.js';
 import cors from 'cors';
 import logger from './config/logger.js';
 import { RequestEmpty } from './types/type.js';
@@ -41,7 +42,8 @@ await startServer();
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
+    credentials: true,
   }),
 );
 
@@ -56,5 +58,7 @@ app.use('/collaborators', CollaboratorRoutes);
 app.use('/directors', DirectorRoutes);
 app.use('/rating', RatingRoutes);
 app.use('/auth', AuthRoutes);
+app.use('/api/submissions', SubmissionRoutes);
+app.use('/uploads', express.static('uploads'));
 
 app.use(errorMiddleware);

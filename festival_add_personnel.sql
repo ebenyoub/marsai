@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 -- SQL Data for adding personnel to NERD-MarsAI-Back Festival Data
 -- Generation Date: 2024-07-30
 -- This script should be run AFTER `donnees_fictives.sql` to add more directors,
@@ -49,13 +50,13 @@ INSERT INTO `director` (`id`, `firstname`, `lastname`, `gender`, `birthday`, `em
 -- User IDs 1, 2, 3, 4 already exist from `donnees_fictives.sql`
 --
 INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `created_at`, `updated_at`, `festival_id`) VALUES
-(5, 'Philippe', 'Marchand', 'philippe.marchand@admin.com', '$2b$10$fakePasswordHashAdmin2', NOW(), NOW(), 1), -- New Admin
-(6, 'Eva', 'Garcia', 'eva.garcia@jury.com', '$2b$10$fakePasswordHashJury1', NOW(), NOW(), 1), -- New Jury
-(7, 'Lucas', 'Roux', 'lucas.roux@jury.com', '$2b$10$fakePasswordHashJury2', NOW(), NOW(), 1), -- New Jury
-(8, 'Anna', 'Lefevre', 'anna.lefevre@jury.com', '$2b$10$fakePasswordHashJury3', NOW(), NOW(), 1), -- New Jury
-(9, 'David', 'Moreau', 'david.moreau@jury.com', '$2b$10$fakePasswordHashJury4', NOW(), NOW(), 1), -- New Jury
-(10, 'Sophia', 'Dubois', 'sophia.dubois@jury.com', '$2b$10$fakePasswordHashJury5', NOW(), NOW(), 1), -- New Jury
-(11, 'Max', 'Leroy', 'max.leroy@superadmin.com', '$2b$10$fakePasswordHashSuperAdmin1', NOW(), NOW(), 1); -- New Super Admin
+(5, 'Philippe', 'Marchand', 'philippe.marchand@admin.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', NOW(), NOW(), 1), -- New Admin
+(6, 'Eva', 'Garcia', 'eva.garcia@jury.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', NOW(), NOW(), 1), -- New Jury
+(7, 'Lucas', 'Roux', 'lucas.roux@jury.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', NOW(), NOW(), 1), -- New Jury
+(8, 'Anna', 'Lefevre', 'anna.lefevre@jury.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', NOW(), NOW(), 1), -- New Jury
+(9, 'David', 'Moreau', 'david.moreau@jury.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', NOW(), NOW(), 1), -- New Jury
+(10, 'Sophia', 'Dubois', 'sophia.dubois@jury.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', NOW(), NOW(), 1), -- New Jury
+(11, 'Max', 'Leroy', 'max.leroy@superadmin.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', NOW(), NOW(), 1); -- New Super Admin
 
 
 --

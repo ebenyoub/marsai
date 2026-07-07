@@ -7,6 +7,7 @@ import { userSchema } from '../validation/user.schema.js';
 const router = express.Router();
 
 router.get('/', UserController.getAllUsers);
+router.post('/jury', UserController.addJuryMember);
 router.get('/:id', validate(idParamSchema, 'params'), UserController.getOneUser);
 router.put('/:id', validate(idParamSchema, 'params'), validate(userSchema.partial()), UserController.updateUser);
 router.delete('/:id', validate(idParamSchema, 'params'), UserController.deleteUser);

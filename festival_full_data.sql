@@ -1,9 +1,13 @@
+SET NAMES utf8mb4;
 -- SQL Data for enriching NERD-MarsAI-Back Festival Data
 -- Generation Date: 2024-07-30
 -- This script should be run AFTER `donnees_fictives.sql` and `100_ai_short_films_seed.sql`.
 -- It populates related tables to create a more complete festival dataset.
 
 SET FOREIGN_KEY_CHECKS=0; -- Disable foreign key checks for easier insertion
+
+TRUNCATE TABLE `collaborator`;
+TRUNCATE TABLE `rating`;
 
 --
 -- Data for table `collaborator`

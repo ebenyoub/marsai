@@ -1,11 +1,12 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import Movie from '../models/movie.model.js';
-import { MovieType, Params, RequestBody, RequestEmpty, RequestParams, RequestParamsBody } from '../types/type.js';
+import { MovieType, Params, RequestBody, RequestParams, RequestParamsBody } from '../types/type.js';
 import logger from '../config/logger.js';
 import { s, sendError } from '../utils.js';
 
-const getAllMovies = async (_req: RequestEmpty, res: Response) => {
-  const results = await Movie.findAll();
+const getAllMovies = async (req: Request, res: Response) => {
+  const { status } = req.query;
+  const results = await Movie.findAll(status as string);
 
   if (results.length === 0) {
     logger.warn(`Aucune vidéo n'a été trouvé.`);

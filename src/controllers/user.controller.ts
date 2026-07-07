@@ -78,9 +78,73 @@ const deleteUser = async (req: RequestParams<Params>, res: Response) => {
   });
 };
 
+import AuthModel from '../models/auth.model.js';
+import bcrypt from 'bcrypt';
+import { RequestBody } from '../types/type.js';
+
+const addJuryMember = async (req: RequestBody<{ email: string }>, res: Response) => {
+  const { email } = req.body;
+  if (!email) {
+    return sendError('Email requis', 400);
+  }
+
+  const existingUser = await UserModel.findByEmail(email);
+
+  if (existingUser) {
+    if (existingUser.role === 'jury' || existingUser.role === 'admin' || existingUser.role === 'super-admin') {
+      return res.status(200).json({
+        success: true,
+        message: `L'utilisateur avec cet email a déjà le rôle '${existingUser.role}'.`,
+        user: existingUser,
+      });
+    }
+
+    // Promouvoir l'utilisateur existant
+    await UserModel.update(existingUser.id!, { role: 'jury' });
+    logger.info(`Utilisateur ${email} promu au rôle de juré.`);
+    return res.status(200).json({
+      success: true,
+      message: "L'utilisateur existant a été promu au rôle de juré.",
+      user: { ...existingUser, role: 'jury' },
+    });
+  }
+
+  // Créer un nouveau compte juré avec mot de passe temporaire
+  const tempPassword = 'password123';
+  const hashedPassword = await bcrypt.hash(tempPassword, 10);
+
+  const results = await AuthModel.create({
+    firstname: 'Membre',
+    lastname: 'Jury',
+    email,
+    password: hashedPassword,
+    role: 'jury',
+    festival_id: 1,
+  } as UserType);
+
+  if (results.affectedRows === 0) {
+    return sendError('Erreur lors de la création du compte juré.', 500);
+  }
+
+  logger.info(`Nouveau compte juré créé pour ${email}.`);
+  return res.status(201).json({
+    success: true,
+    message: 'Nouveau compte juré créé avec succès',
+    isNewAccount: true,
+    user: {
+      id: results.insertId,
+      email,
+      firstname: 'Membre',
+      lastname: 'Jury',
+      role: 'jury',
+    },
+  });
+};
+
 export default {
   getAllUsers,
   getOneUser,
   updateUser,
   deleteUser,
+  addJuryMember,
 };

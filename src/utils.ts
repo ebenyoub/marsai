@@ -59,6 +59,7 @@ export const updateEntity = async <T extends object>(
   data: Partial<T>,
   allowedColumns: (keyof T)[],
   db: Pool,
+  options: { hasTimestamp?: boolean } = { hasTimestamp: true },
 ): Promise<ResultSetHeader> => {
   const columns = allowedColumns.filter((col) => data[col] !== undefined);
 
@@ -67,7 +68,9 @@ export const updateEntity = async <T extends object>(
   }
 
   const setClause = columns.map((col) => `\`${String(col)}\` = ?`).join(', ');
-  const query = `UPDATE \`${tableName}\` SET ${setClause}, updated_at = NOW() WHERE id = ?`;
+  const query = options.hasTimestamp
+    ? `UPDATE \`${tableName}\` SET ${setClause}, updated_at = NOW() WHERE id = ?`
+    : `UPDATE \`${tableName}\` SET ${setClause} WHERE id = ?`;
 
   const values: DBValue[] = columns.map((col) => {
     const val = data[col];

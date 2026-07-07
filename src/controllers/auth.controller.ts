@@ -47,9 +47,19 @@ const register = async (req: RequestBody<UserType>, res: Response) => {
   const userId = results.insertId;
   logger.info(`Nouvel utilisateur créé avec l'id ${userId}.`);
 
+  // Connexion automatique après inscription : même contrat de réponse que /auth/login
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET as string, { expiresIn: '2h' });
+
   return res.status(201).json({
     success: true,
-    data: { userId, ...results },
+    token,
+    user: {
+      id: userId,
+      email: userData.email,
+      firstname: userData.firstname,
+      lastname: userData.lastname,
+      role: 'user',
+    },
     message: 'Utilisateur créé avec succès',
   });
 };

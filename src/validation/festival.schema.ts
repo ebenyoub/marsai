@@ -7,4 +7,6 @@ export const festivalSchema = z.object({
   end_at: z.coerce.date(),
   status: z.enum(['Actif', 'Inactif'], { message: "Le statut doit être 'Actif' ou 'Inactif'" }),
   booking_total: z.coerce.number().int().min(0).default(0),
+  slug: z.string().trim().min(2, 'Slug trop court'),
+  city: z.string().trim().min(2, 'Ville trop courte'),
 });

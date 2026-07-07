@@ -3,16 +3,21 @@ import db from '../config/database.js';
 import { MovieRow, MovieType } from '../types/type.js';
 import { insertEntity, updateEntity } from '../utils.js';
 
-const findAll = async (): Promise<MovieRow[]> => {
-  const query = `
-    SELECT 
-      m.*, 
-      u.firstname AS director_firstname, 
-      u.lastname AS director_lastname
+const findAll = async (status?: string): Promise<MovieRow[]> => {
+  let query = `
+    SELECT
+      m.*,
+      d.firstname AS director_firstname,
+      d.lastname AS director_lastname,
+      d.country AS countryName
     FROM movie m
-    JOIN user u ON m.director_id = u.id
-    WHERE m.status = 'approved'
+    JOIN director d ON m.director_id = d.id
   `;
+  
+  if (status !== 'all') {
+    query += ` WHERE m.status = 'approved'`;
+  }
+
   const [rows] = await db.execute<MovieRow[]>(query);
   return rows;
 };
@@ -36,16 +41,16 @@ const columns: (keyof MovieType)[] = [
   'methodology',
   'ia_type',
   'status',
-  'created_at',
   'director_id',
 ];
 
-const create = async (movie: MovieType): Promise<ResultSetHeader> => {
-  return insertEntity('movie', movie, columns, db);
+const create = async (movie: Partial<MovieType>): Promise<ResultSetHeader> => {
+  // La table movie n'a pas de colonne updated_at
+  return insertEntity('movie', movie, columns, db, { hasTimestamp: false });
 };
 
 const update = async (id: number, data: Partial<MovieType>): Promise<ResultSetHeader> => {
-  return updateEntity('movie', id, data, columns, db);
+  return updateEntity('movie', id, data, columns, db, { hasTimestamp: false });
 };
 
 export default {

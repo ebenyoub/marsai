@@ -18,7 +18,7 @@ const findById = async (id: number): Promise<FestivalRow | null> => {
 
 const create = async (festival: FestivalType): Promise<ResultSetHeader> => {
   const query =
-    'INSERT INTO festival (name, description, created_at, start_at, end_at, status, booking_total) VALUES (?, ?, NOW(), ?, ?, ?,? )';
+    'INSERT INTO festival (name, description, created_at, start_at, end_at, status, booking_total, slug, city) VALUES (?, ?, NOW(), ?, ?, ?, ?, ?, ?)';
   const [result] = await db.execute<ResultSetHeader>(query, [
     festival.name,
     festival.description,
@@ -26,24 +26,19 @@ const create = async (festival: FestivalType): Promise<ResultSetHeader> => {
     festival.end_at,
     festival.status,
     festival.booking_total,
+    festival.slug,
+    festival.city,
   ]);
   return result;
 };
 
 //--------------------------------------------------------------------------------
 
+import { updateEntity } from '../utils.js';
+
 const update = async (id: number, data: Partial<FestivalType>): Promise<ResultSetHeader> => {
-  const query = `UPDATE festival SET name = ?, description = ?, start_at = ?, end_at = ?, status = ?, booking_total = ? WHERE id = ?`;
-  const [result] = await db.execute<ResultSetHeader>(query, [
-    data.name || null,
-    data.description || null,
-    data.start_at || null,
-    data.end_at || null,
-    data.status || null,
-    data.booking_total || null,
-    id,
-  ]);
-  return result;
+  const columns: (keyof FestivalType)[] = ['name', 'description', 'start_at', 'end_at', 'status', 'booking_total', 'slug', 'city'];
+  return updateEntity('festival', id, data, columns, db, { hasTimestamp: false });
 };
 
 //--------------------------------------------------------------------------------

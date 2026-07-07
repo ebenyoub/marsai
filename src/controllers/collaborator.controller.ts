@@ -17,7 +17,7 @@ const getAllCollaborators = async (req: Request, res: Response) => {
 
 const getOneCollaborator = async (req: Request<Params>, res: Response) => {
   try {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const results = await collaboratorModel.findOne(id);
     if (results.length === 0) {
       res.status(404).json({ success: false, message: 'Collaborateur introuvable' });
@@ -52,7 +52,7 @@ const createCollaborator = async (req: Request, res: Response) => {
 
 const updateCollaborator = async (req: Request<Params>, res: Response) => {
   try {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const collaborator: CollaboratorType = req.body;
     const results = await collaboratorModel.update(id, collaborator);
     if (!results) {
@@ -70,7 +70,7 @@ const updateCollaborator = async (req: Request<Params>, res: Response) => {
 
 const deleteCollaborator = async (req: Request<Params>, res: Response) => {
   try {
-    const deletedCollaborator = await collaboratorModel.deleted(req.params.id);
+    const deletedCollaborator = await collaboratorModel.deleted(Number(req.params.id));
     if (!deletedCollaborator) {
       return res.status(404).json({ message: 'Collaborateurr non trouvé' });
     }

@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 -- SQL Data Seed and Schema Definition for NERD-MarsAI-Back
 -- Generation Date: 2024-07-30
 -- This script provides a corrected and more exhaustive schema,
@@ -35,7 +36,10 @@ CREATE TABLE `festival` (
   `end_at` DATETIME NOT NULL,
   `status` ENUM('Actif', 'Inactif') NOT NULL,
   `booking_total` INT NOT NULL,
-  PRIMARY KEY (`id`)
+  `slug` VARCHAR(255) NOT NULL,
+  `city` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -65,6 +69,7 @@ CREATE TABLE `user` (
   `lastname` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL UNIQUE, -- Added UNIQUE constraint
   `password` VARCHAR(255) NOT NULL,
+  `role` VARCHAR(50) DEFAULT 'user',
   `created_at` DATETIME NOT NULL, -- Changed from DATE to DATETIME for consistency
   `updated_at` DATETIME NOT NULL, -- Changed from DATE to DATETIME for consistency
   `festival_id` INT NULL, -- Allowed NULL as per schema, but could be NOT NULL if user MUST belong to a festival
@@ -166,7 +171,7 @@ CREATE TABLE `collaborator` (
   `firstname` VARCHAR(100) NOT NULL,
   `lastname` VARCHAR(100) NOT NULL,
   `gender` ENUM('Mr', 'Mme') NOT NULL,
-  `email` VARCHAR(100) NOT NULL UNIQUE, -- Added UNIQUE constraint
+  `email` VARCHAR(100) NOT NULL,
   `job` TEXT NOT NULL,
   `movie_id` INT NULL, -- Allowed NULL
   PRIMARY KEY (`id`),
@@ -236,8 +241,8 @@ CREATE TABLE `rating` (
 --
 -- Data for table `festival`
 --
-INSERT INTO `festival` (`id`, `name`, `description`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`) VALUES
-(1, 'Mars AI Film Festival 2024', 'Le premier festival de films générés ou assistés par intelligence artificielle. Un événement dédié à l''innovation cinématographique.', NOW(), '2024-10-15 09:00:00', '2024-10-18 23:00:00', 'Actif', 500);
+INSERT INTO `festival` (`id`, `name`, `description`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`, `slug`, `city`) VALUES
+(1, 'Mars AI Film Festival 2024', 'Le premier festival de films générés ou assistés par intelligence artificielle. Un événement dédié à l''innovation cinématographique.', NOW(), '2024-10-15 09:00:00', '2024-10-18 23:00:00', 'Actif', 500, 'festival-2024', 'Marseille');
 
 --
 -- Data for table `role`
@@ -262,11 +267,11 @@ INSERT INTO `tag` (`id`, `name`) VALUES
 --
 -- Data for table `user`
 --
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `created_at`, `updated_at`, `festival_id`) VALUES
-(1, 'Jean', 'Dupont', 'jean.dupont@email.com', '$2b$10$fakePasswordHash123456', NOW(), NOW(), 1),
-(2, 'Marie', 'Curie', 'marie.curie@email.com', '$2b$10$anotherFakeHash789012', NOW(), NOW(), 1),
-(3, 'Albert', 'Einstein', 'albert.einstein@email.com', '$2b$10$superFakeHash555666', NOW(), NOW(), 1),
-(4, 'Ada', 'Lovelace', 'ada.lovelace@email.com', '$2b$10$moreFakeHash777888', NOW(), NOW(), 1);
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `created_at`, `updated_at`, `festival_id`) VALUES
+(1, 'Jean', 'Dupont', 'jean.dupont@email.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', 'admin', NOW(), NOW(), 1),
+(2, 'Marie', 'Curie', 'marie.curie@email.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', 'jury', NOW(), NOW(), 1),
+(3, 'Albert', 'Einstein', 'albert.einstein@email.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', 'user', NOW(), NOW(), 1),
+(4, 'Ada', 'Lovelace', 'ada.lovelace@email.com', '$2b$10$4l.WQvbPCIADeR4X8E8DK.E0JI20OlBxsmZRfiaRJYLzh6NxWAaRm', 'super-admin', NOW(), NOW(), 1);
 
 --
 -- Data for table `have` (linking users to roles)
@@ -292,7 +297,7 @@ INSERT INTO `movie` (`id`, `title`, `title_en`, `synopsis_fr`, `synopsis_en`, `d
 (1, 'La Machine', 'The Machine', 'Dans un futur proche, un androïde de combat développe une conscience et remet en question sa programmation.', 'In the near future, a combat android develops consciousness and questions its programming.', 12, 'Anglais', 'https://www.youtube.com/watch?v=1YJsxMcAJoA', 'https://i.ytimg.com/vi/1YJsxMcAJoA/maxresdefault.jpg', 'Français, Anglais', 'RunwayML, Kaiber', 'Génération d''images, deepfake', '100% IA', 'approved', NOW(), 1),
 (2, 'Le Bègue', 'Stutterer', 'Un typographe solitaire avec un bégaiement sévère doit faire face à sa plus grande peur.', 'A lonely typographer with a severe stutter must face his greatest fear.', 13, 'Anglais', 'https://www.youtube.com/watch?v=2m_VTZR5gzw', 'https://i.ytimg.com/vi/2m_VTZR5gzw/maxresdefault.jpg', 'Français', 'Aucun', 'Film traditionnel', 'Hybride', 'pending', NOW(), 2),
 (3, 'Parapluie', 'Umbrella', 'L''histoire de Joseph, un garçon qui vit dans un orphelinat et rêve d''avoir un parapluie jaune.', 'The story of Joseph, a boy who lives in an orphanage and dreams of having a yellow umbrella.', 8, 'Muet', 'https://www.youtube.com/watch?v=Bl1FOKpFY2Q', 'https://i.ytimg.com/vi/Bl1FOKpFY2Q/maxresdefault.jpg', 'N/A', 'Blender, ZBrush', 'Animation 3D assistée par IA pour le rendu', 'Hybride', 'approved', NOW(), 3),
-(4, 'L\'Étoile Oubliée', 'The Forgotten Star', 'Une exploration poétique de la mémoire et de l''oubli, racontée à travers les yeux d''un vieil astronome.', 'A poetic exploration of memory and oblivion, told through the eyes of an old astronomer.', 15, 'Français', 'https://www.youtube.com/watch?v=example4', 'https://via.placeholder.com/1920x1080.png?text=ForgottenStar', 'Anglais', 'Midjourney, Stable Diffusion', 'Création d''environnements, character design', 'Hybride', 'pending', NOW(), 1);
+(4, 'L''Étoile Oubliée', 'The Forgotten Star', 'Une exploration poétique de la mémoire et de l''oubli, racontée à travers les yeux d''un vieil astronome.', 'A poetic exploration of memory and oblivion, told through the eyes of an old astronomer.', 15, 'Français', 'https://www.youtube.com/watch?v=F0p7vW3hD4o', 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1280', 'Anglais', 'Midjourney, Stable Diffusion', 'Création d''environnements, character design', 'Hybride', 'pending', NOW(), 1);
 
 --
 -- Data for table `movie_tag` (linking movies to tags)
@@ -311,12 +316,12 @@ INSERT INTO `movie_tag` (`movie_id`, `tag_id`) VALUES
 -- Data for table `image` (for movie galleries)
 --
 INSERT INTO `image` (`id`, `url`, `created_at`, `movie_id`) VALUES
-(1, 'https://via.placeholder.com/1920x1080.png?text=La+Machine+Scene+1', NOW(), 1),
-(2, 'https://via.placeholder.com/1920x1080.png?text=La+Machine+Scene+2', NOW(), 1),
-(3, 'https://via.placeholder.com/1920x1080.png?text=Le+Begue+Scene+1', NOW(), 2),
-(4, 'https://via.placeholder.com/1920x1080.png?text=Parapluie+Scene+1', NOW(), 3),
-(5, 'https://via.placeholder.com/1920x1080.png?text=ForgottenStar+Poster', NOW(), 4),
-(6, 'https://via.placeholder.com/1920x1080.png?text=ForgottenStar+Scene', NOW(), 4);
+(1, 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?q=80&w=1280', NOW(), 1),
+(2, 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?q=80&w=1280', NOW(), 1),
+(3, 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1280', NOW(), 2),
+(4, 'https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?q=80&w=1280', NOW(), 3),
+(5, 'https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=1280', NOW(), 4),
+(6, 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1280', NOW(), 4);
 
 --
 -- Data for table `collaborator`

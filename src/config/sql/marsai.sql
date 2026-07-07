@@ -111,15 +111,18 @@ CREATE TABLE `festival` (
   `start_at` datetime NOT NULL,
   `end_at` datetime NOT NULL,
   `status` enum('Actif','Inactif') NOT NULL,
-  `booking_total` int NOT NULL
+  `booking_total` int NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  UNIQUE KEY `slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `festival`
 --
 
-INSERT INTO `festival` (`id`, `name`, `decription`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`) VALUES
-(1, 'MarsAI Festival 2026', 'Festival international de courts-métrages générés par IA sur le thème des futurs souhaitables.', '2026-02-01 01:10:27', '2026-03-01 09:00:00', '2026-03-15 23:59:59', 'Actif', 3000);
+INSERT INTO `festival` (`id`, `name`, `decription`, `created_at`, `start_at`, `end_at`, `status`, `booking_total`, `slug`, `city`) VALUES
+(1, 'MarsAI Festival 2026', 'Festival international de courts-métrages générés par IA sur le thème des futurs souhaitables.', '2026-02-01 01:10:27', '2026-03-01 09:00:00', '2026-03-15 23:59:59', 'Actif', 3000, 'festival-2026', 'Marseille');
 
 -- --------------------------------------------------------
 
