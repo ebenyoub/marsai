@@ -1,1 +1,1 @@
-# NERD-MarsAI-Back
+# MarsAI Backend

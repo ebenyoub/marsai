@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+dist/
+*/dist/
+dist-ssr/
+*/dist-ssr/
+
+# Logs and runtime data
+logs/
+*/logs/
+uploads/
+*/uploads/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Local environment files
+.env
+.env.*
+!.env.example
+!.env.production.example
+*/.env
+*/.env.*
+!*/.env_example
+!*/.env.example
+
+# Test reports
+test-results/
+*/test-results/
+playwright-report/
+*/playwright-report/
+
+# OS and editor files
+.DS_Store
+*/.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.sw?
