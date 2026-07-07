@@ -3,14 +3,16 @@ import db from '../config/database.js';
 import { UserRow, UserType } from '../types/type.js';
 import { updateEntity } from '../utils.js';
 
+const SAFE_COLUMNS = 'id, firstname, lastname, email, role, created_at, updated_at, festival_id';
+
 const findAll = async (): Promise<UserRow[]> => {
-  const query = 'SELECT * FROM user';
+  const query = `SELECT ${SAFE_COLUMNS} FROM user`;
   const [rows] = await db.execute<UserRow[]>(query);
   return rows;
 };
 
 const findById = async (id: number): Promise<UserRow | null> => {
-  const query = 'SELECT * FROM user WHERE id = ?';
+  const query = `SELECT ${SAFE_COLUMNS} FROM user WHERE id = ?`;
   const [result] = await db.execute<UserRow[]>(query, [id]);
   return result.length > 0 ? result[0] : null;
 };

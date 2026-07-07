@@ -91,11 +91,13 @@ const addJuryMember = async (req: RequestBody<{ email: string }>, res: Response)
   const existingUser = await UserModel.findByEmail(email);
 
   if (existingUser) {
+    const { password: _password, ...safeExistingUser } = existingUser;
+
     if (existingUser.role === 'jury' || existingUser.role === 'admin' || existingUser.role === 'super-admin') {
       return res.status(200).json({
         success: true,
         message: `L'utilisateur avec cet email a déjà le rôle '${existingUser.role}'.`,
-        user: existingUser,
+        user: safeExistingUser,
       });
     }
 
@@ -105,7 +107,7 @@ const addJuryMember = async (req: RequestBody<{ email: string }>, res: Response)
     return res.status(200).json({
       success: true,
       message: "L'utilisateur existant a été promu au rôle de juré.",
-      user: { ...existingUser, role: 'jury' },
+      user: { ...safeExistingUser, role: 'jury' },
     });
   }
 
