@@ -10,8 +10,14 @@ const router = express.Router();
 router.get('/', MovieController.getAllMovies);
 router.get('/stats', verifyToken, MovieController.getStats);
 router.get('/:id', validate(idParamSchema, 'params'), MovieController.getMovieById);
-router.post('/', validate(movieSchema), MovieController.create);
-router.put('/:id', validate(idParamSchema, 'params'), validate(movieSchema.partial()), MovieController.update);
+router.post('/', verifyToken, validate(movieSchema), MovieController.create);
+router.put(
+  '/:id',
+  verifyToken,
+  validate(idParamSchema, 'params'),
+  validate(movieSchema.partial()),
+  MovieController.update,
+);
 // router.delete('/:id', validate(idParamSchema, 'params'), MovieController.deleteUser);
 
 export default router;
