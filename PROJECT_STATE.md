@@ -4,16 +4,16 @@ Dernière mise à jour : 2026-07-08 (session en cours).
 
 ## Où on en est
 
-MVP fonctionnel, testé E2E (23 tests Playwright, tous verts — un test redondant/vacueux supprimé après PBI 011). Les PBI produit 001-009 sont terminés et pushés sur `origin/main`.
+MVP fonctionnel, testé E2E (25 tests Playwright, tous verts). Les PBI produit 001-009 sont terminés et pushés sur `origin/main`.
 
 Le chantier de dette technique du 2026-07-07 (sécurité backend, TSC, RBAC, code mort) est clos et vérifié, mais **pas encore pushé** (6 commits locaux).
 
 Le cycle PBI produit a repris le 2026-07-08 :
 - **PBI 010 — modération des soumissions** : l'UI d'approbation/rejet dans `/admin` existait déjà et était déjà câblée à de vraies routes (pas un mock décoratif) ; le vrai trou fonctionnel identifié était une faille de confidentialité (`GET /movies?status=all` public, exposant les soumissions pending/rejected à n'importe qui). Corrigée et **commitée** (`32fb4ee`), validée par l'utilisateur.
-- **PBI 011 — i18n de la table de modération** : `SubmissionsTable`/`TabsListContainer` recevaient déjà un prop `t` mais ne l'utilisaient jamais ; statuts, en-têtes et titres de boutons étaient codés en dur en français. Corrigé en réutilisant les clés `common.pending/validated/rejected` existantes + 8 nouvelles clés `admin.submissions.*`. Validée par l'utilisateur.
-- **Nettoyage immédiat de dette** : le test `Admin Flow: Moderation Actions (Approve, Reject)` (`e2e.spec.ts`) était vacueusement vert (`if isVisible` silencieux, langue non forcée) et redondant avec `submission-moderation.spec.ts` — supprimé. **PBI 011 + nettoyage non commités, en attente de validation.**
+- **PBI 011 — i18n de la table de modération** : `SubmissionsTable`/`TabsListContainer` recevaient déjà un prop `t` mais ne l'utilisaient jamais ; statuts, en-têtes et titres de boutons étaient codés en dur en français. Corrigé en réutilisant les clés `common.pending/validated/rejected` existantes + 8 nouvelles clés `admin.submissions.*`. Nettoyage immédiat associé : suppression du test `Admin Flow: Moderation Actions` vacueusement vert et redondant. **Commitée** (`1d05f62`), validée par l'utilisateur.
+- **PBI 012 — inscription (`/register`)** : parcours explicitement requis par `AGENTS.md`, jamais couvert par un test Playwright, jamais retouché depuis l'import initial du monorepo (aucun historique Git). Vérification en navigateur : le champ de confirmation du mot de passe affichait le label **"Save"** (`t('common.save')`) au lieu de "Confirmer le mot de passe" — vrai bug UX, pas une fonctionnalité manquante. Corrigé + 2 tests Playwright ajoutés (mismatch bloqué, inscription réussie → connexion auto → redirection `/`). **Travail non commité, en attente de validation.**
 
-## Commits locaux non pushés (6)
+## Commits locaux non pushés (8)
 
 Sur `main`, en avance sur `origin/main` :
 
@@ -23,8 +23,10 @@ Sur `main`, en avance sur `origin/main` :
 4. `39e6208` — chore: suppression code mort (`SubmissionCard.tsx`, `SubmissionsPanel.tsx`)
 5. `c85eb01` — feat: RBAC minimal (rôle dans le JWT, middleware `requireRole`, routes évidentes protégées)
 6. `cc10a32` — docs: close out session — project state, tasks, decisions, backlog progress
+7. `32fb4ee` — fix: require admin role to list unmoderated (pending/rejected) submissions (PBI 010)
+8. `1d05f62` — feat: wire i18n in submissions moderation table, drop vacuous test (PBI 011 + nettoyage)
 
-**Chacun a été vérifié individuellement** : build + lint (backend et/ou frontend selon pertinence), `tsc --noEmit` (0 erreur depuis `cf6cfb5`), 22/22 tests Playwright, vérifications manuelles ciblées (curl par rôle, scripts Playwright jetables supprimés après usage).
+**Chacun a été vérifié individuellement** : build + lint (backend et/ou frontend selon pertinence), `tsc --noEmit` (0 erreur depuis `cf6cfb5`), suite Playwright complète, vérifications manuelles ciblées (curl par rôle, scripts Playwright jetables supprimés après usage).
 
 ⚠️ **Ne jamais pousser ces commits sans validation explicite de l'utilisateur** — règle rappelée à chaque fin de cycle dans cette session, aucune exception.
 
@@ -38,13 +40,13 @@ Sur `main`, en avance sur `origin/main` :
 
 Modération des soumissions. Analyse : l'UI (`SubmissionsTable`, `TabsListContainer`) et les routes (`PUT /movies/:id`) existaient déjà et fonctionnaient réellement (pas un mock). Le vrai trou : `GET /movies?status=all` n'avait aucune protection, donc n'importe quel visiteur anonyme pouvait lister les soumissions `pending`/`rejected` (titre, synopsis, nom du réalisateur) avant modération. Correction : `marsai_backend/src/routes/movie.router.ts` — nouvelle garde `requireModerationAccess` qui laisse la galerie publique ouverte (pas de `status`, ou `status=approved`) mais exige `verifyToken` + `requireRole(['admin','super-admin'])` dès que `status` est fourni avec une autre valeur. Vérifié par curl (401 anonyme, 403 rôle user, 200 admin) et par un nouveau test Playwright (`tests/submission-moderation.spec.ts`) qui approuve une soumission fraîchement créée et vérifie sa réapparition dans la galerie publique, en plus de la régression 401/403.
 
-## PBI 011 terminé (2026-07-08, non commité, validé)
+## PBI 011 terminé (2026-07-08, commit `1d05f62`, validé)
 
-i18n de la table de modération. Analyse : `SubmissionsTable.tsx` déclarait déjà un prop `t` (fonction de traduction) sans jamais l'utiliser — en-têtes de colonnes, titres de boutons et badges de statut étaient codés en dur en français dans `SubmissionsTable.tsx` et `TabsListContainer.tsx` (`getStatusBadge`), en violation de la règle i18n d'`AGENTS.md`. Correction : réutilisation des clés existantes `common.pending`/`common.validated`/`common.rejected` pour les badges, ajout de 8 nouvelles clés `admin.submissions.column.*` / `admin.submissions.preview|approve|reject` dans `fr.json`/`en.json`, câblage du prop `t` déjà présent. Effet de bord découvert et corrigé : la locale par défaut d'un navigateur/contexte de test neuf (`navigator.language`) est l'anglais, pas le français — deux tests Playwright préexistants (`Video Modal Preview`, et le nouveau `submission-moderation.spec.ts`) présumaient silencieusement le français sans le forcer ; ils passaient par accident car le texte était figé en dur. Corrigés pour forcer explicitement le français avant d'asserter sur du texte français, comme le fait déjà le reste de la suite.
+i18n de la table de modération. Analyse : `SubmissionsTable.tsx` déclarait déjà un prop `t` (fonction de traduction) sans jamais l'utiliser — en-têtes de colonnes, titres de boutons et badges de statut étaient codés en dur en français dans `SubmissionsTable.tsx` et `TabsListContainer.tsx` (`getStatusBadge`), en violation de la règle i18n d'`AGENTS.md`. Correction : réutilisation des clés existantes `common.pending`/`common.validated`/`common.rejected` pour les badges, ajout de 8 nouvelles clés `admin.submissions.column.*` / `admin.submissions.preview|approve|reject` dans `fr.json`/`en.json`, câblage du prop `t` déjà présent. Effet de bord découvert et corrigé : la locale par défaut d'un navigateur/contexte de test neuf (`navigator.language`) est l'anglais, pas le français — deux tests Playwright préexistants présumaient silencieusement le français sans le forcer ; ils passaient par accident car le texte était figé en dur. Corrigés pour forcer explicitement le français, comme le fait déjà le reste de la suite. Nettoyage immédiat associé dans le même commit : `Admin Flow: Moderation Actions (Approve, Reject)` (`e2e.spec.ts`) analysé — vacueusement vert (`if isVisible` silencieux sur un locator à 0 résultat, jamais force la langue), mutait un vrai film de seed en `approved` sans le restaurer (effet de bord non déterministe), entièrement redondant avec `submission-moderation.spec.ts` (déterministe). **Supprimé plutôt que réécrit.**
 
-## Nettoyage dette immédiat (2026-07-08, non commité)
+## PBI 012 terminé (2026-07-08, non commité)
 
-`Admin Flow: Moderation Actions (Approve, Reject)` (`tests/e2e.spec.ts`) analysé : ne forçait jamais la langue (donc `tr:has-text("En attente")` ne matchait jamais rien en locale anglaise par défaut), et son `if (await pendingRow.isVisible())` sur un locator à 0 résultat renvoie `false` sans erreur — le corps du test était silencieusement sauté, verdict vacueusement vert. Dépendait en plus de données de seed partagées et mutait un vrai film en `approved` sans le restaurer quand il s'exécutait (effet de bord non déterministe sur l'état partagé de la suite). Entièrement redondant avec `submission-moderation.spec.ts` (déterministe, langue forcée, assertions réelles, vérifie aussi la réapparition en galerie publique). **Supprimé plutôt que réécrit.** Suite Playwright : 24 → 23 tests, tous verts, aucune perte de couverture réelle.
+Inscription (`/register`). Analyse : parcours explicitement requis par `AGENTS.md` ("inscription" dans la checklist de vérification navigateur obligatoire), mais **zéro couverture Playwright** et aucun historique Git (fichier jamais retouché depuis l'import initial du monorepo — `git log --follow` ne montre rien). Vérification en navigateur (`page.locator('label').allInnerTexts()`) : les 5 labels du formulaire étaient `First Name / Last Name / Email / Password / Save` — le champ de confirmation du mot de passe affichait **"Save"** (`t('common.save')`) au lieu de "Confirmer le mot de passe". Vrai bug UX sur un parcours jamais vérifié, pas une fonctionnalité manquante (le backend `/auth/register` et la validation zod — dont le message `errors.passwords_dont_match` — fonctionnaient déjà correctement). Correction : nouvelle clé `register.confirm_password` (`fr.json`/`en.json`, aucune clé existante ne convenait) câblée dans `Register.tsx`. Ajout de `tests/register.spec.ts` (2 tests, jusqu'ici absent) : mismatch de mot de passe bloqué avec message d'erreur visible, inscription réussie → connexion automatique → redirection `/` → token en localStorage.
 
 ## Dette technique restante (connue, non bloquante)
 
@@ -56,10 +58,13 @@ i18n de la table de modération. Analyse : `SubmissionsTable.tsx` déclarait dé
 
 ## Prochain PBI (non décidé)
 
-Candidats :
-1. Statuer sur les routes ambiguës (`POST /movies`, `/collaborators`, `/directors`) si un rôle devient évident.
-2. Lancer la "phase de documentation globale" annoncée pour corriger `CLAUDE.md`.
-3. Revue sécurité plus large (`security-reviewer`) sur le reste du périmètre.
+Candidats produit (backlog V1, priorité actuelle) :
+1. Continuer l'audit systématique du reste de la checklist `AGENTS.md` (ex. flux jury/admin non encore passés au crible comme `/register` l'a été) pour trouver le prochain vrai trou fonctionnel.
+
+Candidats hors scope pour l'instant (mis en pause explicitement par l'utilisateur) :
+2. Statuer sur les routes ambiguës (`POST /movies`, `/collaborators`, `/directors`).
+3. Phase de documentation globale pour corriger `CLAUDE.md`.
+4. Revue sécurité plus large (`security-reviewer`).
 
 ## Environnement de dev (rappel)
 

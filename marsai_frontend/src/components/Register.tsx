@@ -107,7 +107,7 @@ const Register = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label required>{t('common.save')}</Label>
+          <Label required>{t('register.confirm_password')}</Label>
           <Input
             type="password"
             placeholder="**********"

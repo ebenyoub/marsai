@@ -112,6 +112,7 @@
   "form.title": "Se Connecter",
   "register_title": "Créer un compte",
   "register_subtitle": "Rejoignez la plateforme marsAI",
+  "register.confirm_password": "Confirmer le mot de passe",
   "form.pass": "Mot de passe",
   "form.forgot_pass": "Mot de pass oublié?",
   "form.footer": "Pas encore de compte?",
