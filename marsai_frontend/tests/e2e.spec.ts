@@ -121,41 +121,44 @@ test.describe('MarsAI E2E Test Suite', () => {
     const commentInput = page.locator('textarea');
     const uniqueComment = `Formidable court-métrage E2E ${Date.now()}`;
     await commentInput.fill(uniqueComment);
-    
-    // Register dialog listener BEFORE the click
+
+    // Register dialog listener BEFORE the click. Votes are final (PBI 040):
+    // the first run against a fresh DB records the vote, later runs get the
+    // "already voted" message — both are accepted here, the lock itself is
+    // asserted in jury-vote-lock.spec.ts.
     page.once('dialog', async dialog => {
       await dialog.accept();
     });
 
     // Submit rating
     await page.click('button:has-text("Soumettre l\'évaluation")');
-    
+
     // Give it a brief moment to finish request
     await page.waitForTimeout(1500);
 
-    // 4. Refresh Page
+    // 4. Refresh Page — the stored (locked) rating must reload
     await page.reload();
     await page.waitForSelector('textarea', { state: 'visible', timeout: 15000 });
-    
-    // Verify comment is reloaded
-    await expect(commentInput).toHaveValue(uniqueComment);
+
+    const storedComment = await commentInput.inputValue();
+    expect(storedComment).not.toBe('');
 
     // 5. Select another film in sidebar (if there's any other film)
     const otherFilm = page.locator('aside button').nth(1);
     if (await otherFilm.isVisible()) {
       await otherFilm.click();
       await page.waitForTimeout(500);
-      
+
       // The comment field should now be empty (or at least different) for the second film
       const val2 = await commentInput.inputValue();
-      expect(val2).not.toBe(uniqueComment);
+      expect(val2).not.toBe(storedComment);
 
       // Go back to the first film (index 0)
       await page.locator('aside button').nth(0).click();
       await page.waitForTimeout(500);
 
       // Comment should be loaded back
-      await expect(commentInput).toHaveValue(uniqueComment);
+      await expect(commentInput).toHaveValue(storedComment);
     }
   });
 

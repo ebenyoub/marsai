@@ -11,8 +11,15 @@ const createRating = async (req: RequestBody<RatingType>, res: Response) => {
     return sendError('Utilisateur non identifié', 401);
   }
 
-  // affectedRows : 1 = insertion, 2 = mise à jour (upsert), 0 = revote identique.
-  // Dans les trois cas, l'évaluation est bien en base.
+  // Décision produit (PBI 040) : un vote soumis est définitif.
+  const existing = await RatingModel.findByUserAndMovie(authUserId, req.body.movie_id);
+  if (existing) {
+    return res.status(409).json({
+      success: false,
+      message: 'Vous avez déjà voté pour ce film — le vote est définitif.',
+    });
+  }
+
   const results = await RatingModel.createRating({ ...req.body, user_id: authUserId });
 
   logger.info(`Évaluation enregistrée (user ${req.body.user_id}, movie ${req.body.movie_id}).`);

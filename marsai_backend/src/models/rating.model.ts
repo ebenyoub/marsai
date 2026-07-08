@@ -3,8 +3,8 @@ import { RatingType, RatingRow } from '../types/type.js';
 import db from '../config/database.js';
 
 const createRating = async (rating: RatingType): Promise<ResultSetHeader> => {
-  // Un juré peut revoter sur le même film : la clé primaire (user_id, movie_id)
-  // impose un upsert plutôt qu'un simple insert.
+  // Le contrôleur refuse tout revote (vote définitif) ; l'ON DUPLICATE KEY
+  // ne subsiste que comme garde-fou contre une course entre deux requêtes.
   const query = `
     INSERT INTO rating (user_id, movie_id, score_creativity, score_technical, score_message, comment, score_total, created_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
