@@ -100,7 +100,7 @@ export function AdminSidebar({
       </div>
       <div className=" border-t border-border">
         <h3 className="text-sm font-semibold text-muted-foreground mb-3 md:flex md:justify-center text-center mt-4">
-          {t('footer.status') || (t('admin.systemStatus') || 'Statut Système')}
+          {t('footer.status')}
         </h3>
         <div className="space-y-3 bg-card/50 rounded-lg p-3 border border-border/50 text-center ">
           {/* API Status */}
@@ -112,7 +112,7 @@ export function AdminSidebar({
                 <div className="absolute inset-0 w-2 h-2 bg-[#10B981] rounded-full opacity-75 animate-ping" aria-hidden="true" />
               </div>
               <span className="text-xs text-[#10B981] font-medium">
-                {t('footer.status.operational') || 'Opérationnel'}
+                {t('footer.status.operational')}
               </span>
             </div>
           </div>
@@ -126,7 +126,7 @@ export function AdminSidebar({
                 <div className="absolute inset-0 w-2 h-2 bg-[#10B981] rounded-full opacity-75 animate-ping" aria-hidden="true" />
               </div>
               <span className="text-xs text-[#10B981] font-medium">
-                {t('footer.status.operational') || 'Opérationnel'}
+                {t('footer.status.operational')}
               </span>
             </div>
           </div>
@@ -140,7 +140,7 @@ export function AdminSidebar({
                 <div className="absolute inset-0 w-2 h-2 bg-[#10B981] rounded-full opacity-75 animate-ping" aria-hidden="true" />
               </div>
               <span className="text-xs text-[#10B981] font-medium">
-                {t('footer.status.operational') || 'Opérationnel'}
+                {t('footer.status.operational')}
               </span>
             </div>
           </div>
@@ -148,7 +148,7 @@ export function AdminSidebar({
           {/* Last Check */}
           <div className="pt-2 border-t border-border/30">
             <p className="text-xs text-muted-foreground">
-              {t('admin.lastCheck') || 'Dernière vérif.'}: {new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+              {t('admin.lastCheck')}: {new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
             </p>
           </div>
         </div>
