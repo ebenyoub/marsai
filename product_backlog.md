@@ -9,19 +9,20 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 001-008 | Statistiques admin, persistance branding, gestion jury, refonte soumission film | `ae51ecc` | ✅ pushé |
 | 009 | Compteur de soumissions par festival (super-admin) + nom du réalisateur (jury) | `cc07b71` | ✅ pushé |
 | — | Fix données factices dashboards admin/super-admin (`AdminSidebar`, `SuperAdminDashboard`) | `d92af8f` | ✅ pushé |
-| 010 | Modération des soumissions — fuite de confidentialité corrigée (`GET /movies?status=all` public) ; UI d'approbation/rejet déjà existante vérifiée fonctionnelle E2E | `32fb4ee` | ✅ commité, validé, en attente de push |
-| 011 | i18n de la table de modération — statuts/en-têtes/titres de boutons câblés sur `t()` au lieu de texte codé en dur ; 2 tests Playwright corrigés (langue non forcée) + suppression d'un test redondant/vacueux | `1d05f62` | ✅ commité, validé, en attente de push |
-| 012 | Inscription (`/register`) — label "Save" mal câblé sur le champ de confirmation du mot de passe, corrigé ; parcours jusqu'ici sans aucune couverture Playwright, 2 tests ajoutés | `4c06934` | ✅ commité, validé, en attente de push |
-| 013 | Page de succès de soumission (`/success`) — paragraphe de description codé en dur en français, corrigé ; seule l'URL était vérifiée jusqu'ici, 1 test ajouté (contenu FR + EN) | `5777b51` | ✅ commité, validé, en attente de push |
-| 014 | Statut festival "À venir" (super-admin) — option non persistable (reliquat de mock jamais nettoyé après branchement API réelle), UI alignée sur les 2 états réels du backend, 1 test ajouté (round-trip) | `7094c74` | ✅ commité, validé, en attente de push |
-| 015 | Galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise — titre, chargement, erreur, vide, compteur, placeholder de recherche codés en dur en français ; même défaut corrigé dans `JuryDashboard.tsx` ; 1 test ajouté (FR + EN) | `5d38aeb` | ✅ commité, validé, en attente de push |
-| 016 | Clés `footer.about`/`footer.contact` manquantes des deux fichiers de traduction, affichées brutes (`footer.about`, `footer.contact`) sur toutes les pages ; corrigé, 1 test ajouté (garde-fou générique contre toute clé manquante future) | `8bb2d0e` | ✅ commité, validé, en attente de push |
-| 017 | Audit systématique des 306 appels `t()` du frontend — `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé (supprimé) ; 1 test ajouté | `c761e60` | ✅ commité, validé, en attente de push |
-| 018 | Écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur — clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés ; test `Jury Flow` existant corrigé (langue non forcée) ; 1 test ajouté | `a4cd982` | ✅ commité, en attente de validation |
+| 010 | Modération des soumissions — fuite de confidentialité corrigée (`GET /movies?status=all` public) ; UI d'approbation/rejet déjà existante vérifiée fonctionnelle E2E | `32fb4ee` | ✅ pushé |
+| 011 | i18n de la table de modération — statuts/en-têtes/titres de boutons câblés sur `t()` au lieu de texte codé en dur ; 2 tests Playwright corrigés (langue non forcée) + suppression d'un test redondant/vacueux | `1d05f62` | ✅ pushé |
+| 012 | Inscription (`/register`) — label "Save" mal câblé sur le champ de confirmation du mot de passe, corrigé ; parcours jusqu'ici sans aucune couverture Playwright, 2 tests ajoutés | `4c06934` | ✅ pushé |
+| 013 | Page de succès de soumission (`/success`) — paragraphe de description codé en dur en français, corrigé ; seule l'URL était vérifiée jusqu'ici, 1 test ajouté (contenu FR + EN) | `5777b51` | ✅ pushé |
+| 014 | Statut festival "À venir" (super-admin) — option non persistable (reliquat de mock jamais nettoyé après branchement API réelle), UI alignée sur les 2 états réels du backend, 1 test ajouté (round-trip) | `7094c74` | ✅ pushé |
+| 015 | Galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise — titre, chargement, erreur, vide, compteur, placeholder de recherche codés en dur en français ; même défaut corrigé dans `JuryDashboard.tsx` ; 1 test ajouté (FR + EN) | `5d38aeb` | ✅ pushé |
+| 016 | Clés `footer.about`/`footer.contact` manquantes des deux fichiers de traduction, affichées brutes (`footer.about`, `footer.contact`) sur toutes les pages ; corrigé, 1 test ajouté (garde-fou générique contre toute clé manquante future) | `8bb2d0e` | ✅ pushé |
+| 017 | Audit systématique des 306 appels `t()` du frontend — `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé (supprimé) ; 1 test ajouté | `c761e60` | ✅ pushé |
+| 042 | Login par Entrée — le comportement attendu fonctionnait déjà (`<form onSubmit>` + `type="submit"` corrects dans `Login.tsx`/`Register.tsx`, soumission implicite vérifiée en navigateur depuis les deux champs) ; aucun changement de code, 3 tests Playwright de non-régression ajoutés (`login-enter.spec.ts`) | `7b6bf9e` | ✅ commité, en attente de validation |
+| 018 | Écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur — clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés ; test `Jury Flow` existant corrigé (langue non forcée) ; 1 test ajouté | `a4cd982` | ✅ pushé, validé |
 
-## Chantier dette technique (2026-07-07, clos, pas encore pushé)
+## Chantier dette technique (2026-07-07, clos)
 
-6 commits de dette technique (TSC, sécurité, RBAC, code mort) sont prêts localement mais **pas encore pushés** (voir `PROJECT_STATE.md`).
+6 commits de dette technique (TSC, sécurité, RBAC, code mort) — **pushés sur `origin/main` le 2026-07-08** avec l'ensemble des commits locaux (voir `PROJECT_STATE.md`).
 
 ## Hors V1 — voir ROADMAP_V2.md
 
@@ -37,7 +38,6 @@ Rien n'est développé. Spécifications complètes ci-dessous, aucune informatio
 |---|---|---|---|
 | 040 | **Fiabilité du vote jury (API + verrouillage backend)** — corriger l'erreur "API Error" rencontrée lors du vote ; vérifier que le vote est réellement enregistré en base ; puis rendre impossible toute modification d'un vote déjà soumis (verrouillage définitif côté serveur) | M | — |
 | 041 | **UX post-vote jury** — dans la liste des vidéos : badge/icône verte sur les vidéos déjà votées ; après validation d'un vote : remplacer les `alert()` par une vraie modale de succès avec icône verte + message de confirmation ; verrouiller le vote côté UI : griser les notes, commentaire en lecture seule, bouton d'envoi désactivé, affichage clair "vote déjà enregistré" | M | 040 |
-| 042 | **Login : soumission par Entrée** — appuyer sur Entrée après saisie email + mot de passe doit soumettre le formulaire ; vérifier que les boutons utilisent bien `type="submit"` | S | — |
 
 ### P1 — MVP
 

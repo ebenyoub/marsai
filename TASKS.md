@@ -2,9 +2,13 @@
 
 ## En attente de décision utilisateur
 
-- [ ] **Push des commits locaux** (`03de953`..`a4cd982` et suivants) vers `origin/main` — attend validation explicite. Voir `PROJECT_STATE.md`.
-- [ ] **Valider le PBI 018** (terminé, commité `a4cd982`).
-- [ ] **Lancer le backlog V1 priorisé** issu de la revue fonctionnelle du 2026-07-08 (PBI 035-048, specs dans `product_backlog.md`) — ordre recommandé : 042 → 040 → 041 (P0), puis 035/043, puis Événements 036-039, puis P2 044-048.
+- [ ] **Valider le PBI 042** (terminé : aucun code à changer, 3 tests de non-régression ajoutés — voir `PROJECT_STATE.md`).
+- [ ] **Poursuivre le backlog V1 priorisé** (revue fonctionnelle 2026-07-08, specs dans `product_backlog.md`) — 042 fait ; ordre : 040 → 041 (P0), puis 035/043, puis Événements 036-039, puis P2 044-048.
+
+## Terminé cette session (2026-07-08, suite)
+
+- [x] Push validé et effectué : `main` = `origin/main` (vague dette technique + PBI 010-018 + docs backlog + fix docker + fix bouton destructif).
+- [x] PBI 042 — Login par Entrée : comportement déjà fonctionnel (form/submit corrects), vérifié en navigateur ; 3 tests Playwright ajoutés (`tests/login-enter.spec.ts`).
 
 ## Dette technique identifiée, non traitée (volontairement)
 

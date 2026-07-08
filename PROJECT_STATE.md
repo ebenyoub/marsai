@@ -6,7 +6,7 @@ Dernière mise à jour : 2026-07-08 (session en cours).
 
 MVP fonctionnel, testé E2E (31 tests Playwright, tous verts). Les PBI produit 001-009 sont terminés et pushés sur `origin/main`.
 
-Le chantier de dette technique du 2026-07-07 (sécurité backend, TSC, RBAC, code mort) est clos et vérifié, mais **pas encore pushé** (6 commits locaux).
+Le chantier de dette technique du 2026-07-07 (sécurité backend, TSC, RBAC, code mort) est clos, vérifié et **pushé** (push global validé le 2026-07-08).
 
 **Correction de méthode (2026-07-08, x2)** : `AGENTS.md` décrit des règles de développement, pas le périmètre du backlog produit. Les sources de vérité sont le code actuel, l'historique Git, `PROJECT_STATE.md`, `product_backlog.md` et les décisions produit documentées — que ce soit pour identifier le prochain PBI, ou pour justifier qu'une fonctionnalité trouvée est hors MVP (`ROADMAP_V2.md` a été reformulé en conséquence, voir commit `62b5cda`).
 
@@ -21,9 +21,9 @@ Le cycle PBI produit a repris le 2026-07-08 :
 - **PBI 017 — audit systématique de tous les appels `t()` du frontend** : après PBI 016, script Python ponctuel scannant les 306 appels `t()` du code contre `fr.json`/`en.json` (résolution de chemin imbriqué correcte, pas juste une correspondance de clé plate). 4 clés manquantes trouvées : `admin.lastCheck`/`admin.systemStatus` (`AdminSidebar.tsx`), `form.remember` (`CheckBox.tsx`), `submit.error` (`useFilmSubmission.ts`). `AdminSidebar.tsx` utilisait le motif `t(x) || 'repli'` en pensant se protéger d'une clé manquante — **inefficace**, car `t()` renvoie la clé elle-même (toujours une chaîne non vide) quand elle est introuvable, donc `||` ne se déclenche jamais : `admin.lastCheck` s'affichait littéralement dans `/admin` à la place de "Dernière vérif.". `admin.systemStatus` était en réalité du code mort (jamais atteint, `footer.status` avant lui résout toujours vrai). `CheckBox.tsx` s'est révélé être un composant **jamais importé nulle part** — supprimé plutôt que corrigé. `submit.error` avait un filet de secours (`t(key, 'texte par défaut')`) mais retombait toujours en français en anglais, comme `search.placeholder` au PBI 015. Corrigé : ajout de `admin.lastCheck`/`submit.error` dans `fr.json`/`en.json`, simplification des 4 usages de `t(x) || '...'` dans `AdminSidebar.tsx` (le seul cassé + 3 morts mais trompeurs), suppression de `CheckBox.tsx`. Ajout de `tests/admin-sidebar-i18n.spec.ts`. **Commitée** (`c761e60`), validée par l'utilisateur.
 - **PBI 018 — écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur** : un seul appel `t()` dans tout le fichier (280 lignes), alors que c'est l'écran le plus critique du produit (vote jury). En comparant avec les clés déjà présentes dans `fr.json`/`en.json`, découverte que `jury.ai.*` et la plupart de `jury.rating.*` existaient déjà, préparées pour ce composant mais **jamais câblées** — même schéma que le PBI 011 (prop/ressource déjà là, jamais utilisée). Corrigé en réutilisant ces clés existantes en priorité, et en ajoutant seulement celles qui manquaient réellement (libellés des 3 curseurs de notation, "Type de Classification IA", "Langue"/"Synopsis", messages d'alerte de soumission, etc. — une vingtaine de nouvelles clés, aucune invention de contenu, uniquement traduction directe du texte français déjà présent). Effet de bord découvert et corrigé : le test `Jury Flow` existant cliquait sur `button:has-text("Soumettre l'évaluation")`, qui ne fonctionnait que parce que le texte était figé en français — même schéma que le nettoyage du PBI 011, corrigé en forçant le français explicitement. Ajout de `tests/jury-evaluator-i18n.spec.ts`. **Commité (`a4cd982`), en attente de validation.**
 
-## Commits locaux non pushés (17)
+## Historique des commits de la vague 2026-07-07/08 (tous pushés le 2026-07-08)
 
-Sur `main`, en avance sur `origin/main` :
+**Push validé et effectué le 2026-07-08** : `main` et `origin/main` sont synchronisés (incluant aussi `e7b3f07` docs backlog V1, `b161e44` fix docker bind-mounts, `cba6412` fix bouton destructif). Liste historique :
 
 1. `03de953` — fix: auth manquante sur routes mutantes festival/movie/collaborator/director
 2. `1337c47` — fix: fuite de hash de mot de passe bcrypt sur `/users` (critique, corrigée)
@@ -45,7 +45,7 @@ Sur `main`, en avance sur `origin/main` :
 
 **Chacun a été vérifié individuellement** : build + lint (backend et/ou frontend selon pertinence), `tsc --noEmit` (0 erreur depuis `cf6cfb5`), suite Playwright complète, vérifications manuelles ciblées (curl par rôle, scripts Playwright jetables supprimés après usage).
 
-⚠️ **Ne jamais pousser ces commits sans validation explicite de l'utilisateur** — règle rappelée à chaque fin de cycle dans cette session, aucune exception.
+⚠️ **Ne jamais pousser de commits sans validation explicite de l'utilisateur** — règle permanente, aucune exception. (La vague ci-dessus a été validée puis pushée le 2026-07-08.)
 
 ## PBI produit terminés (pushés sur origin/main)
 
@@ -92,7 +92,11 @@ Audit systématique de tous les appels `t()` du frontend. Méthode : script Pyth
 
 Correction : ajout de `admin.lastCheck`/`submit.error` dans les deux fichiers de traduction ; simplification des 4 usages `t(x) || '...'` dans `AdminSidebar.tsx` (le seul réellement cassé, plus 3 morts-mais-trompeurs sur le même modèle) en simples `t(x)` ; suppression de `CheckBox.tsx`. Ajout de `tests/admin-sidebar-i18n.spec.ts` : vérifie que ni `admin.lastCheck` ni `admin.systemStatus` n'apparaissent en clair dans la sidebar admin, et que le libellé traduit est bien affiché.
 
-## PBI 018 terminé (2026-07-08, commit `a4cd982`, en attente de validation)
+## PBI 042 terminé (2026-07-08, en attente de validation)
+
+Login par Entrée (P0 du backlog V1). Analyse : `Login.tsx` et `Register.tsx` utilisent déjà un vrai `<form onSubmit={handleSubmit(...)}>` (composant `Form` de `ui/form.tsx`) avec un bouton `type="submit"` correctement transmis via le spread `{...props}` de `ui/button.tsx` — aucun `onClick` isolé. Vérification en navigateur réel : Entrée dans le champ mot de passe **et** dans le champ email soumet le login (redirection `/` + token en localStorage) ; Entrée sur `/register` déclenche bien la soumission (erreurs de validation zod affichées). **Le bug rapporté par la revue fonctionnelle ne se reproduit pas — aucun changement de code.** Correction minimale : 3 tests Playwright de non-régression ajoutés (`tests/login-enter.spec.ts`) pour verrouiller la soumission implicite contre une future régression (ex. refactor de `Button` perdant le prop `type`). Build + lint + `tsc --noEmit` + tests ciblés (login-enter + register) tous verts.
+
+## PBI 018 terminé (2026-07-08, commit `a4cd982`, validé et pushé)
 
 Écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur. Analyse : un seul appel `t()` dans les 280 lignes du fichier, alors que c'est l'écran le plus critique du produit (vote jury, requis explicitement). En listant les clés `jury.ai.*`/`jury.rating.*`/`jury.video.*` déjà présentes dans `fr.json`/`en.json` (ex. `jury.ai.title` = "Carte d'Identité IA", `jury.rating.title` = "Votre Évaluation", `jury.rating.comments.hint` = "Ces commentaires sont confidentiels"), constaté qu'elles correspondaient presque mot pour mot au texte codé en dur du composant — les clés existaient déjà, préparées pour cet écran, mais **jamais câblées**. Même schéma que le PBI 011 (ressource i18n déjà là, jamais utilisée) : pas une fonctionnalité manquante, un composant jamais fini. Correction : réutilisation de toutes les clés existantes réutilisables, ajout d'une vingtaine de nouvelles clés uniquement pour le texte sans équivalent exact (libellés des 3 curseurs de notation créativité/technique/narration, "Type de Classification IA", "Langue"/"Synopsis", messages d'alerte de soumission/connexion requise) — traduction directe du français déjà présent, aucun contenu inventé. Le badge de statut (`film.status`) réutilise aussi `common.pending/validated/rejected` au lieu d'afficher la valeur brute du backend.
 
@@ -111,7 +115,7 @@ Une revue fonctionnelle complète a produit des **décisions produit officielles
 
 ## Prochain PBI
 
-Prochain travail : dérouler le backlog V1 priorisé ci-dessus (commencer par PBI 042). Candidats hors scope pour l'instant (mis en pause explicitement par l'utilisateur) :
+Prochain travail : dérouler le backlog V1 priorisé ci-dessus — 042 terminé, prochains : **040 puis 041**. Candidats hors scope pour l'instant (mis en pause explicitement par l'utilisateur) :
 1. Statuer sur les routes ambiguës (`POST /movies`, `/collaborators`, `/directors`).
 2. Phase de documentation globale pour corriger `CLAUDE.md`.
 3. Revue sécurité plus large (`security-reviewer`).
