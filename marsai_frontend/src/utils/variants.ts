@@ -8,7 +8,7 @@ export const buttonVariants = {
   active: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
   outline:
     'border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
-  destructive: 'bg-destructive text-secondary-foreground hover:bg-secondary/80',
+  destructive: 'bg-destructive text-white hover:bg-secondary/80',
   dropdown:
     'bg-card border-border hover:border-primary focus:ring-primary focus:ring-offset-background flex items-center gap-2 rounded-lg border px-3 py-1.5 transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none',
 } as const;
