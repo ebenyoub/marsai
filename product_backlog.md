@@ -9,11 +9,12 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 001-008 | Statistiques admin, persistance branding, gestion jury, refonte soumission film | `ae51ecc` | ✅ pushé |
 | 009 | Compteur de soumissions par festival (super-admin) + nom du réalisateur (jury) | `cc07b71` | ✅ pushé |
 | — | Fix données factices dashboards admin/super-admin (`AdminSidebar`, `SuperAdminDashboard`) | `d92af8f` | ✅ pushé |
+| 010 | Modération des soumissions — fuite de confidentialité corrigée (`GET /movies?status=all` public) ; UI d'approbation/rejet déjà existante vérifiée fonctionnelle E2E | non commité | ⏳ en attente de validation |
 
-## En pause (chantier dette technique en cours, cf. `TASKS.md` / `PROJECT_STATE.md`)
+## Chantier dette technique (2026-07-07, clos, pas encore pushé)
 
-Le cycle PBI produit a été suspendu le 2026-07-07 à la demande de l'utilisateur pour traiter la dette TSC et le RBAC en priorité (voir `docs/decisions.md`). 5 commits de dette technique sont prêts localement mais **pas encore pushés**.
+6 commits de dette technique (TSC, sécurité, RBAC, code mort) sont prêts localement mais **pas encore pushés** (voir `PROJECT_STATE.md`).
 
 ## Prochain PBI
 
-Non décidé — à choisir en début de session demain (voir propositions dans `PROJECT_STATE.md`).
+Non décidé — candidats dans `PROJECT_STATE.md` (routes ambiguës `/movies` `/collaborators` `/directors`, correction i18n codée en dur dans `SubmissionsTable`/`TabsListContainer`, phase de documentation globale `CLAUDE.md`).
