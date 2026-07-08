@@ -14,7 +14,7 @@ export function Success() {
       </div>
       <h1 className="mb-4 text-4xl font-bold text-white">{t('submit.success')}</h1>
       <p className="mb-8 max-w-md text-slate-400">
-        Merci d'avoir participé à l'aventure marsAI. Votre œuvre est maintenant en cours de traitement.
+        {t('submit.success.description')}
       </p>
       <Button variant="purple" onClick={() => navigate('/')}>
         {t('nav.home')}

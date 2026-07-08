@@ -215,6 +215,7 @@
   "submit.step5.email": "Email",
   "submit.step5.empty": "Aucun collaborateur ajouté",
   "submit.success": "Votre film a été soumis avec succès !",
+  "submit.success.description": "Merci d'avoir participé à l'aventure marsAI. Votre œuvre est maintenant en cours de traitement.",
   "submit.final": "Soumettre le Film",
   "submit.final.ready": "Prêt à marquer l'histoire du cinéma génératif ?",
   "submit.previous": "Précédent",
