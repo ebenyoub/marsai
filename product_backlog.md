@@ -16,7 +16,8 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 014 | Statut festival "À venir" (super-admin) — option non persistable (reliquat de mock jamais nettoyé après branchement API réelle), UI alignée sur les 2 états réels du backend, 1 test ajouté (round-trip) | `7094c74` | ✅ commité, validé, en attente de push |
 | 015 | Galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise — titre, chargement, erreur, vide, compteur, placeholder de recherche codés en dur en français ; même défaut corrigé dans `JuryDashboard.tsx` ; 1 test ajouté (FR + EN) | `5d38aeb` | ✅ commité, validé, en attente de push |
 | 016 | Clés `footer.about`/`footer.contact` manquantes des deux fichiers de traduction, affichées brutes (`footer.about`, `footer.contact`) sur toutes les pages ; corrigé, 1 test ajouté (garde-fou générique contre toute clé manquante future) | `8bb2d0e` | ✅ commité, validé, en attente de push |
-| 017 | Audit systématique des 306 appels `t()` du frontend — `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé (supprimé) ; 1 test ajouté | non commité | ⏳ en attente de validation |
+| 017 | Audit systématique des 306 appels `t()` du frontend — `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé (supprimé) ; 1 test ajouté | `c761e60` | ✅ commité, validé, en attente de push |
+| 018 | Écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur — clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés ; test `Jury Flow` existant corrigé (langue non forcée) ; 1 test ajouté | non commité | ⏳ en attente de validation |
 
 ## Chantier dette technique (2026-07-07, clos, pas encore pushé)
 

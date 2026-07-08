@@ -2,14 +2,14 @@
 
 ## En attente de décision utilisateur
 
-- [ ] **Push des 15 commits locaux** (`03de953`..`8bb2d0e`) + du travail PBI 017 (non commité) vers `origin/main` — attend validation explicite. Voir `PROJECT_STATE.md`.
+- [ ] **Push des 16 commits locaux** (`03de953`..`c761e60`) + du travail PBI 018 (non commité) vers `origin/main` — attend validation explicite. Voir `PROJECT_STATE.md`.
 - [ ] **Choisir le prochain PBI** (voir propositions dans `PROJECT_STATE.md`).
 
 ## Dette technique identifiée, non traitée (volontairement)
 
 - [ ] Assigner un rôle à `POST /movies`, `/collaborators`, `/directors` **si** une UI frontend vient à les appeler un jour — sinon laisser en authentification simple.
 - [ ] Corriger `CLAUDE.md` section "État connu (juillet 2026)" (obsolète — voir `docs/decisions.md` du 2026-07-07) lors de la phase de documentation globale annoncée par l'utilisateur.
-- [ ] Conteneur Docker `marsai_backend` toujours cassé (`dist/server.js` manquant, image jamais reconstruite) — contournement : backend lancé en local (`npm run dev`) pointé sur MySQL Docker (port 3310) pour la vérification des PBI 010-017.
+- [ ] Conteneur Docker `marsai_backend` toujours cassé (`dist/server.js` manquant, image jamais reconstruite) — contournement : backend lancé en local (`npm run dev`) pointé sur MySQL Docker (port 3310) pour la vérification des PBI 010-018.
 
 ## Hors V1 (voir ROADMAP_V2.md)
 
@@ -25,7 +25,8 @@
 - [x] PBI 014 — statut festival "À venir" (super-admin) : option de statut non persistable (reliquat de mock jamais nettoyé), corrigée en alignant l'UI sur les 2 états réels du backend ; ajout de `tests/festival-status.spec.ts` (round-trip après rechargement) (commit `7094c74`)
 - [x] PBI 015 — galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise (titre, chargement, erreur, vide, compteur, placeholder de recherche) ; même défaut corrigé dans `JuryDashboard.tsx` ; ajout de `tests/gallery-i18n.spec.ts` (commit `5d38aeb`)
 - [x] PBI 016 — clés `footer.about`/`footer.contact` manquantes, affichées brutes sur toutes les pages ; corrigé ; ajout de `tests/footer-i18n.spec.ts` (garde-fou générique) (commit `8bb2d0e`)
-- [x] PBI 017 — audit systématique des 306 appels `t()` du frontend : `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace, `t()` ne renvoie jamais faux), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé nulle part (supprimé) ; ajout de `tests/admin-sidebar-i18n.spec.ts` (non commité)
+- [x] PBI 017 — audit systématique des 306 appels `t()` du frontend : `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace, `t()` ne renvoie jamais faux), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé nulle part (supprimé) ; ajout de `tests/admin-sidebar-i18n.spec.ts` (commit `c761e60`)
+- [x] PBI 018 — écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur (1 seul appel `t()` sur 280 lignes) ; clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés pour le reste ; test `Jury Flow` existant corrigé (langue non forcée) ; ajout de `tests/jury-evaluator-i18n.spec.ts` (non commité)
 - [x] Création de `ROADMAP_V2.md` : réinitialisation de mot de passe et pages légales du footer déplacées hors `PROJECT_STATE.md` avec justification (commit `a9309c5`) ; reformulé pour se baser sur le backlog plutôt qu'`AGENTS.md` (commit `62b5cda`)
 
 ## Terminé session précédente (2026-07-07)

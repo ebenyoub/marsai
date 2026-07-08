@@ -105,10 +105,14 @@ test.describe('MarsAI E2E Test Suite', () => {
 
     // 2. Go to Jury Panel
     await page.goto('/jury');
-    
+
     // Wait for loader to disappear and textarea to become visible
     await page.waitForSelector('textarea', { state: 'visible', timeout: 15000 });
-    
+
+    // Force French: the submit button below is asserted in French.
+    await page.click('button:has(svg.lucide-globe)');
+    await page.click('button:has-text("Français")');
+
     // 3. Select first film in list (which is active by default)
     const directorLabel = page.locator('p.text-primary', { hasText: /Réalisateur|Director/ });
     await expect(directorLabel).toBeVisible();

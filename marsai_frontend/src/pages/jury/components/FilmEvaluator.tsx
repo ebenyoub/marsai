@@ -71,16 +71,16 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
 
   const averageScore = Math.round((scores.creativity + scores.technical + scores.narrative) / 3);
 
-  if (!film) return <div className="flex h-full items-center justify-center text-slate-500">Sélectionnez un film</div>;
+  if (!film) return <div className="flex h-full items-center justify-center text-slate-500">{t('jury.video.select_film')}</div>;
 
   const videoId = getYouTubeId(film.yt_url);
 
   const handleSubmit = async () => {
     if (!user) {
-      alert("Vous devez être connecté pour voter.");
+      alert(t('jury.rating.login_required'));
       return;
     }
-    
+
     setIsSubmitting(true);
     try {
       await apiRequest('/rating', {
@@ -96,10 +96,10 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
           score_total: averageScore,
         }),
       });
-      alert('Évaluation envoyée avec succès !');
+      alert(t('jury.rating.submit_success'));
     } catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : 'Erreur lors de l\'envoi de l\'évaluation');
+      alert(err instanceof Error ? err.message : t('jury.rating.submit_error'));
     } finally {
       setIsSubmitting(false);
     }
@@ -117,18 +117,22 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
               </p>
             )}
             <p className="text-sm text-slate-400 mt-2">
-              Language: {film.main_language} • Duration: {film.duration}s
+              {t('jury.video.language')}: {film.main_language} • {t('jury.video.duration')}: {film.duration}s
             </p>
           </div>
           <span className="bg-primary/10 text-primary border-primary/20 rounded-full border px-3 py-1 text-xs font-medium">
-            {film.status === 'pending' ? 'Pending' : film.status}
+            {film.status === 'pending'
+              ? t('common.pending')
+              : film.status === 'approved'
+                ? t('common.validated')
+                : t('common.rejected')}
           </span>
         </div>
         <div className="aspect-video w-full overflow-hidden rounded-xl bg-black">
           <iframe src={`https://www.youtube.com/embed/${videoId}`} className="h-full w-full border-0" allowFullScreen />
         </div>
         <div className="mt-4">
-          <h3 className="font-semibold text-white">Synopsis</h3>
+          <h3 className="font-semibold text-white">{t('jury.video.synopsis')}</h3>
           <p className="text-sm text-slate-400">{film.synopsis_fr || film.synopsis_en}</p>
         </div>
       </Card>
@@ -136,20 +140,20 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
       <Card variant="dashboard">
         <div className="text-primary mb-1 flex items-center gap-2">
           <Brain className="size-5" />
-          <h2 className="text-lg font-semibold text-white">Carte d'Identité IA</h2>
+          <h2 className="text-lg font-semibold text-white">{t('jury.ai.title')}</h2>
         </div>
-        <p className="mb-6 text-sm text-slate-400">Outils et méthodologie utilisés</p>
+        <p className="mb-6 text-sm text-slate-400">{t('jury.ai.description')}</p>
 
         <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
           {[
             {
-              label: 'Type de Classification IA',
+              label: t('jury.ai.classification_type'),
               value: film.ia_type,
               active: !!film.ia_type,
             },
             {
-              label: 'Outils Utilisés (Stack)',
-              value: film.stack || 'Non renseigné',
+              label: t('jury.ai.stack'),
+              value: film.stack || t('jury.ai.stack.empty'),
               active: !!film.stack && film.stack.trim() !== '',
             },
           ].map((item, i) => (
@@ -168,9 +172,9 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
         </div>
 
         <Card variant="dashboard" className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
-          <span className="mb-2 block text-xs text-slate-500">Méthodologie Créative</span>
+          <span className="mb-2 block text-xs text-slate-500">{t('jury.ai.methodology')}</span>
           <p className="text-sm leading-relaxed text-slate-300">
-            {film.methodology || 'Aucune méthodologie détaillée.'}
+            {film.methodology || t('jury.ai.methodology.empty')}
           </p>
         </Card>
       </Card>
@@ -178,16 +182,18 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
       <Card className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 md:p-6">
         <div className="text-primary mb-6 flex items-center gap-2">
           <Star className="size-5" />
-          <h2 className="text-lg font-semibold text-white">Votre Évaluation</h2>
+          <h2 className="text-lg font-semibold text-white">{t('jury.rating.title')}</h2>
         </div>
 
         <div className="mb-10 rounded-xl border border-slate-800 bg-slate-950/50 py-6 text-center">
-          <p className="text-sm text-slate-500">Note Moyenne (Règle des 3)</p>
+          <p className="text-sm text-slate-500">
+            {t('jury.rating.average_score')} ({t('jury.rating.subtitle')})
+          </p>
           <div className="text-primary my-2 text-4xl font-bold">
             {averageScore} <span className="text-xl text-slate-500">/10</span>
           </div>
           <p className="text-xs text-slate-400">
-            Créativité: {scores.creativity} | Technique: {scores.technical} | Narration: {scores.narrative}
+            {t('jury.rating.creativity.label')}: {scores.creativity} | {t('jury.rating.technical.label')}: {scores.technical} | {t('jury.rating.narrative.label')}: {scores.narrative}
           </p>
         </div>
 
@@ -195,15 +201,19 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
           {[
             {
               id: 'creativity',
-              label: '1. Créativité & Innovation',
-              desc: "Originalité du concept, usage innovant de l'IA",
+              label: `1. ${t('jury.rating.creativity.label')}`,
+              desc: t('jury.rating.creativity.desc'),
             },
             {
               id: 'technical',
-              label: '2. Qualité Technique',
-              desc: 'Maîtrise des outils IA, qualité visuelle et sonore',
+              label: `2. ${t('jury.rating.technical.label')}`,
+              desc: t('jury.rating.technical.desc'),
             },
-            { id: 'narrative', label: '3. Narration & Impact', desc: "Cohérence de l'histoire, émotion, message" },
+            {
+              id: 'narrative',
+              label: `3. ${t('jury.rating.narrative.label')}`,
+              desc: t('jury.rating.narrative.desc'),
+            },
           ].map(slider => {
             const score = scores[slider.id as keyof typeof scores];
             const fillPercentage = ((score - 1) / 9) * 100;
@@ -242,9 +252,9 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
 
                 <div>
                   <div className="mb-1 flex justify-between text-xs text-slate-500">
-                    <span>1 - Faible</span>
-                    <span className="text-primary font-medium">Moyen</span>
-                    <span>10 - Excellent</span>
+                    <span>1 - {t('jury.rating.poor')}</span>
+                    <span className="text-primary font-medium">{t('jury.rating.average')}</span>
+                    <span>10 - {t('jury.rating.excellent')}</span>
                   </div>
                   <p className="text-xs text-slate-400">{slider.desc}</p>
                 </div>
@@ -255,22 +265,22 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
 
         <div className="mt-10 border-t border-slate-800 pt-6">
           <FormGroup>
-            <Label className="text-sm text-white">Commentaires Internes (Privés)</Label>
+            <Label className="text-sm text-white">{t('jury.rating.comments')}</Label>
             <TextArea
               value={comment}
               onChange={e => setComment(e.target.value)}
-              placeholder="Partagez vos impressions pour les délibérations..."
+              placeholder={t('jury.rating.comments.placeholder')}
               className="mt-2 min-h-25 bg-slate-950 text-white"
             />
-            <p className="mt-2 text-xs text-slate-500">Ces commentaires sont confidentiels</p>
+            <p className="mt-2 text-xs text-slate-500">{t('jury.rating.comments.hint')}</p>
           </FormGroup>
-          <Button 
-            variant="purple" 
+          <Button
+            variant="purple"
             className="mt-6 flex w-full items-center justify-center gap-2 py-3"
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            <Send className="size-4" /> {isSubmitting ? 'Envoi...' : 'Soumettre l\'évaluation'}
+            <Send className="size-4" /> {isSubmitting ? t('jury.rating.sending') : t('jury.rating.submit')}
           </Button>
         </div>
       </Card>
