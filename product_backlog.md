@@ -17,6 +17,7 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 015 | Galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise — titre, chargement, erreur, vide, compteur, placeholder de recherche codés en dur en français ; même défaut corrigé dans `JuryDashboard.tsx` ; 1 test ajouté (FR + EN) | `5d38aeb` | ✅ pushé |
 | 016 | Clés `footer.about`/`footer.contact` manquantes des deux fichiers de traduction, affichées brutes (`footer.about`, `footer.contact`) sur toutes les pages ; corrigé, 1 test ajouté (garde-fou générique contre toute clé manquante future) | `8bb2d0e` | ✅ pushé |
 | 017 | Audit systématique des 306 appels `t()` du frontend — `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé (supprimé) ; 1 test ajouté | `c761e60` | ✅ pushé |
+| 041 | UX post-vote jury — badge vert « Voté » + compteur réel de progression dans la liste (nouvel endpoint `GET /rating/me`), modale de succès (Radix Dialog) à la place de l'`alert()`, UI verrouillée si vote existant (bandeau « Vote déjà enregistré », curseurs désactivés/grisés, commentaire en lecture seule, bouton désactivé) ; tests `Jury Flow` et `jury-evaluator-i18n` adaptés, 1 test ajouté (`jury-vote-ux.spec.ts`) | `a0fb09c` | ✅ commité, en attente de validation |
 | 040 | Fiabilité du vote jury — "API Error" causé par les erreurs de validation zod (réponse `errors[]` sans `message`, ex. commentaire vide obligatoire) : `api.ts` remonte désormais le premier message d'erreur ; vote verrouillé côté serveur (409 « déjà voté » au revote, upsert conservé comme garde-fou anti-course) ; test `Jury Flow` adapté (le re-vote supposé possible ne l'est plus), 2 tests API ajoutés (`jury-vote-lock.spec.ts`) | `fd93c99` | ✅ commité, en attente de validation |
 | 042 | Login par Entrée — le comportement attendu fonctionnait déjà (`<form onSubmit>` + `type="submit"` corrects dans `Login.tsx`/`Register.tsx`, soumission implicite vérifiée en navigateur depuis les deux champs) ; aucun changement de code, 3 tests Playwright de non-régression ajoutés (`login-enter.spec.ts`) | `7b6bf9e` | ✅ commité, en attente de validation |
 | 018 | Écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur — clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés ; test `Jury Flow` existant corrigé (langue non forcée) ; 1 test ajouté | `a4cd982` | ✅ pushé, validé |
@@ -32,12 +33,6 @@ Deux vrais bugs trouvés pendant l'audit du PBI 014 (lien "Mot de passe oublié"
 ## Backlog V1 non développé — revue fonctionnelle complète (2026-07-08, décisions produit officielles)
 
 Rien n'est développé. Spécifications complètes ci-dessous, aucune information de la revue n'a été omise. Estimations : S (< 1/2 journée), M (1/2 à 1 journée), L (> 1 journée).
-
-### P0 — bloquant MVP
-
-| PBI | Résumé | Est. | Dépend de |
-|---|---|---|---|
-| 041 | **UX post-vote jury** — dans la liste des vidéos : badge/icône verte sur les vidéos déjà votées ; après validation d'un vote : remplacer les `alert()` par une vraie modale de succès avec icône verte + message de confirmation ; verrouiller le vote côté UI : griser les notes, commentaire en lecture seule, bouton d'envoi désactivé, affichage clair "vote déjà enregistré" | M | 040 |
 
 ### P1 — MVP
 

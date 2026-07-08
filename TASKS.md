@@ -2,13 +2,14 @@
 
 ## En attente de décision utilisateur
 
-- [ ] **Valider le PBI 040** (terminé : "API Error" corrigé + vote verrouillé serveur — voir `PROJECT_STATE.md`).
-- [ ] **Poursuivre le backlog V1 priorisé** (revue fonctionnelle 2026-07-08, specs dans `product_backlog.md`) — 042 et 040 faits ; ordre : 041 (P0), puis 035/043, puis Événements 036-039, puis P2 044-048.
+- [ ] **Valider le PBI 041** (terminé : badge « Voté », modale de succès, UI verrouillée — voir `PROJECT_STATE.md`).
+- [ ] **Poursuivre le backlog V1 priorisé** (revue fonctionnelle 2026-07-08, specs dans `product_backlog.md`) — P0 (042, 040, 041) faits ; ordre : 035/043, puis Événements 036-039, puis P2 044-048.
 
 ## Terminé cette session (2026-07-08, suite)
 
 - [x] Push validé et effectué : `main` = `origin/main` (vague dette technique + PBI 010-018 + docs backlog + fix docker + fix bouton destructif).
 - [x] PBI 042 — Login par Entrée : comportement déjà fonctionnel (form/submit corrects), vérifié en navigateur ; 3 tests Playwright ajoutés (`tests/login-enter.spec.ts`). **Validé et pushé** (`7b6bf9e`, `5078c0f`).
+- [x] PBI 041 — UX post-vote jury : badge « Voté » + compteur réel (`GET /rating/me` ajouté), modale de succès à la place de l'`alert()`, UI verrouillée (bandeau, curseurs, commentaire, bouton) ; `jury-vote-ux.spec.ts` ajouté ; suite 37/37. **Validé et pushé** : 040 (`fd93c99`, `548c0d8`).
 - [x] PBI 040 — Fiabilité du vote jury : "API Error" = erreurs de validation zod sans `message` (commentaire obligatoire non signalé), corrigé dans `api.ts` ; vote verrouillé serveur (409 au revote) ; test `Jury Flow` adapté + `tests/jury-vote-lock.spec.ts` ajouté ; suite complète 36/36.
 
 ## Dette technique identifiée, non traitée (volontairement)
