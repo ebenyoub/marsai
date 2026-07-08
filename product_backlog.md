@@ -17,6 +17,7 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 015 | Galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise — titre, chargement, erreur, vide, compteur, placeholder de recherche codés en dur en français ; même défaut corrigé dans `JuryDashboard.tsx` ; 1 test ajouté (FR + EN) | `5d38aeb` | ✅ pushé |
 | 016 | Clés `footer.about`/`footer.contact` manquantes des deux fichiers de traduction, affichées brutes (`footer.about`, `footer.contact`) sur toutes les pages ; corrigé, 1 test ajouté (garde-fou générique contre toute clé manquante future) | `8bb2d0e` | ✅ pushé |
 | 017 | Audit systématique des 306 appels `t()` du frontend — `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé (supprimé) ; 1 test ajouté | `c761e60` | ✅ pushé |
+| 040 | Fiabilité du vote jury — "API Error" causé par les erreurs de validation zod (réponse `errors[]` sans `message`, ex. commentaire vide obligatoire) : `api.ts` remonte désormais le premier message d'erreur ; vote verrouillé côté serveur (409 « déjà voté » au revote, upsert conservé comme garde-fou anti-course) ; test `Jury Flow` adapté (le re-vote supposé possible ne l'est plus), 2 tests API ajoutés (`jury-vote-lock.spec.ts`) | `fd93c99` | ✅ commité, en attente de validation |
 | 042 | Login par Entrée — le comportement attendu fonctionnait déjà (`<form onSubmit>` + `type="submit"` corrects dans `Login.tsx`/`Register.tsx`, soumission implicite vérifiée en navigateur depuis les deux champs) ; aucun changement de code, 3 tests Playwright de non-régression ajoutés (`login-enter.spec.ts`) | `7b6bf9e` | ✅ commité, en attente de validation |
 | 018 | Écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur — clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés ; test `Jury Flow` existant corrigé (langue non forcée) ; 1 test ajouté | `a4cd982` | ✅ pushé, validé |
 
@@ -36,7 +37,6 @@ Rien n'est développé. Spécifications complètes ci-dessous, aucune informatio
 
 | PBI | Résumé | Est. | Dépend de |
 |---|---|---|---|
-| 040 | **Fiabilité du vote jury (API + verrouillage backend)** — corriger l'erreur "API Error" rencontrée lors du vote ; vérifier que le vote est réellement enregistré en base ; puis rendre impossible toute modification d'un vote déjà soumis (verrouillage définitif côté serveur) | M | — |
 | 041 | **UX post-vote jury** — dans la liste des vidéos : badge/icône verte sur les vidéos déjà votées ; après validation d'un vote : remplacer les `alert()` par une vraie modale de succès avec icône verte + message de confirmation ; verrouiller le vote côté UI : griser les notes, commentaire en lecture seule, bouton d'envoi désactivé, affichage clair "vote déjà enregistré" | M | 040 |
 
 ### P1 — MVP

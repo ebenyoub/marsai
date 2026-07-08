@@ -92,6 +92,10 @@ Audit systématique de tous les appels `t()` du frontend. Méthode : script Pyth
 
 Correction : ajout de `admin.lastCheck`/`submit.error` dans les deux fichiers de traduction ; simplification des 4 usages `t(x) || '...'` dans `AdminSidebar.tsx` (le seul réellement cassé, plus 3 morts-mais-trompeurs sur le même modèle) en simples `t(x)` ; suppression de `CheckBox.tsx`. Ajout de `tests/admin-sidebar-i18n.spec.ts` : vérifie que ni `admin.lastCheck` ni `admin.systemStatus` n'apparaissent en clair dans la sidebar admin, et que le libellé traduit est bien affiché.
 
+## PBI 040 terminé (2026-07-08, en attente de validation)
+
+Fiabilité du vote jury (P0). Cause racine de l'"API Error" : le schéma zod du backend exige un commentaire non vide (`comment min(1)`), rien ne l'indique dans l'UI, et en cas d'échec de validation le middleware renvoie `{success:false, errors:[...]}` **sans champ `message`** — or `api.ts` ne lisait que `result.message`, d'où le générique "API Error". Reproduit par curl (vote sans commentaire → 400 `errors[]`). Deuxième volet : le vote n'était pas verrouillé — le modèle fait un upsert `ON DUPLICATE KEY UPDATE`, donc un juré pouvait modifier son vote indéfiniment, contraire à la décision produit (vote définitif). Corrections minimales : (1) `api.ts` retombe sur `errors[0].message` avant le générique ; (2) `rating.controller.ts` refuse tout revote avec un 409 « Vous avez déjà voté pour ce film — le vote est définitif. » (l'upsert du modèle est conservé comme garde-fou anti-course uniquement). Le test `Jury Flow` existant supposait le re-vote possible (commentaire unique re-soumis à chaque run) — adapté au verrouillage. Ajout de `tests/jury-vote-lock.spec.ts` (2 tests API déterministes : vote enregistré puis 409 au revote avec données inchangées en base ; message de validation réel exposé). Vérifié en navigateur réel : les deux messages s'affichent au juré à la place d'"API Error". Builds/lint/tsc backend + frontend verts, suite Playwright complète 36/36. Image Docker backend reconstruite et vérifiée.
+
 ## PBI 042 terminé (2026-07-08, en attente de validation)
 
 Login par Entrée (P0 du backlog V1). Analyse : `Login.tsx` et `Register.tsx` utilisent déjà un vrai `<form onSubmit={handleSubmit(...)}>` (composant `Form` de `ui/form.tsx`) avec un bouton `type="submit"` correctement transmis via le spread `{...props}` de `ui/button.tsx` — aucun `onClick` isolé. Vérification en navigateur réel : Entrée dans le champ mot de passe **et** dans le champ email soumet le login (redirection `/` + token en localStorage) ; Entrée sur `/register` déclenche bien la soumission (erreurs de validation zod affichées). **Le bug rapporté par la revue fonctionnelle ne se reproduit pas — aucun changement de code.** Correction minimale : 3 tests Playwright de non-régression ajoutés (`tests/login-enter.spec.ts`) pour verrouiller la soumission implicite contre une future régression (ex. refactor de `Button` perdant le prop `type`). Build + lint + `tsc --noEmit` + tests ciblés (login-enter + register) tous verts.
@@ -115,7 +119,7 @@ Une revue fonctionnelle complète a produit des **décisions produit officielles
 
 ## Prochain PBI
 
-Prochain travail : dérouler le backlog V1 priorisé ci-dessus — 042 terminé, prochains : **040 puis 041**. Candidats hors scope pour l'instant (mis en pause explicitement par l'utilisateur) :
+Prochain travail : dérouler le backlog V1 priorisé ci-dessus — 042 et 040 terminés, prochain : **041** (UX post-vote jury, débloqué par 040). Candidats hors scope pour l'instant (mis en pause explicitement par l'utilisateur) :
 1. Statuer sur les routes ambiguës (`POST /movies`, `/collaborators`, `/directors`).
 2. Phase de documentation globale pour corriger `CLAUDE.md`.
 3. Revue sécurité plus large (`security-reviewer`).
