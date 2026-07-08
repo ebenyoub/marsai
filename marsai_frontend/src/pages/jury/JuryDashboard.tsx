@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '@/lib/api';
 import FilmEvaluator from './components/FilmEvaluator';
 import MobileSidebar from './components/MobileSidebar';
@@ -12,6 +13,7 @@ interface MoviesResponse {
 }
 
 export default function JuryDashboard() {
+  const { t } = useTranslation();
   const [films, setFilms] = useState<FilmType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,18 +30,18 @@ export default function JuryDashboard() {
           setFilms(result.data);
           setActiveFilmId(result.data[0].id.toString());
         } else {
-          setError(result.message || 'Aucun film trouvé.');
+          setError(result.message || t('jury.error.no_films'));
         }
       } catch (err) {
         console.error('Erreur lors de la récupération :', err);
-        setError('Impossible de se connecter au serveur.');
+        setError(t('jury.error.connection'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchMovies();
-  }, []);
+  }, [t]);
 
   const filteredFilms = films.filter(f => f.title?.toLowerCase().includes(searchQuery.toLowerCase()));
 
@@ -54,7 +56,7 @@ export default function JuryDashboard() {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-slate-950 text-white">Chargement des films...</div>
+      <div className="flex h-screen items-center justify-center bg-slate-950 text-white">{t('gallery.loading')}</div>
     );
   }
   if (error && films.length === 0) {

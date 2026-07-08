@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Film } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import FilmPopup from '@/components/FilmPopup';
 import Pagination from '@/components/Pagination';
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -10,6 +11,7 @@ import { FilmWithDirector } from '@/types/home';
 import CardVideo from './CardVideo';
 
 export default function VideoSection() {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [query, setQuery] = useState('');
   const [selectedFilm, setSelectedFilm] = useState<FilmWithDirector | null>(null);
@@ -34,8 +36,12 @@ export default function VideoSection() {
     return filteredFilms.slice(start, start + postsPerPage);
   }, [currentPage, filteredFilms, postsPerPage]);
 
-  if (isLoading) return <div className="py-20 text-center">Chargement des films...</div>;
-  if (error) return <div className="py-20 text-center text-red-500">Erreur : {error}</div>;
+  if (isLoading) return <div className="py-20 text-center">{t('gallery.loading')}</div>;
+  if (error) return (
+    <div className="py-20 text-center text-red-500">
+      {t('gallery.error')} : {error}
+    </div>
+  );
 
   return (
     <section className="container mx-auto my-12 space-y-8 px-4">
@@ -43,10 +49,10 @@ export default function VideoSection() {
         <div>
           <div>
             <CardTitle variant="videoSection" icon={<Film className="text-primary" />}>
-              Films en Compétition
+              {t('gallery.title')}
             </CardTitle>
             <CardDescription>
-              {filteredFilms.length} film{s(filteredFilms.length)} sélectionné{s(filteredFilms.length)}
+              {t('gallery.selected_count', { count: filteredFilms.length, plural: s(filteredFilms.length) })}
             </CardDescription>
           </div>
           <SearchBar
@@ -74,7 +80,7 @@ export default function VideoSection() {
 
       {/* Si aucun résultat */}
       {filteredFilms.length === 0 && (
-        <p className="text-muted-foreground py-10 text-center">Aucun film ne correspond à votre recherche.</p>
+        <p className="text-muted-foreground py-10 text-center">{t('gallery.empty')}</p>
       )}
 
       <FilmPopup film={selectedFilm} open={!!selectedFilm} onClose={() => setSelectedFilm(null)} />

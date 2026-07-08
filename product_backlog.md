@@ -14,6 +14,7 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 012 | Inscription (`/register`) — label "Save" mal câblé sur le champ de confirmation du mot de passe, corrigé ; parcours jusqu'ici sans aucune couverture Playwright, 2 tests ajoutés | `4c06934` | ✅ commité, validé, en attente de push |
 | 013 | Page de succès de soumission (`/success`) — paragraphe de description codé en dur en français, corrigé ; seule l'URL était vérifiée jusqu'ici, 1 test ajouté (contenu FR + EN) | `5777b51` | ✅ commité, validé, en attente de push |
 | 014 | Statut festival "À venir" (super-admin) — option non persistable (reliquat de mock jamais nettoyé après branchement API réelle), UI alignée sur les 2 états réels du backend, 1 test ajouté (round-trip) | `7094c74` | ✅ commité, validé, en attente de push |
+| 015 | Galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise — titre, chargement, erreur, vide, compteur, placeholder de recherche codés en dur en français ; même défaut corrigé dans `JuryDashboard.tsx` ; 1 test ajouté (FR + EN) | non commité | ⏳ en attente de validation |
 
 ## Chantier dette technique (2026-07-07, clos, pas encore pushé)
 
