@@ -53,6 +53,10 @@ test.describe('Submission Moderation', () => {
     await page.goto('/admin');
     await expect(page).toHaveURL('/admin');
 
+    // Force French state: table labels below are asserted in French.
+    await page.click('button:has(svg.lucide-globe)');
+    await page.click('button:has-text("Français")');
+
     const row = page.locator('tbody tr', { hasText: uniqueTitle });
     await expect(row).toBeVisible({ timeout: 10000 });
     await expect(row).toContainText('En attente');

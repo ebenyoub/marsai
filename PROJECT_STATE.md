@@ -4,11 +4,14 @@ Dernière mise à jour : 2026-07-08 (session en cours).
 
 ## Où on en est
 
-MVP fonctionnel, testé E2E (24 tests Playwright, tous verts — +2 depuis PBI 010). Les PBI produit 001-009 sont terminés et pushés sur `origin/main`.
+MVP fonctionnel, testé E2E (23 tests Playwright, tous verts — un test redondant/vacueux supprimé après PBI 011). Les PBI produit 001-009 sont terminés et pushés sur `origin/main`.
 
 Le chantier de dette technique du 2026-07-07 (sécurité backend, TSC, RBAC, code mort) est clos et vérifié, mais **pas encore pushé** (6 commits locaux).
 
-Le cycle PBI produit a repris le 2026-07-08 avec le **PBI 010 — modération des soumissions** : l'UI d'approbation/rejet dans `/admin` existait déjà et était déjà câblée à de vraies routes (pas un mock décoratif) ; le vrai trou fonctionnel identifié était une faille de confidentialité (`GET /movies?status=all` public, exposant les soumissions pending/rejected à n'importe qui). Corrigée. **Travail non commité, en attente de validation.**
+Le cycle PBI produit a repris le 2026-07-08 :
+- **PBI 010 — modération des soumissions** : l'UI d'approbation/rejet dans `/admin` existait déjà et était déjà câblée à de vraies routes (pas un mock décoratif) ; le vrai trou fonctionnel identifié était une faille de confidentialité (`GET /movies?status=all` public, exposant les soumissions pending/rejected à n'importe qui). Corrigée et **commitée** (`32fb4ee`), validée par l'utilisateur.
+- **PBI 011 — i18n de la table de modération** : `SubmissionsTable`/`TabsListContainer` recevaient déjà un prop `t` mais ne l'utilisaient jamais ; statuts, en-têtes et titres de boutons étaient codés en dur en français. Corrigé en réutilisant les clés `common.pending/validated/rejected` existantes + 8 nouvelles clés `admin.submissions.*`. Validée par l'utilisateur.
+- **Nettoyage immédiat de dette** : le test `Admin Flow: Moderation Actions (Approve, Reject)` (`e2e.spec.ts`) était vacueusement vert (`if isVisible` silencieux, langue non forcée) et redondant avec `submission-moderation.spec.ts` — supprimé. **PBI 011 + nettoyage non commités, en attente de validation.**
 
 ## Commits locaux non pushés (6)
 
@@ -31,9 +34,17 @@ Sur `main`, en avance sur `origin/main` :
 - PBI 009 (commit `cc07b71`) : compteur de soumissions par festival (super-admin), nom du réalisateur affiché côté jury.
 - Fix données factices dashboards admin/super-admin (commit `d92af8f`) : `AdminSidebar` et `SuperAdminDashboard` utilisaient des festivals codés en dur ; branchés sur `/festivals` réel.
 
-## PBI 010 terminé (2026-07-08, non commité)
+## PBI 010 terminé (2026-07-08, commit `32fb4ee`, validé)
 
 Modération des soumissions. Analyse : l'UI (`SubmissionsTable`, `TabsListContainer`) et les routes (`PUT /movies/:id`) existaient déjà et fonctionnaient réellement (pas un mock). Le vrai trou : `GET /movies?status=all` n'avait aucune protection, donc n'importe quel visiteur anonyme pouvait lister les soumissions `pending`/`rejected` (titre, synopsis, nom du réalisateur) avant modération. Correction : `marsai_backend/src/routes/movie.router.ts` — nouvelle garde `requireModerationAccess` qui laisse la galerie publique ouverte (pas de `status`, ou `status=approved`) mais exige `verifyToken` + `requireRole(['admin','super-admin'])` dès que `status` est fourni avec une autre valeur. Vérifié par curl (401 anonyme, 403 rôle user, 200 admin) et par un nouveau test Playwright (`tests/submission-moderation.spec.ts`) qui approuve une soumission fraîchement créée et vérifie sa réapparition dans la galerie publique, en plus de la régression 401/403.
+
+## PBI 011 terminé (2026-07-08, non commité, validé)
+
+i18n de la table de modération. Analyse : `SubmissionsTable.tsx` déclarait déjà un prop `t` (fonction de traduction) sans jamais l'utiliser — en-têtes de colonnes, titres de boutons et badges de statut étaient codés en dur en français dans `SubmissionsTable.tsx` et `TabsListContainer.tsx` (`getStatusBadge`), en violation de la règle i18n d'`AGENTS.md`. Correction : réutilisation des clés existantes `common.pending`/`common.validated`/`common.rejected` pour les badges, ajout de 8 nouvelles clés `admin.submissions.column.*` / `admin.submissions.preview|approve|reject` dans `fr.json`/`en.json`, câblage du prop `t` déjà présent. Effet de bord découvert et corrigé : la locale par défaut d'un navigateur/contexte de test neuf (`navigator.language`) est l'anglais, pas le français — deux tests Playwright préexistants (`Video Modal Preview`, et le nouveau `submission-moderation.spec.ts`) présumaient silencieusement le français sans le forcer ; ils passaient par accident car le texte était figé en dur. Corrigés pour forcer explicitement le français avant d'asserter sur du texte français, comme le fait déjà le reste de la suite.
+
+## Nettoyage dette immédiat (2026-07-08, non commité)
+
+`Admin Flow: Moderation Actions (Approve, Reject)` (`tests/e2e.spec.ts`) analysé : ne forçait jamais la langue (donc `tr:has-text("En attente")` ne matchait jamais rien en locale anglaise par défaut), et son `if (await pendingRow.isVisible())` sur un locator à 0 résultat renvoie `false` sans erreur — le corps du test était silencieusement sauté, verdict vacueusement vert. Dépendait en plus de données de seed partagées et mutait un vrai film en `approved` sans le restaurer quand il s'exécutait (effet de bord non déterministe sur l'état partagé de la suite). Entièrement redondant avec `submission-moderation.spec.ts` (déterministe, langue forcée, assertions réelles, vérifie aussi la réapparition en galerie publique). **Supprimé plutôt que réécrit.** Suite Playwright : 24 → 23 tests, tous verts, aucune perte de couverture réelle.
 
 ## Dette technique restante (connue, non bloquante)
 
@@ -42,15 +53,13 @@ Modération des soumissions. Analyse : l'UI (`SubmissionsTable`, `TabsListContai
 - Mapping de statut festival frontend (`'active'|'upcoming'|'archived'`) vs backend (`'Actif'|'Inactif'`) : simplification introduite au cycle précédent (`Inactif`→`archived` faute de concept "upcoming" côté backend).
 - Jointure `festival→submissionsCount` (via `user.email = director.email`) reste fragile (pas de FK, correspondance texte) — acceptée faute de meilleure option vu le schéma actuel.
 - `CLAUDE.md` section "État connu (juillet 2026)" contient des affirmations **obsolètes**, découvertes lors de l'audit de cette session (voir `docs/decisions.md`). Correction reportée à une phase de documentation globale, décision explicite de l'utilisateur.
-- `SubmissionsTable.tsx` / `TabsListContainer.tsx` : texte français codé en dur (badges de statut, en-têtes de colonnes) alors que des clés i18n existent déjà pour les statuts (`common.pending`, `common.validated`, `common.rejected`) — repéré pendant le PBI 010, non corrigé car hors scope de ce PBI et non bloquant.
 
 ## Prochain PBI (non décidé)
 
 Candidats :
 1. Statuer sur les routes ambiguës (`POST /movies`, `/collaborators`, `/directors`) si un rôle devient évident.
-2. Corriger l'i18n codé en dur dans `SubmissionsTable`/`TabsListContainer` (voir dette ci-dessus).
-3. Lancer la "phase de documentation globale" annoncée pour corriger `CLAUDE.md`.
-4. Revue sécurité plus large (`security-reviewer`) sur le reste du périmètre.
+2. Lancer la "phase de documentation globale" annoncée pour corriger `CLAUDE.md`.
+3. Revue sécurité plus large (`security-reviewer`) sur le reste du périmètre.
 
 ## Environnement de dev (rappel)
 

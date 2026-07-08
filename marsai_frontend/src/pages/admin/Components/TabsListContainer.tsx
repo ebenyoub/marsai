@@ -23,14 +23,14 @@ interface AddJuryResponse {
     message?: string
 }
 
-const getStatusBadge = (status: string) => {
+const getStatusBadge = (status: string, t: (key: string) => string) => {
     switch (status) {
         case 'approved':
-            return <Badge variant="green">Validé</Badge>
+            return <Badge variant="green">{t('common.validated')}</Badge>
         case 'rejected':
-            return <Badge variant="destructive">Refusé</Badge>
+            return <Badge variant="destructive">{t('common.rejected')}</Badge>
         default:
-            return <Badge variant="warning">En attente</Badge>
+            return <Badge variant="warning">{t('common.pending')}</Badge>
     }
 }
 
@@ -177,7 +177,7 @@ function TabsListContainer() {
                 {!isLoading && !error && films && (
                     <SubmissionsTable
                         submissions={films}
-                        getStatusBadge={getStatusBadge}
+                        getStatusBadge={(status) => getStatusBadge(status, t)}
                         onApprove={handleApprove}
                         onReject={handleReject}
                         onPreview={(f) => setPreviewFilm(f)}

@@ -155,29 +155,6 @@ test.describe('MarsAI E2E Test Suite', () => {
     }
   });
 
-  test('Admin Flow: Moderation Actions (Approve, Reject)', async ({ page }) => {
-    // 1. Login as Admin
-    await authenticateAs(page, 'jean.dupont@email.com', 'password123');
-
-    // Navigate to admin
-    await page.goto('/admin');
-    await expect(page).toHaveURL('/admin');
-
-    // 2. Locate a pending movie in the table
-    // A pending movie has a badge with text "En attente"
-    const pendingRow = page.locator('tr:has-text("En attente")').first();
-    
-    if (await pendingRow.isVisible()) {
-      const movieTitle = await pendingRow.locator('td').nth(1).innerText();
-      const approveButton = pendingRow.locator('button[title="Approuver"]');
-      await approveButton.click();
-      
-      // Wait for table to reload and check that the row for this movie now says "Validé"
-      const updatedRow = page.locator(`tr:has-text("${movieTitle}")`);
-      await expect(updatedRow).toContainText('Validé');
-    }
-  });
-
   test('Super Admin Flow: Edit Festival name and slug', async ({ page }) => {
     // 1. Login as Super Admin
     await authenticateAs(page, 'ada.lovelace@email.com', 'password123');
@@ -259,6 +236,10 @@ test.describe('MarsAI E2E Test Suite', () => {
 
     await page.goto('/admin');
     await expect(page).toHaveURL('/admin');
+
+    // Force French state: table labels below are asserted in French.
+    await page.click('button:has(svg.lucide-globe)');
+    await page.click('button:has-text("Français")');
 
     // Find any movie row and click preview
     const row = page.locator('tbody tr').first();

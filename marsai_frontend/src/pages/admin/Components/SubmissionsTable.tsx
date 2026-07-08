@@ -36,16 +36,16 @@ const fallbackImages = [
   'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop'  // Futuristic server room
 ];
 
-export function SubmissionsTable({ submissions, getStatusBadge, onApprove, onReject, onPreview }: SubmissionsTableProps) {
+export function SubmissionsTable({ submissions, getStatusBadge, onApprove, onReject, onPreview, t }: SubmissionsTableProps) {
   return (
     <table className="w-full">
       <thead className='w-full'>
         <tr className="text-center bg-muted-foreground/10 items-center h-10 ">
-          <th className="rounded-l-lg hidden md:visible">Cover</th>
-          <th className='rounded-l-xl'>Titre</th>
-          <th>Réalisateur</th>
-          <th>IA</th>
-          <th>Statut</th>
+          <th className="rounded-l-lg hidden md:visible">{t('admin.submissions.column.cover')}</th>
+          <th className='rounded-l-xl'>{t('admin.submissions.column.title')}</th>
+          <th>{t('admin.submissions.column.director')}</th>
+          <th>{t('admin.submissions.column.ai')}</th>
+          <th>{t('admin.submissions.column.status')}</th>
           <th className="rounded-r-lg" />
         </tr>
       </thead>
@@ -91,15 +91,15 @@ export function SubmissionsTable({ submissions, getStatusBadge, onApprove, onRej
             <td>{getStatusBadge(s.status)}</td>
             <td className="p-3">
               <div className="flex gap-2 items-center justify-end">
-                <Button size="icon" variant="ghost" onClick={() => onPreview(s)} title="Aperçu">
+                <Button size="icon" variant="ghost" onClick={() => onPreview(s)} title={t('admin.submissions.preview')}>
                   <Eye className="w-5 h-5" />
                 </Button>
                 {s.status === 'pending' && (
                   <>
-                    <Button size="icon" variant="ghost" onClick={() => onApprove(s.id)} className="text-green-500 hover:text-green-400" title="Approuver">
+                    <Button size="icon" variant="ghost" onClick={() => onApprove(s.id)} className="text-green-500 hover:text-green-400" title={t('admin.submissions.approve')}>
                       <Check className="w-5 h-5" />
                     </Button>
-                    <Button size="icon" variant="ghost" onClick={() => onReject(s.id)} className="text-red-500 hover:text-red-400" title="Rejeter">
+                    <Button size="icon" variant="ghost" onClick={() => onReject(s.id)} className="text-red-500 hover:text-red-400" title={t('admin.submissions.reject')}>
                       <X className="w-5 h-5" />
                     </Button>
                   </>
