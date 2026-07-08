@@ -73,7 +73,9 @@ function SuperAdminDashboard() {
           slug: newFestival.slug!,
           year: newFestival.year!,
           city: newFestival.city || 'Marseille',
-          status: 'upcoming',
+          // Backend only has 'Actif'/'Inactif' (festivalPayload.status above); matches
+          // what a refetch would show, so the UI doesn't lie between now and the next reload.
+          status: 'archived',
           primaryColor: newFestival.primaryColor!,
           youtubeApiKey: newFestival.youtubeApiKey,
           submissionsCount: 0,

@@ -4,7 +4,7 @@ import { FestivalInstance } from "./CreateFestivalForm"
 export function CMSStatsGrid({ festivals }: { festivals: FestivalInstance[] }) {
   const stats = [
     { label: 'Festivals Actifs', value: festivals.filter(f => f.status === 'active').length },
-    { label: 'Festivals à Venir', value: festivals.filter(f => f.status === 'upcoming').length },
+    { label: 'Festivals Archivés', value: festivals.filter(f => f.status === 'archived').length },
     { label: 'Total Soumissions', value: festivals.reduce((a, f) => a + (f.submissionsCount ?? 0), 0) },
     { label: 'Instances Totales', value: festivals.length },
   ]

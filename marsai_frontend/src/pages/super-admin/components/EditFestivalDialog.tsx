@@ -103,14 +103,13 @@ export function EditFestivalDialog({ festival, open, onOpenChange, onSave }: Edi
               <div className="mt-1.5">
                 <Select
                   value={edited.status}
-                  onValueChange={(val: 'active' | 'upcoming' | 'archived') => setEdited(prev => ({ ...prev, status: val }))}
+                  onValueChange={(val: 'active' | 'archived') => setEdited(prev => ({ ...prev, status: val }))}
                 >
                   <SelectTrigger className="bg-slate-900 border-slate-800 text-white">
                     <SelectValue placeholder="Choisir un statut" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-950 border-slate-800 text-white">
                     <SelectItem value="active">Actif</SelectItem>
-                    <SelectItem value="upcoming">À venir / Brouillon</SelectItem>
                     <SelectItem value="archived">Archivé</SelectItem>
                   </SelectContent>
                 </Select>

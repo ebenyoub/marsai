@@ -12,12 +12,18 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 010 | Modération des soumissions — fuite de confidentialité corrigée (`GET /movies?status=all` public) ; UI d'approbation/rejet déjà existante vérifiée fonctionnelle E2E | `32fb4ee` | ✅ commité, validé, en attente de push |
 | 011 | i18n de la table de modération — statuts/en-têtes/titres de boutons câblés sur `t()` au lieu de texte codé en dur ; 2 tests Playwright corrigés (langue non forcée) + suppression d'un test redondant/vacueux | `1d05f62` | ✅ commité, validé, en attente de push |
 | 012 | Inscription (`/register`) — label "Save" mal câblé sur le champ de confirmation du mot de passe, corrigé ; parcours jusqu'ici sans aucune couverture Playwright, 2 tests ajoutés | `4c06934` | ✅ commité, validé, en attente de push |
-| 013 | Page de succès de soumission (`/success`) — paragraphe de description codé en dur en français, corrigé ; seule l'URL était vérifiée jusqu'ici, 1 test ajouté (contenu FR + EN) | non commité | ⏳ en attente de validation |
+| 013 | Page de succès de soumission (`/success`) — paragraphe de description codé en dur en français, corrigé ; seule l'URL était vérifiée jusqu'ici, 1 test ajouté (contenu FR + EN) | `5777b51` | ✅ commité, validé, en attente de push |
+| 014 | Statut festival "À venir" (super-admin) — option non persistable (reliquat de mock jamais nettoyé après branchement API réelle), UI alignée sur les 2 états réels du backend, 1 test ajouté (round-trip) | non commité | ⏳ en attente de validation |
 
 ## Chantier dette technique (2026-07-07, clos, pas encore pushé)
 
 6 commits de dette technique (TSC, sécurité, RBAC, code mort) sont prêts localement mais **pas encore pushés** (voir `PROJECT_STATE.md`).
 
+## Trouvés mais non traités (décision produit requise)
+
+- Lien "Mot de passe oublié" (`Login.tsx`) — pas de fonctionnalité réelle derrière, nécessite un choix d'infra email.
+- Liens légaux du footer (`Footer.tsx`) — nécessitent du contenu réel, non inventable par l'agent.
+
 ## Prochain PBI
 
-Non décidé — audit systématique de la checklist `AGENTS.md` en cours (méthode : chercher le premier flux requis mais jamais vérifié en navigateur, comme pour PBI 012/013). Routes ambiguës `/movies`/`/collaborators`/`/directors`, `CLAUDE.md` et revue sécurité plus large restent en pause (demande explicite de l'utilisateur).
+Non décidé. Méthode : code actuel + historique Git + `PROJECT_STATE.md`/`product_backlog.md` comme sources de vérité (pas `AGENTS.md`, qui décrit des règles de dev, pas le périmètre produit). Routes ambiguës `/movies`/`/collaborators`/`/directors`, `CLAUDE.md` et revue sécurité plus large restent en pause (demande explicite de l'utilisateur).

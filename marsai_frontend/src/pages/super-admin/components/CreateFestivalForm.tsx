@@ -7,7 +7,7 @@ export interface FestivalInstance {
   slug: string;
   city: string;
   year: number;
-  status: 'active' | 'upcoming' | 'archived';
+  status: 'active' | 'archived';
   logo?: string;
   primaryColor: string;
   youtubeApiKey?: string;
