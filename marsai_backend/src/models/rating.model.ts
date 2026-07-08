@@ -27,6 +27,14 @@ const createRating = async (rating: RatingType): Promise<ResultSetHeader> => {
   return result;
 };
 
+const findMovieIdsByUser = async (userId: number): Promise<number[]> => {
+  const [rows] = await db.execute<RatingRow[]>(
+    'SELECT movie_id FROM rating WHERE user_id = ?',
+    [userId]
+  );
+  return rows.map((row) => row.movie_id);
+};
+
 const findByUserAndMovie = async (userId: number, movieId: number): Promise<RatingType | null> => {
   const [rows] = await db.execute<RatingRow[]>(
     'SELECT * FROM rating WHERE user_id = ? AND movie_id = ?',
@@ -38,4 +46,5 @@ const findByUserAndMovie = async (userId: number, movieId: number): Promise<Rati
 export default {
   createRating,
   findByUserAndMovie,
+  findMovieIdsByUser,
 };

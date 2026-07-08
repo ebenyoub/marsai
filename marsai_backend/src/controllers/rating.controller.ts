@@ -46,7 +46,19 @@ const getRatingByMovie = async (req: RequestParams<Params>, res: Response) => {
   });
 };
 
+const getMyRatedMovies = async (req: RequestParams<Params>, res: Response) => {
+  const authUserId = (req as AuthenticatedRequest).user?.userId;
+  if (!authUserId) {
+    return res.status(401).json({ success: false, message: 'Utilisateur non identifié' });
+  }
+
+  const movieIds = await RatingModel.findMovieIdsByUser(authUserId);
+
+  return res.status(200).json({ success: true, data: movieIds });
+};
+
 export default {
   createRating,
   getRatingByMovie,
+  getMyRatedMovies,
 };

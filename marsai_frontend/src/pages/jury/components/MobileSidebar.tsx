@@ -10,6 +10,7 @@ interface MobileSidebarProps {
   activeFilmId: string | null;
   onSelectFilm: (id: string | number) => void;
   setQuery: (query: string) => void;
+  votedMovieIds: Set<number>;
 }
 
 export default function MobileSidebar(props: MobileSidebarProps) {

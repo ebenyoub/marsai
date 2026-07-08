@@ -10,6 +10,7 @@ const router = express.Router();
 const juryRoles = ['jury', 'admin', 'super-admin'] as const;
 
 router.post('/', verifyToken, requireRole([...juryRoles]), validate(ratingSchema), RatingController.createRating);
+router.get('/me', verifyToken, requireRole([...juryRoles]), RatingController.getMyRatedMovies);
 router.get('/movie/:id', verifyToken, requireRole([...juryRoles]), RatingController.getRatingByMovie);
 
 export default router;

@@ -282,6 +282,9 @@
   "jury.rating.sending": "Sending...",
   "jury.rating.login_required": "You must be logged in to vote.",
   "jury.rating.submit_success": "Rating submitted successfully!",
+  "jury.rating.already_voted": "Vote already recorded",
+  "jury.sidebar.voted": "Voted",
+  "common.close": "Close",
   "jury.rating.submit_error": "Error submitting rating",
 
   "badge.official": "Official Selection",

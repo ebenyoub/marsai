@@ -119,26 +119,31 @@ test.describe('MarsAI E2E Test Suite', () => {
     await expect(directorLabel).toContainText('Alessandro');
 
     const commentInput = page.locator('textarea');
-    const uniqueComment = `Formidable court-métrage E2E ${Date.now()}`;
-    await commentInput.fill(uniqueComment);
+    const lockedBanner = page.getByTestId('vote-locked-banner');
 
-    // Register dialog listener BEFORE the click. Votes are final (PBI 040):
-    // the first run against a fresh DB records the vote, later runs get the
-    // "already voted" message — both are accepted here, the lock itself is
-    // asserted in jury-vote-lock.spec.ts.
-    page.once('dialog', async dialog => {
-      await dialog.accept();
-    });
+    // Votes are final (PBI 040/041): the first run against a fresh DB records
+    // the vote through the success modal, later runs land on a locked UI.
+    if (await lockedBanner.isVisible()) {
+      await expect(commentInput).toHaveAttribute('readonly', '');
+      await expect(page.getByRole('button', { name: 'Vote déjà enregistré' })).toBeDisabled();
+    } else {
+      const uniqueComment = `Formidable court-métrage E2E ${Date.now()}`;
+      await commentInput.fill(uniqueComment);
+      await page.click('button:has-text("Soumettre l\'évaluation")');
 
-    // Submit rating
-    await page.click('button:has-text("Soumettre l\'évaluation")');
+      // Success modal replaces the old alert() (PBI 041)
+      await expect(page.getByText('Évaluation envoyée avec succès !')).toBeVisible();
+      await page.getByRole('button', { name: 'Fermer' }).click();
 
-    // Give it a brief moment to finish request
-    await page.waitForTimeout(1500);
+      // UI locks immediately after voting
+      await expect(lockedBanner).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Vote déjà enregistré' })).toBeDisabled();
+    }
 
     // 4. Refresh Page — the stored (locked) rating must reload
     await page.reload();
     await page.waitForSelector('textarea', { state: 'visible', timeout: 15000 });
+    await expect(lockedBanner).toBeVisible();
 
     const storedComment = await commentInput.inputValue();
     expect(storedComment).not.toBe('');

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Brain, Send, Star } from 'lucide-react';
+import { Brain, CheckCircle2, Send, Star } from 'lucide-react';
 import Button from '@/components/ui/button';
 import { Card } from '@/components/ui/Card';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { FormGroup, Label, TextArea } from '@/components/ui/form';
 import { apiRequest } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
@@ -31,22 +32,26 @@ type FilmEvaluatorProps = {
     director_firstname?: string;
     director_lastname?: string;
   };
+  onVoted?: (movieId: number) => void;
 };
 
-export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
+export default function FilmEvaluator({ film, onVoted }: FilmEvaluatorProps) {
   const { t } = useTranslation();
   const { user, token } = useAuth();
   const [scores, setScores] = useState({ creativity: 1, technical: 1, narrative: 1 });
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isVoted, setIsVoted] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     if (!film?.id) return;
-    
+
     // Reset first
     setScores({ creativity: 1, technical: 1, narrative: 1 });
     setComment('');
-    
+    setIsVoted(false);
+
     const fetchExistingRating = async () => {
       try {
         const res = await apiRequest<RatingResponse>(`/rating/movie/${film.id}`, {
@@ -60,12 +65,14 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
             narrative: r.score_message || 1
           });
           setComment(r.comment || '');
+          // Un vote existant est définitif (PBI 040) : l'UI se verrouille.
+          setIsVoted(true);
         }
       } catch (err) {
         console.error("Erreur de récupération de la note existante :", err);
       }
     };
-    
+
     fetchExistingRating();
   }, [film?.id, token]);
 
@@ -96,7 +103,9 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
           score_total: averageScore,
         }),
       });
-      alert(t('jury.rating.submit_success'));
+      setIsVoted(true);
+      setShowSuccess(true);
+      onVoted?.(Number(film.id));
     } catch (err) {
       console.error(err);
       alert(err instanceof Error ? err.message : t('jury.rating.submit_error'));
@@ -197,7 +206,20 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
           </p>
         </div>
 
-        <div className="space-y-10">
+        {isVoted && (
+          <div
+            data-testid="vote-locked-banner"
+            className="mb-8 flex items-center gap-3 rounded-xl border border-green-500/30 bg-green-500/10 p-4"
+          >
+            <CheckCircle2 className="size-6 shrink-0 text-green-400" />
+            <div>
+              <p className="font-semibold text-green-400">{t('jury.rating.already_voted')}</p>
+              <p className="text-sm text-slate-400">{t('jury.rating.comments.hint')}</p>
+            </div>
+          </div>
+        )}
+
+        <div className={`space-y-10 ${isVoted ? 'pointer-events-none opacity-50' : ''}`}>
           {[
             {
               id: 'creativity',
@@ -246,6 +268,7 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
                     max="10"
                     value={score}
                     onChange={e => setScores({ ...scores, [slider.id]: Number(e.target.value) })}
+                    disabled={isVoted}
                     className="absolute z-10 h-full w-full cursor-pointer opacity-0"
                   />
                 </div>
@@ -270,20 +293,46 @@ export default function FilmEvaluator({ film }: FilmEvaluatorProps) {
               value={comment}
               onChange={e => setComment(e.target.value)}
               placeholder={t('jury.rating.comments.placeholder')}
-              className="mt-2 min-h-25 bg-slate-950 text-white"
+              readOnly={isVoted}
+              className={`mt-2 min-h-25 bg-slate-950 text-white ${isVoted ? 'opacity-50' : ''}`}
             />
             <p className="mt-2 text-xs text-slate-500">{t('jury.rating.comments.hint')}</p>
           </FormGroup>
           <Button
             variant="purple"
-            className="mt-6 flex w-full items-center justify-center gap-2 py-3"
+            className="mt-6 flex w-full items-center justify-center gap-2 py-3 disabled:cursor-not-allowed disabled:opacity-50"
             onClick={handleSubmit}
-            disabled={isSubmitting}
+            disabled={isSubmitting || isVoted}
           >
-            <Send className="size-4" /> {isSubmitting ? t('jury.rating.sending') : t('jury.rating.submit')}
+            {isVoted ? (
+              <>
+                <CheckCircle2 className="size-4" /> {t('jury.rating.already_voted')}
+              </>
+            ) : (
+              <>
+                <Send className="size-4" /> {isSubmitting ? t('jury.rating.sending') : t('jury.rating.submit')}
+              </>
+            )}
           </Button>
         </div>
       </Card>
+
+      <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+        <DialogContent className="border-slate-800 bg-slate-950 text-center sm:max-w-md">
+          <CheckCircle2 className="mx-auto size-14 text-green-400" />
+          <DialogTitle className="text-center text-white">{t('jury.rating.submitted')}</DialogTitle>
+          <DialogDescription className="text-center text-slate-400">
+            {t('jury.rating.submit_success')}
+          </DialogDescription>
+          <Button
+            variant="purple"
+            className="mx-auto mt-2 justify-center px-6"
+            onClick={() => setShowSuccess(false)}
+          >
+            {t('common.close')}
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiRequest } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
 import FilmEvaluator from './components/FilmEvaluator';
 import MobileSidebar from './components/MobileSidebar';
 import SidebarContent from './components/SidebarContent';
@@ -18,8 +19,25 @@ export default function JuryDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const { token } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilmId, setActiveFilmId] = useState<string | null>(null);
+  const [votedMovieIds, setVotedMovieIds] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    if (!token) return;
+    const fetchVoted = async () => {
+      try {
+        const res = await apiRequest<{ success: boolean; data: number[] }>('/rating/me', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.success) setVotedMovieIds(new Set(res.data));
+      } catch (err) {
+        console.error('Erreur lors de la récupération des votes :', err);
+      }
+    };
+    fetchVoted();
+  }, [token]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -52,6 +70,7 @@ export default function JuryDashboard() {
     activeFilmId,
     onSelectFilm: (id: string | number) => setActiveFilmId(id.toString()),
     setQuery: setSearchQuery,
+    votedMovieIds,
   };
 
   if (loading) {
@@ -83,7 +102,10 @@ export default function JuryDashboard() {
         </header>
 
         <div className="scrollbar flex-1 overflow-x-scroll p-4 md:p-8">
-          <FilmEvaluator film={activeFilm} />
+          <FilmEvaluator
+            film={activeFilm}
+            onVoted={movieId => setVotedMovieIds(prev => new Set(prev).add(movieId))}
+          />
         </div>
       </main>
     </div>

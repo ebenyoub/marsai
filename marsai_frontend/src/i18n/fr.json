@@ -283,6 +283,9 @@
   "jury.rating.sending": "Envoi...",
   "jury.rating.login_required": "Vous devez être connecté pour voter.",
   "jury.rating.submit_success": "Évaluation envoyée avec succès !",
+  "jury.rating.already_voted": "Vote déjà enregistré",
+  "jury.sidebar.voted": "Voté",
+  "common.close": "Fermer",
   "jury.rating.submit_error": "Erreur lors de l'envoi de l'évaluation",
 
   "badge.official": "Sélection Officielle",
