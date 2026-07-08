@@ -2,8 +2,9 @@
 
 ## En attente de décision utilisateur
 
-- [ ] **Push des 16 commits locaux** (`03de953`..`c761e60`) + du travail PBI 018 (non commité) vers `origin/main` — attend validation explicite. Voir `PROJECT_STATE.md`.
-- [ ] **Choisir le prochain PBI** (voir propositions dans `PROJECT_STATE.md`).
+- [ ] **Push des commits locaux** (`03de953`..`a4cd982` et suivants) vers `origin/main` — attend validation explicite. Voir `PROJECT_STATE.md`.
+- [ ] **Valider le PBI 018** (terminé, commité `a4cd982`).
+- [ ] **Lancer le backlog V1 priorisé** issu de la revue fonctionnelle du 2026-07-08 (PBI 035-048, specs dans `product_backlog.md`) — ordre recommandé : 042 → 040 → 041 (P0), puis 035/043, puis Événements 036-039, puis P2 044-048.
 
 ## Dette technique identifiée, non traitée (volontairement)
 
@@ -26,7 +27,7 @@
 - [x] PBI 015 — galerie d'accueil (`VideoSection.tsx`) sans traduction anglaise (titre, chargement, erreur, vide, compteur, placeholder de recherche) ; même défaut corrigé dans `JuryDashboard.tsx` ; ajout de `tests/gallery-i18n.spec.ts` (commit `5d38aeb`)
 - [x] PBI 016 — clés `footer.about`/`footer.contact` manquantes, affichées brutes sur toutes les pages ; corrigé ; ajout de `tests/footer-i18n.spec.ts` (garde-fou générique) (commit `8bb2d0e`)
 - [x] PBI 017 — audit systématique des 306 appels `t()` du frontend : `admin.lastCheck` manquant (motif `t(x) || 'repli'` inefficace, `t()` ne renvoie jamais faux), `admin.systemStatus` mort, `submit.error` retombait en français en anglais, `CheckBox.tsx` jamais importé nulle part (supprimé) ; ajout de `tests/admin-sidebar-i18n.spec.ts` (commit `c761e60`)
-- [x] PBI 018 — écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur (1 seul appel `t()` sur 280 lignes) ; clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés pour le reste ; test `Jury Flow` existant corrigé (langue non forcée) ; ajout de `tests/jury-evaluator-i18n.spec.ts` (non commité)
+- [x] PBI 018 — écran de vote du jury (`FilmEvaluator.tsx`) presque entièrement codé en dur (1 seul appel `t()` sur 280 lignes) ; clés `jury.ai.*`/`jury.rating.*` déjà présentes mais jamais câblées, réutilisées + ~20 nouvelles clés pour le reste ; test `Jury Flow` existant corrigé (langue non forcée) ; ajout de `tests/jury-evaluator-i18n.spec.ts` (commit `a4cd982`)
 - [x] Création de `ROADMAP_V2.md` : réinitialisation de mot de passe et pages légales du footer déplacées hors `PROJECT_STATE.md` avec justification (commit `a9309c5`) ; reformulé pour se baser sur le backlog plutôt qu'`AGENTS.md` (commit `62b5cda`)
 
 ## Terminé session précédente (2026-07-07)
