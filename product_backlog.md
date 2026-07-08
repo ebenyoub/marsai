@@ -13,16 +13,15 @@ Suivi d'avancement des PBI produit. Ce fichier ne documente que l'état d'avance
 | 011 | i18n de la table de modération — statuts/en-têtes/titres de boutons câblés sur `t()` au lieu de texte codé en dur ; 2 tests Playwright corrigés (langue non forcée) + suppression d'un test redondant/vacueux | `1d05f62` | ✅ commité, validé, en attente de push |
 | 012 | Inscription (`/register`) — label "Save" mal câblé sur le champ de confirmation du mot de passe, corrigé ; parcours jusqu'ici sans aucune couverture Playwright, 2 tests ajoutés | `4c06934` | ✅ commité, validé, en attente de push |
 | 013 | Page de succès de soumission (`/success`) — paragraphe de description codé en dur en français, corrigé ; seule l'URL était vérifiée jusqu'ici, 1 test ajouté (contenu FR + EN) | `5777b51` | ✅ commité, validé, en attente de push |
-| 014 | Statut festival "À venir" (super-admin) — option non persistable (reliquat de mock jamais nettoyé après branchement API réelle), UI alignée sur les 2 états réels du backend, 1 test ajouté (round-trip) | non commité | ⏳ en attente de validation |
+| 014 | Statut festival "À venir" (super-admin) — option non persistable (reliquat de mock jamais nettoyé après branchement API réelle), UI alignée sur les 2 états réels du backend, 1 test ajouté (round-trip) | `7094c74` | ✅ commité, validé, en attente de push |
 
 ## Chantier dette technique (2026-07-07, clos, pas encore pushé)
 
 6 commits de dette technique (TSC, sécurité, RBAC, code mort) sont prêts localement mais **pas encore pushés** (voir `PROJECT_STATE.md`).
 
-## Trouvés mais non traités (décision produit requise)
+## Hors V1 — voir ROADMAP_V2.md
 
-- Lien "Mot de passe oublié" (`Login.tsx`) — pas de fonctionnalité réelle derrière, nécessite un choix d'infra email.
-- Liens légaux du footer (`Footer.tsx`) — nécessitent du contenu réel, non inventable par l'agent.
+Deux vrais bugs trouvés pendant l'audit du PBI 014 (lien "Mot de passe oublié" mort, liens légaux du footer vers `#`) ont été évalués comme non indispensables au MVP défini par `AGENTS.md` — aucun des deux ne conditionne un parcours produit requis (accueil, galerie, soumission, auth, rôles, vote, admin/super-admin, i18n, YouTube, collaborateurs). Détail et justification dans `ROADMAP_V2.md`, pas seulement dans `PROJECT_STATE.md`.
 
 ## Prochain PBI
 

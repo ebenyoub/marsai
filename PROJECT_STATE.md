@@ -15,9 +15,9 @@ Le cycle PBI produit a repris le 2026-07-08 :
 - **PBI 011 — i18n de la table de modération** : `SubmissionsTable`/`TabsListContainer` recevaient déjà un prop `t` mais ne l'utilisaient jamais ; statuts, en-têtes et titres de boutons étaient codés en dur en français. Corrigé en réutilisant les clés `common.pending/validated/rejected` existantes + 8 nouvelles clés `admin.submissions.*`. Nettoyage immédiat associé : suppression du test `Admin Flow: Moderation Actions` vacueusement vert et redondant. **Commitée** (`1d05f62`), validée par l'utilisateur.
 - **PBI 012 — inscription (`/register`)** : parcours jamais couvert par un test Playwright, jamais retouché depuis l'import initial du monorepo (aucun historique Git). Vérification en navigateur : le champ de confirmation du mot de passe affichait le label **"Save"** (`t('common.save')`) au lieu de "Confirmer le mot de passe" — vrai bug UX, pas une fonctionnalité manquante. Corrigé + 2 tests Playwright ajoutés (mismatch bloqué, inscription réussie → connexion auto → redirection `/`). **Commitée** (`4c06934`), validée par l'utilisateur.
 - **PBI 013 — page de succès de soumission (`/success`)** : son URL était vérifiée par les tests existants mais jamais son contenu. Le titre utilisait `t('submit.success')` correctement, mais le paragraphe de description entier était codé en dur en français — un utilisateur en anglais voyait une page mi-anglaise mi-française juste après avoir soumis son film. Corrigé (nouvelle clé `submit.success.description`) + test Playwright ajouté (contenu vérifié en FR et EN, bouton retour à l'accueil). **Commitée** (`5777b51`), validée par l'utilisateur.
-- **PBI 014 — statut festival "À venir" non persistable (super-admin)** : trouvé en lisant le code (`SuperAdminDashboard.tsx`, `EditFestivalDialog.tsx`) — trois options de statut proposées (Actif / À venir / Archivé) mais la base ne stocke que 2 valeurs (`enum('Actif','Inactif')`). Choisir "À venir" et enregistrer sauvegardait silencieusement `Inactif`, et après rechargement le festival réapparaissait "Archivé" — pire que la "simplification acceptée" déjà notée dans ce document, car le choix ne survit jamais à un rechargement. Origine : reliquat de l'UI mock d'avant `d92af8f` (3 festivals fictifs), jamais nettoyé quand cette UI a été branchée sur l'API réelle. Corrigé en alignant le frontend sur les 2 états réels du backend (suppression de l'option "À venir" du select et du type, correction de l'état optimiste de création, remplacement de la stat "Festivals à Venir" — toujours à 0 — par "Festivals Archivés"). Test Playwright ajouté (round-trip Actif→Archivé→Actif après rechargement, restaure l'état pour ne pas casser les tests suivants). **Travail non commité, en attente de validation.**
+- **PBI 014 — statut festival "À venir" non persistable (super-admin)** : trouvé en lisant le code (`SuperAdminDashboard.tsx`, `EditFestivalDialog.tsx`) — trois options de statut proposées (Actif / À venir / Archivé) mais la base ne stocke que 2 valeurs (`enum('Actif','Inactif')`). Choisir "À venir" et enregistrer sauvegardait silencieusement `Inactif`, et après rechargement le festival réapparaissait "Archivé" — pire que la "simplification acceptée" déjà notée dans ce document, car le choix ne survit jamais à un rechargement. Origine : reliquat de l'UI mock d'avant `d92af8f` (3 festivals fictifs), jamais nettoyé quand cette UI a été branchée sur l'API réelle. Corrigé en alignant le frontend sur les 2 états réels du backend (suppression de l'option "À venir" du select et du type, correction de l'état optimiste de création, remplacement de la stat "Festivals à Venir" — toujours à 0 — par "Festivals Archivés"). Test Playwright ajouté (round-trip Actif→Archivé→Actif après rechargement, restaure l'état pour ne pas casser les tests suivants). **Commitée** (`7094c74`), validée par l'utilisateur. Les deux autres bugs trouvés pendant le même audit (lien "Mot de passe oublié" mort, liens légaux du footer vers `#`) ont été évalués comme non indispensables au MVP et déplacés vers `ROADMAP_V2.md` — voir cette section plus bas, ils ne sont plus documentés seulement ici.
 
-## Commits locaux non pushés (10)
+## Commits locaux non pushés (11)
 
 Sur `main`, en avance sur `origin/main` :
 
@@ -31,6 +31,7 @@ Sur `main`, en avance sur `origin/main` :
 8. `1d05f62` — feat: wire i18n in submissions moderation table, drop vacuous test (PBI 011 + nettoyage)
 9. `4c06934` — fix: mislabeled confirm-password field on registration, add E2E coverage (PBI 012)
 10. `5777b51` — fix: hardcoded French paragraph on submission success page (PBI 013)
+11. `7094c74` — fix: festival "upcoming" status silently degraded to "archived" (PBI 014)
 
 **Chacun a été vérifié individuellement** : build + lint (backend et/ou frontend selon pertinence), `tsc --noEmit` (0 erreur depuis `cf6cfb5`), suite Playwright complète, vérifications manuelles ciblées (curl par rôle, scripts Playwright jetables supprimés après usage).
 
@@ -58,13 +59,11 @@ Inscription (`/register`). Analyse : parcours explicitement requis par `AGENTS.m
 
 Page de succès de soumission (`/success`). Analyse : son URL était bien vérifiée par 3 tests existants (`e2e.spec.ts`, `submission-collaborators.spec.ts`) — mais jamais son **contenu**. Lecture du composant : le titre utilisait correctement `t('submit.success')`, mais le paragraphe de description entier (`"Merci d'avoir participé à l'aventure marsAI..."`) était codé en dur en français juste en dessous, sans clé i18n. Un utilisateur ayant basculé en anglais voyait donc une page de confirmation mi-anglaise mi-française immédiatement après avoir soumis son film — le moment le plus visible du parcours de soumission. Correction : nouvelle clé `submit.success.description` (`fr.json`/`en.json`, aucune clé existante ne convenait) câblée dans `Success.tsx`. Ajout de `tests/submission-success.spec.ts` : contenu complet vérifié en français puis en anglais (bascule de langue), plus le bouton de retour à l'accueil.
 
-## PBI 014 terminé (2026-07-08, non commité)
+## PBI 014 terminé (2026-07-08, commit `7094c74`, validé)
 
 Statut festival "À venir" non persistable (super-admin). Analyse (code + `git show d92af8f`) : `EditFestivalDialog.tsx` proposait 3 statuts (Actif / À venir / Archivé), reliquat d'une UI mock (3 festivals fictifs) jamais nettoyée quand `d92af8f` a branché le dashboard sur l'API réelle — la base ne stocke que `enum('Actif','Inactif')`. Choisir "À venir" et enregistrer sauvegardait silencieusement `Inactif`, et après rechargement le festival redevenait "Archivé" : plus grave que la simple approximation de lecture déjà notée en dette technique, c'est une perte de choix silencieuse à l'écriture. La stat "Festivals à Venir" du tableau de bord était structurellement toujours à 0 pour la même raison. Corrigé en alignant le frontend sur les 2 états réels : suppression de l'option "À venir" (`EditFestivalDialog.tsx`, type `FestivalInstance` dans `CreateFestivalForm.tsx`), état optimiste de création corrigé (`SuperAdminDashboard.tsx`, `'upcoming'` → `'archived'` pour ne pas mentir avant le prochain rechargement), stat remplacée par "Festivals Archivés" (`CMSStatsGrid.tsx`). Ajout de `tests/festival-status.spec.ts` : confirme que seuls 2 statuts sont proposés, vérifie la persistance après rechargement dans les deux sens (Actif→Archivé→Actif), et restaure l'état initial pour ne pas affecter les tests suivants (un seul festival existe dans les données de seed).
 
-Trouvé pendant le même audit, **non traité** (nécessite une décision produit, pas seulement du code) :
-- Lien "Mot de passe oublié ?" (`Login.tsx`) : redirige vers `/`, aucune fonctionnalité de réinitialisation n'existe côté backend (pas de route, pas d'envoi d'email, aucune infra SMTP dans le projet). Construire la vraie fonctionnalité est un choix d'infrastructure à valider avec l'utilisateur.
-- Liens légaux du footer (mentions légales, confidentialité, RGPD dans `Footer.tsx`) : pointent vers `href="#"`, aucune page derrière. Nécessite du contenu réel que l'agent ne peut pas inventer.
+Deux autres bugs trouvés pendant le même audit ont été classés **hors V1** (voir `ROADMAP_V2.md` pour le détail et la justification, ils ne sont plus décrits ici) : lien "Mot de passe oublié" mort dans `Login.tsx`, liens légaux du footer vers `#` dans `Footer.tsx`.
 
 ## Dette technique restante (connue, non bloquante)
 
@@ -75,14 +74,12 @@ Trouvé pendant le même audit, **non traité** (nécessite une décision produi
 
 ## Prochain PBI (non décidé)
 
-Candidats produit trouvés mais nécessitant une décision de l'utilisateur avant développement (voir PBI 014 ci-dessus) :
-1. "Mot de passe oublié" — construire la fonctionnalité réelle (choix d'infra email) ou retirer le lien en attendant.
-2. Liens légaux du footer — écrire le contenu, ou les retirer/désactiver en attendant.
-
 Candidats hors scope pour l'instant (mis en pause explicitement par l'utilisateur) :
-3. Statuer sur les routes ambiguës (`POST /movies`, `/collaborators`, `/directors`).
-4. Phase de documentation globale pour corriger `CLAUDE.md`.
-5. Revue sécurité plus large (`security-reviewer`).
+1. Statuer sur les routes ambiguës (`POST /movies`, `/collaborators`, `/directors`).
+2. Phase de documentation globale pour corriger `CLAUDE.md`.
+3. Revue sécurité plus large (`security-reviewer`).
+
+Voir `ROADMAP_V2.md` pour les évolutions non indispensables au MVP identifiées mais non planifiées (mot de passe oublié, pages légales).
 
 ## Environnement de dev (rappel)
 
